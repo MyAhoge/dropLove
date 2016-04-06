@@ -34,6 +34,8 @@
 		BA52BFC81CB3EBEA00941371 /* bg1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BA52BFBD1CB3EBEA00941371 /* bg1.jpg */; };
 		BA52BFC91CB3EBEA00941371 /* icom.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BA52BFBE1CB3EBEA00941371 /* icom.jpg */; };
 		BA52BFCA1CB3EBEA00941371 /* icom1.png in Resources */ = {isa = PBXBuildFile; fileRef = BA52BFBF1CB3EBEA00941371 /* icom1.png */; };
+		BA52BFCD1CB4A11300941371 /* editMemorialDayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA52BFCC1CB4A11300941371 /* editMemorialDayViewController.m */; };
+		BA52BFD01CB51D6300941371 /* addMemorialDayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA52BFCF1CB51D6300941371 /* addMemorialDayViewController.m */; };
 		BA5AF64D1CAA623B00293489 /* weatherServices.m in Sources */ = {isa = PBXBuildFile; fileRef = BA5AF64C1CAA623B00293489 /* weatherServices.m */; };
 		BA5AF6CA1CABC93A00293489 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA5AF6C91CABC93A00293489 /* AssetsLibrary.framework */; };
 		BA5AF6CC1CABC94200293489 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA5AF6CB1CABC94200293489 /* AudioToolbox.framework */; };
@@ -185,6 +187,10 @@
 		BA52BFBD1CB3EBEA00941371 /* bg1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg1.jpg; sourceTree = "<group>"; };
 		BA52BFBE1CB3EBEA00941371 /* icom.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icom.jpg; sourceTree = "<group>"; };
 		BA52BFBF1CB3EBEA00941371 /* icom1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icom1.png; sourceTree = "<group>"; };
+		BA52BFCB1CB4A11300941371 /* editMemorialDayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = editMemorialDayViewController.h; sourceTree = "<group>"; };
+		BA52BFCC1CB4A11300941371 /* editMemorialDayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = editMemorialDayViewController.m; sourceTree = "<group>"; };
+		BA52BFCE1CB51D6300941371 /* addMemorialDayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addMemorialDayViewController.h; sourceTree = "<group>"; };
+		BA52BFCF1CB51D6300941371 /* addMemorialDayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addMemorialDayViewController.m; sourceTree = "<group>"; };
 		BA5AF64B1CAA623B00293489 /* weatherServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = weatherServices.h; sourceTree = "<group>"; };
 		BA5AF64C1CAA623B00293489 /* weatherServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = weatherServices.m; sourceTree = "<group>"; };
 		BA5AF6C91CABC93A00293489 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -727,6 +733,10 @@
 				BA5AF7791CAD13AF00293489 /* chatViewController.m */,
 				BAF7E6711CB343970018E4A5 /* memorialViewController.h */,
 				BAF7E6721CB343970018E4A5 /* memorialViewController.m */,
+				BA52BFCB1CB4A11300941371 /* editMemorialDayViewController.h */,
+				BA52BFCC1CB4A11300941371 /* editMemorialDayViewController.m */,
+				BA52BFCE1CB51D6300941371 /* addMemorialDayViewController.h */,
+				BA52BFCF1CB51D6300941371 /* addMemorialDayViewController.m */,
 			);
 			path = home;
 			sourceTree = "<group>";
@@ -950,6 +960,7 @@
 				BA5AF7341CABE89100293489 /* AFURLRequestSerialization.m in Sources */,
 				BA5AF7321CABE89100293489 /* AFNetworkReachabilityManager.m in Sources */,
 				BA5AF7351CABE89100293489 /* AFURLResponseSerialization.m in Sources */,
+				BA52BFCD1CB4A11300941371 /* editMemorialDayViewController.m in Sources */,
 				BA52BF921CB3E79200941371 /* SocialViewController.m in Sources */,
 				BA5AF7221CABE87700293489 /* PlistLocalInfo.m in Sources */,
 				BA52BF9B1CB3E87400941371 /* publishViewController.m in Sources */,
@@ -959,6 +970,7 @@
 				C32B9C4D1CA4D4D3005430A1 /* main.m in Sources */,
 				C32B9C951CA4D643005430A1 /* HomeViewController.m in Sources */,
 				BA5AF77A1CAD13AF00293489 /* chatViewController.m in Sources */,
+				BA52BFD01CB51D6300941371 /* addMemorialDayViewController.m in Sources */,
 				BA52BFB11CB3EACB00941371 /* MineViewController.m in Sources */,
 				C30131471CAC064600CB857F /* MapViewController.m in Sources */,
 				BA5AF7971CAD583500293489 /* timeListimagecell.m in Sources */,

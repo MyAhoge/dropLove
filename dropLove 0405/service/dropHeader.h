@@ -38,7 +38,9 @@
 
 #import "socialCell.h"
 #import "socialPublishController.h"
-
+//0406
+#import "editMemorialDayViewController.h"
+#import "addMemorialDayViewController.h"
 
 #pragma mark 常用宏
 //***********************************//
