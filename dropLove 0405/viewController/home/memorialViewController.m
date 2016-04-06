@@ -115,6 +115,10 @@
     
     [self.myview addSubview:self.dayLab];
     
+    self.tapGesturRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapmyview)];
+    
+    [self.myview addGestureRecognizer:self.tapGesturRecognizer];
+    
     
     
     
@@ -174,8 +178,21 @@
 }
 
 - (void)addmemorial:(UIButton *)sender{
+    addMemorialDayViewController *addMem = [[addMemorialDayViewController alloc]init];
+    addMem.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:addMem animated:YES];
 }
 
+-(void)tapmyview{
 
+//    NSLog(@"点击了page3");
+    
+    editMemorialDayViewController *edit = [[editMemorialDayViewController alloc]init];
+    
+    //隐藏底部tabbar
+    edit.hidesBottomBarWhenPushed = YES;
+    
+    [self.navigationController pushViewController:edit animated:YES];
+}
 
 @end

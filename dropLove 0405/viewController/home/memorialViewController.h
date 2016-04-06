@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface memorialViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface memorialViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>
 
 @property(strong,nonatomic)UITableView *table;
 
@@ -25,4 +25,7 @@
 @property(strong,nonatomic)UILabel *dayLab;
 
 @property(strong,nonatomic)UILabel *firstline;
+
+@property(strong,nonatomic)UITapGestureRecognizer *tapGesturRecognizer;
+
 @end
