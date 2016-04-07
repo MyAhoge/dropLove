@@ -73,21 +73,21 @@
     
     [self.editView addSubview:self.lineLab];
     
-    self.textfield = [[UITextField alloc]initWithFrame:CGRectMake(70, 0, WIDTH-80, 50)];
+    self.textLab = [[UILabel alloc]initWithFrame:CGRectMake(70, 0, WIDTH-80, 50)];
     //默认文本
     
-    self.textfield.placeholder = @"添加纪念日内容";
+    self.textLab.text = @"我们已经相爱";
     
 //    self.textfield.text = @"撒打算打算打算";
     
-    self.textfield.textAlignment = NSTextAlignmentRight;
+    self.textLab.textAlignment = NSTextAlignmentRight;
     
-    self.textfield.font = FONT(12);
+    self.textLab.font = FONT(12);
     
-    self.textfield.textColor = COLOR(167, 167, 172, 1);
+    self.textLab.textColor = COLOR(167, 167, 172, 1);
     
-    [self.editView addSubview:self.textfield];
-    self.textfield.delegate = self;
+    [self.editView addSubview:self.textLab];
+   
  //UIDatePicker
     
     self.i = 0;
@@ -136,17 +136,17 @@
     
     [self.navigationController popViewControllerAnimated:YES];
 }
-//点击空白处收回键盘
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self.textfield resignFirstResponder];
-    
-  
-}
-//点击return收回键盘
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [self.textfield resignFirstResponder];
-    return YES;
-}
+////点击空白处收回键盘
+//- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+//    [self.textfield resignFirstResponder];
+//    
+//  
+//}
+////点击return收回键盘
+//- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+//    [self.textfield resignFirstResponder];
+//    return YES;
+//}
 //日期选择器
 -(void)showDatePicker{
     self.i = _i +1;

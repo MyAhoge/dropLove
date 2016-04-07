@@ -228,12 +228,12 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         [dataService timeAxisAddWidth:^(NSDictionary *resultDic) {
-            self.dic = [[NSDictionary alloc]initWithDictionary:resultDic];
+//            self.dic = [[NSDictionary alloc]initWithDictionary:resultDic];
 
-            NSArray *arr = [_dic objectForKey:@"result"];
-            self.contentArr = [NSMutableArray arrayWithCapacity:0];
-            self.timeArr = [NSMutableArray arrayWithCapacity:0];
-            self.dateArr = [NSMutableArray arrayWithCapacity:0];
+            NSArray *arr = [resultDic objectForKey:@"result"];
+//            self.contentArr = [NSMutableArray arrayWithCapacity:0];
+//            self.timeArr = [NSMutableArray arrayWithCapacity:0];
+//            self.dateArr = [NSMutableArray arrayWithCapacity:0];
             self.sourceArr = [NSMutableArray arrayWithCapacity:0];
             
             for (NSDictionary *dic in arr) {

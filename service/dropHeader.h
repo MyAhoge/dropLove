@@ -82,11 +82,19 @@
 #import "socialModel.h"
 #import "socialcommentViewController.h"
 #import "socialCommentCell.h"
+<<<<<<< HEAD
 
 // 0407
 #import "WishViewController.h"
 #import "IcomNSObject.h"
 #import "addwishViewController.h"
 #import "WishTableViewCell.h"
+=======
+//0407
+#import "memorialDayModel.h"
+#import "ShareViewController.h"
+
+
+>>>>>>> origin/master
 
 #endif /* dropHeader_h */

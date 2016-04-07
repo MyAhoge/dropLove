@@ -29,17 +29,17 @@
         
         self.yearLab.textColor = [UIColor whiteColor];
         
-        self.yearLab.font = FONT(13);
+        self.yearLab.font = FONT(12);
         
         [self.contentView addSubview:self.yearLab];
-        
-        self.mouthLab = [[UILabel alloc]init];
-        
-        self.mouthLab.textColor = [UIColor whiteColor];
-        
-        self.mouthLab.font = FONT(13);
-        
-        [self.contentView addSubview:self.mouthLab];
+//        
+//        self.mouthLab = [[UILabel alloc]init];
+//        
+//        self.mouthLab.textColor = [UIColor whiteColor];
+//        
+//        self.mouthLab.font = FONT(13);
+//        
+//        [self.contentView addSubview:self.mouthLab];
         
         self.dayLab = [[UILabel alloc]init];
         
@@ -86,11 +86,11 @@
     
     self.dateView.frame = CGRectMake(0, 0, 50, 50);
     
-    self.yearLab.frame = CGRectMake(0, 33, 33, 15);
+    self.yearLab.frame = CGRectMake(0, 33, 50, 15);
     
-    self.mouthLab.frame = CGRectMake(34, 33, 18, 15);
+//    self.mouthLab.frame = CGRectMake(34, 33, 18, 15);
     
-    self.dayLab.frame = CGRectMake(16, 8, 19, 18);
+    self.dayLab.frame = CGRectMake(16, 5, 25, 25);
     
     self.detailLab.frame = CGRectMake(60, 15, 160, 21);
     

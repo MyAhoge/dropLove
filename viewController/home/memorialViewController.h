@@ -28,4 +28,8 @@
 
 @property(strong,nonatomic)UITapGestureRecognizer *tapGesturRecognizer;
 
+@property(strong,nonatomic)NSMutableArray *Arr;
+
+@property(strong,nonatomic)NSDictionary *dic;
+
 @end

@@ -18,7 +18,7 @@
 
 @property(strong,nonatomic)UILabel *lineLab;
 
-@property(strong,nonatomic)UITextField *textfield;
+@property(strong,nonatomic)UILabel *textLab;
 
 @property (nonatomic,strong)UIDatePicker *datePicker;
 
