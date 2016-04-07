@@ -83,7 +83,10 @@
 #import "socialcommentViewController.h"
 #import "socialCommentCell.h"
 
-
-
+// 0407
+#import "WishViewController.h"
+#import "IcomNSObject.h"
+#import "addwishViewController.h"
+#import "WishTableViewCell.h"
 
 #endif /* dropHeader_h */
