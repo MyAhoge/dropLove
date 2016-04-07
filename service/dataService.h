@@ -26,5 +26,8 @@
  */
 + (void)addDataDic:(NSDictionary *)dic addWith:(void(^)(NSDictionary *resultDic))sucess addWith:(void(^)(NSDictionary *errorDic))error;
 
++ (void)memorialDayDic:(NSDictionary *)dic addWith:(void(^)(NSDictionary *resultDic))sucess addWith:(void(^)(NSDictionary *errorDic))error;
 
+
++(void)addWith:(void (^)(NSDictionary *dic))sucess;
 @end

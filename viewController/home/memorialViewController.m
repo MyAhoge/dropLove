@@ -19,6 +19,9 @@
     
 //    self.view.backgroundColor = COLOR(239, 239, 243,1);
 
+    
+    [self dataSource];
+    
     self.navigationItem.title = @"纪念日";
     
     self.navigationController.navigationBar.titleTextAttributes = @{
@@ -131,19 +134,32 @@
         cell = [[memorialTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"test"];
     }
     //无色
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    memorialDayModel *me = [[memorialDayModel alloc]init];
+    me = self.Arr[indexPath.row];
     
-    cell.detailLab.text = @"他的生日在";
+    [dataService addWith:^(NSDictionary *dic) {
+        self.Arr = [dic objectForKey:@"result"];
+        cell.detailLab.text = [self.Arr[indexPath.section]objectForKey:@"memday_content"];
+        NSLog(@"%@",[self.Arr[indexPath.section]objectForKey:@"memday_content"]);
+        
+        cell.yearLab.text = [[self.Arr[indexPath.section]objectForKey:@"memday_date"] substringToIndex:7];
+        
+        cell.dayLab.text = [[self.Arr[indexPath.section]objectForKey:@"memday_date"] substringFromIndex:8];
+//        cell.detailLab.text = contentstr;
+    }];
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+   
     
     cell.tianLab.text = @"天";
     
     cell.numLab.text = @"300";
     
-    cell.yearLab.text = @"2000";
-    
-    cell.mouthLab.text = @"08";
-    
-    cell.dayLab.text = @"22";
+//    cell.yearLab.text = @"2000";
+//    
+//    cell.mouthLab.text = @"08";
+//    
+//    cell.dayLab.text = @"22";
 
     return cell;
 }
@@ -172,6 +188,15 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    [self.Arr removeObjectAtIndex:indexPath.section];
+    
+    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -185,14 +210,58 @@
 
 -(void)tapmyview{
 
-//    NSLog(@"点击了page3");
-    
-    editMemorialDayViewController *edit = [[editMemorialDayViewController alloc]init];
+    ShareViewController *share = [[ShareViewController alloc]init];
     
     //隐藏底部tabbar
-    edit.hidesBottomBarWhenPushed = YES;
+    share.hidesBottomBarWhenPushed = YES;
     
-    [self.navigationController pushViewController:edit animated:YES];
+    [self.navigationController pushViewController:share animated:YES];
 }
-
+#pragma mark 数据处理
+- (void)dataSource{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//
+        
+        
+//       [ dataService  socialAddWidth:^(NSDictionary *resultDic) {
+//           NSLog(@"121122112");
+//       } addWidth:^(NSDictionary *error) {
+//           
+//       }];
+//        NSDictionary *dic;
+//        [dataService addWith:^(NSDictionary *dic) {
+//            self.Arr = [dic objectForKey:@"result"];
+//            NSString *contentstr = [self.Arr[0] objectForKey:@"memday_content"];
+//            NSString *datestr = [self.Arr[0] objectForKey:@"memday_date"];
+//        }];
+//        
+        
+        
+//        [dataService timeAxisAddWidth:^(NSDictionary *resultDic) {
+//            self.dic = [[NSDictionary alloc]initWithDictionary:resultDic];
+//            
+//            NSArray *arr = [_dic objectForKey:@"result"];
+//            self.contentArr = [NSMutableArray arrayWithCapacity:0];
+//            self.timeArr = [NSMutableArray arrayWithCapacity:0];
+//            self.dateArr = [NSMutableArray arrayWithCapacity:0];
+//            self.sourceArr = [NSMutableArray arrayWithCapacity:0];
+//            
+//            for (NSDictionary *dic in arr) {
+//                timeaxisModel *model = [[timeaxisModel alloc]init];
+//                
+//                model.content = [dic objectForKey:@"timeaxis_content"];
+//                model.time = [dic objectForKey:@"timeaxis_time"];
+//                model.date = [dic objectForKey:@"timeaxis_date"];
+//                [self.sourceArr addObject:model];
+//                
+//                //                [self.contentArr addObject:[dic objectForKey:@"timeaxis_content"]];
+//                //                [self.timeArr addObject:[dic objectForKey:@"timeaxis_time"]];
+//                //                [self.dateArr addObject:[dic objectForKey:@"timeaxis_date"]];
+//            }
+        
+//        } addWidth:^(NSDictionary *error) {
+//            NSLog(@"error");
+//        }];
+    });
+}
 @end
