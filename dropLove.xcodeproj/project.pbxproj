@@ -122,7 +122,6 @@
 		C32B9C4D1CA4D4D3005430A1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C32B9C4C1CA4D4D3005430A1 /* main.m */; };
 		C32B9C501CA4D4D3005430A1 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = C32B9C4F1CA4D4D3005430A1 /* AppDelegate.mm */; };
 		C32B9C531CA4D4D3005430A1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C32B9C521CA4D4D3005430A1 /* ViewController.m */; };
-		C32B9C561CA4D4D3005430A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C32B9C541CA4D4D3005430A1 /* Main.storyboard */; };
 		C32B9C581CA4D4D3005430A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C32B9C571CA4D4D3005430A1 /* Assets.xcassets */; };
 		C32B9C5B1CA4D4D3005430A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C32B9C591CA4D4D3005430A1 /* LaunchScreen.storyboard */; };
 		C32B9C661CA4D4D3005430A1 /* dropLoveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C32B9C651CA4D4D3005430A1 /* dropLoveTests.m */; };
@@ -302,7 +301,6 @@
 		C32B9C4F1CA4D4D3005430A1 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		C32B9C511CA4D4D3005430A1 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		C32B9C521CA4D4D3005430A1 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		C32B9C551CA4D4D3005430A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C32B9C571CA4D4D3005430A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C32B9C5A1CA4D4D3005430A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C32B9C5C1CA4D4D3005430A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -663,7 +661,6 @@
 				C32B9C4F1CA4D4D3005430A1 /* AppDelegate.mm */,
 				C32B9C511CA4D4D3005430A1 /* ViewController.h */,
 				C32B9C521CA4D4D3005430A1 /* ViewController.m */,
-				C32B9C541CA4D4D3005430A1 /* Main.storyboard */,
 				C32B9C571CA4D4D3005430A1 /* Assets.xcassets */,
 				C32B9C591CA4D4D3005430A1 /* LaunchScreen.storyboard */,
 				C32B9C5C1CA4D4D3005430A1 /* Info.plist */,
@@ -941,7 +938,6 @@
 				C32B9C581CA4D4D3005430A1 /* Assets.xcassets in Resources */,
 				BA3586E11CA8FEF800C5E5FF /* shark.png in Resources */,
 				BADD9EC31CA95D4000C19A67 /* one.jpg in Resources */,
-				C32B9C561CA4D4D3005430A1 /* Main.storyboard in Resources */,
 				BA5AF7681CABEE2E00293489 /* RongCloudKit.strings in Resources */,
 				BA5AF76B1CABEE2E00293489 /* RongCloud.bundle in Resources */,
 				BADD9EBF1CA95D4000C19A67 /* 200.png in Resources */,
@@ -1054,14 +1050,6 @@
 				BA5AF7661CABEE2E00293489 /* zh-Hans */,
 			);
 			name = RongCloudKit.strings;
-			sourceTree = "<group>";
-		};
-		C32B9C541CA4D4D3005430A1 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C32B9C551CA4D4D3005430A1 /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		C32B9C591CA4D4D3005430A1 /* LaunchScreen.storyboard */ = {
