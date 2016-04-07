@@ -17,7 +17,7 @@
     
     [self topMethod];
     
-    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, WIDTH, HEIGHT-64) style:UITableViewStylePlain];
+    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, WIDTH, HEIGHT-64-49) style:UITableViewStylePlain];
     [self.view addSubview:_table];
     //去掉分割线
     //    self.table.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -44,7 +44,7 @@
     headerLabel.text = @"社区";
     headerLabel.font = FONT(18);
     
-    UIButton *photoBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH-24-10, 12, 30, 20)];
+    UIButton *photoBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH-30-10, 12, 30, 20)];
     [headerView addSubview:photoBtn];
     photoBtn.titleLabel.font = FONT(15);
     [photoBtn setTitle:@"发布" forState:UIControlStateNormal];
@@ -57,12 +57,24 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    socialModel *model = [[socialModel alloc]init];
+    model = _sourceArr[_sourceArr.count - 1 - indexPath.row];
     socialCell *cell = [tableView dequeueReusableCellWithIdentifier:@"socialId"];
     if (cell == nil) {
         cell = [[socialCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"socialId"];
     }
-    socialModel *model = [[socialModel alloc]init];
-    model = _sourceArr[indexPath.row];
+    cell.deleteBtn.hidden = YES;
+
+    if ([model.userid isEqualToString:[dataService myUserId]]) {
+        cell.deleteBtn.hidden = NO;
+        [cell.deleteBtn setTitle:@"删除" forState:UIControlStateNormal];
+        [cell.deleteBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [cell.deleteBtn addTarget:self action:@selector(deleteMethod:) forControlEvents:UIControlEventTouchUpInside];
+        
+        cell.deleteBtn.tag = indexPath.row;
+    }else{
+        
+    }
     
     cell.contentLab.text = model.content;
     cell.headerLab.text = model.name;
@@ -79,8 +91,21 @@
     cell.headerImg.image = [UIImage imageWithContentsOfFile:path];
     
     [cell.commentBtn setImage:[UIImage imageNamed:@"comment"] forState:UIControlStateNormal];
-    
+
     return cell;
+}
+- (void)deleteMethod:(UIButton *)sender{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"删除心情之后将无法恢复，确认删除吗？" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self.sourceArr removeObjectAtIndex:sender.tag];
+        [self.table reloadData];
+//
+#warning 删除数据库内容
+    }];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:action];
+    [alert addAction:action1];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -116,16 +141,20 @@
 - (void)dataSource{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        [dataService socialAddWidth:^(NSDictionary *resultDic) {
+        self.userId = [dataService myUserId];
+        
+        NSDictionary *idDic = @{@"userid":_userId};
+        [dataService socialDic:idDic AndWidth:^(NSDictionary *resultDic){
             NSDictionary *dic = [[NSDictionary alloc]initWithDictionary:resultDic];
             
             NSArray *arr = [dic objectForKey:@"result"];
             
-            self.contentArr = [NSMutableArray arrayWithCapacity:0];
-            self.headerImgArr = [NSMutableArray arrayWithCapacity:0];
-            self.nameArr = [NSMutableArray arrayWithCapacity:0];
-            self.timeArr = [NSMutableArray arrayWithCapacity:0];
-            self.dateArr = [NSMutableArray arrayWithCapacity:0];
+//            self.contentArr = [NSMutableArray arrayWithCapacity:0];
+//            self.headerImgArr = [NSMutableArray arrayWithCapacity:0];
+//            self.nameArr = [NSMutableArray arrayWithCapacity:0];
+//            self.timeArr = [NSMutableArray arrayWithCapacity:0];
+//            self.dateArr = [NSMutableArray arrayWithCapacity:0];
+            
             self.sourceArr = [NSMutableArray arrayWithCapacity:0];
             
             for (NSDictionary *dic in arr) {
@@ -136,7 +165,9 @@
                 model.date = [dic objectForKey:@"social_date"];
                 model.time = [dic objectForKey:@"social_time"];
                 model.name = [dic objectForKey:@"user_name"];
+                model.userid = [dic objectForKey:@"t_user_user_id"];
                 [self.sourceArr addObject:model];
+                
 //                [self.contentArr addObject:[dic objectForKey:@"social_content"]];
 //                [self.headerImgArr addObject:[dic objectForKey:@"user_headerimage"]];
 //                [self.dateArr addObject:[dic objectForKey:@"social_date"]];
@@ -145,6 +176,7 @@
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.table reloadData];
+                
             });
         } addWidth:^(NSDictionary *error) {
             

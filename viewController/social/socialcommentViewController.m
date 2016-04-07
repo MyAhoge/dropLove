@@ -82,7 +82,7 @@
     if (cell == nil) {
         cell = [[socialCommentCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"socialCommentCellId"];
     }
-    NSLog(@"111%@", _commentMutArr);
+    
     cell.contentLab.text = _commentMutArr[indexPath.row];
     
     [cell setHeight:_commentMutArr[indexPath.row]];
@@ -103,28 +103,39 @@
 }
 #pragma mark 输入框
 - (void)commentMethod{
-    self.footView = [[UIView alloc]initWithFrame:CGRectMake(0, HEIGHT-60, WIDTH, 60)];
+    self.footView = [[UIView alloc]initWithFrame:CGRectMake(0, HEIGHT-40, WIDTH, 40)];
     [self.view addSubview:_footView];
     self.footView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
-    self.textView = [[UITextView alloc]initWithFrame:CGRectMake(10, 10, WIDTH-10-70, 40)];
+    self.textView = [[UITextView alloc]initWithFrame:CGRectMake(10, 5, WIDTH-10-50, 30)];
     [self.footView addSubview:_textView];
 //    self.textView.backgroundColor = MICOLOR;
     
-    UIButton *sendBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH-20-40, 10, 40, 40)];
+    UIButton *sendBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH-30-10, 5, 30, 30)];
     [self.footView addSubview:sendBtn];
-    sendBtn.layer.repeatDuration = 5;
-    [sendBtn setTitleColor:[UIColor purpleColor] forState:UIControlStateNormal];
+    sendBtn.titleLabel.font = FONT(15);
     [sendBtn setTitle:@"发送" forState:UIControlStateNormal];
+    [sendBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [sendBtn addTarget:self action:@selector(sendContentMethod) forControlEvents:UIControlEventTouchUpInside];
     
     self.textView.delegate = self;
 }
 #pragma mark 点击发送
 -(void)sendContentMethod{
-    [self.commentMutArr addObject:_textView.text];
-    [self.table reloadData];
-    self.textView.text = nil;
+    if ([_textView.text isEqualToString:@""]) {
+        UILabel *alertlab = [[UILabel alloc]initWithFrame:CGRectMake((WIDTH-150)/2, (HEIGHT-50)/2, 150, 50)];
+        alertlab.text = @"您还没有输入评论呢，请输入评论吧";
+        [self.view addSubview:alertlab];
+        
+        [UIView animateWithDuration:2 animations:^{
+            alertlab.alpha = 0;
+        }];
+    }else{
+        [self.commentMutArr addObject:_textView.text];
+        [self.table reloadData];
+        self.textView.text = nil;
+        [self.textView resignFirstResponder];
+    }
 }
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
     CGFloat offSet= self.view.frame.size.height- (_textView.frame.origin.y+_textView.frame.size.height+216+50);
@@ -140,7 +151,7 @@
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView{
     [UIView animateWithDuration:0.5 animations:^{
         CGRect frame = self.footView.frame;
-        frame.origin.y = HEIGHT-60;
+        frame.origin.y = HEIGHT-40;
         self.footView.frame = frame;
     }];
     return YES;
@@ -149,73 +160,5 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
 }
-#pragma mark 可找到键盘高度
-//#pragma mark - keyboardHight
-//-(void)viewWillAppear:(BOOL)animated{
-//    [self registerForKeyboardNotifications];
-//}
-//
-//-(void)viewWillDisappear:(BOOL)animated{
-//    [[NSNotificationCenter defaultCenter] removeObserver:self];
-//}
-//- (void)registerForKeyboardNotifications{
-//    //使用NSNotificationCenter 鍵盤出現時
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)  name:UIKeyboardDidShowNotification object:nil];
-//    //使用NSNotificationCenter 鍵盤隐藏時
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:)  name:UIKeyboardWillHideNotification object:nil];
-//}
-//#pragma mark 键盘出来的事件处理，上移文本输入框。
-//- (void)keyboardWillShow:(NSNotification *)notification{
-//    
-//    NSDictionary *userInfo = [notification userInfo];
-//    NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-//    
-//    CGRect keyboardRect = [aValue CGRectValue];
-//    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
-//    
-//    // 根据老的 frame 设定新的 frame
-//    CGRect newTextViewFrame = _textView.frame; // by michael
-//    newTextViewFrame.origin.y = keyboardRect.origin.y - _textView.frame.size.height;
-//    
-//    // 键盘的动画时间，设定与其完全保持一致
-//    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-//    NSTimeInterval animationDuration;
-//    [animationDurationValue getValue:&animationDuration];
-//    
-//    // 键盘的动画是变速的，设定与其完全保持一致
-//    NSValue *animationCurveObject = [userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey];
-//    NSUInteger animationCurve;
-//    [animationCurveObject getValue:&animationCurve];
-//    
-//    // 开始及执行动画
-//    [UIView beginAnimations:nil context:NULL];
-//    [UIView setAnimationDuration:animationDuration];
-//    [UIView setAnimationCurve:(UIViewAnimationCurve)animationCurve];
-//    _textView.frame = newTextViewFrame;
-//    [UIView commitAnimations];
-//}
-////键盘消失时的处理，文本输入框回到页面底部。
-//- (void)keyboardWillHide:(NSNotification *)notification{
-//    
-//    NSDictionary* userInfo = [notification userInfo];
-//    
-//    // 键盘的动画时间，设定与其完全保持一致
-//    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-//    NSTimeInterval animationDuration;
-//    [animationDurationValue getValue:&animationDuration];
-//    
-//    // 键盘的动画是变速的，设定与其完全保持一致
-//    NSValue *animationCurveObject =[userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey];
-//    NSUInteger animationCurve;
-//    [animationCurveObject getValue:&animationCurve];
-//    
-//    [UIView beginAnimations:nil context:NULL];
-//    [UIView setAnimationDuration:animationDuration];
-//    [UIView setAnimationCurve:(UIViewAnimationCurve)animationCurve];
-//    CGRect newTextViewFrame = _textView.frame;
-//    newTextViewFrame.origin.y = HEIGHT - _textView.frame.size.height;
-//    _textView.frame = newTextViewFrame;
-//    [UIView commitAnimations];
-//}
 
 @end

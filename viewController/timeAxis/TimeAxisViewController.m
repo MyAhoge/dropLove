@@ -104,17 +104,12 @@
         cell.backgroundColor = MICOLOR;
         
         timeaxisModel *timeModel = [[timeaxisModel alloc]init];
-        timeModel = self.sourceArr[indexPath.row];
+        timeModel = self.sourceArr[_sourceArr.count - 1 - indexPath.row];
         
         cell.dateLabel1.text = [timeModel.date substringFromIndex:8];
         cell.dateLabel2.text = [timeModel.date substringToIndex:7];
         cell.timeLabel.text = timeModel.time;
         cell.contentlabel.text = timeModel.content;
-        
-//        cell.dateLabel1.text = [_dateArr[indexPath.row] substringFromIndex:8];
-//        cell.dateLabel2.text = [_dateArr[indexPath.row] substringToIndex:7];
-//        cell.contentlabel.text = _contentArr[indexPath.row];
-//        cell.timeLabel.text = _timeArr[indexPath.row];
         
         cell.heartImage.image = [UIImage imageNamed:@"heart"];
         
@@ -227,7 +222,11 @@
 - (void)dataSource{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        [dataService timeAxisAddWidth:^(NSDictionary *resultDic) {
+//        self.userId
+       
+        NSDictionary *idDic = @{@"userid":@"1",
+                                @"otheruserid":@"2"};
+        [dataService timeAxisDic:idDic AndWidth:^(NSDictionary *resultDic) {
             self.dic = [[NSDictionary alloc]initWithDictionary:resultDic];
 
             NSArray *arr = [_dic objectForKey:@"result"];
