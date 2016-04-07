@@ -44,8 +44,8 @@
         
     }];
 }
-#pragma mark 社区数据请求
 
+#pragma mark 社区数据请求
 + (void)socialDic:(NSDictionary *)dic AndWidth:(void (^)(NSDictionary *))sucess addWidth:(void (^)(NSDictionary *))error{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
