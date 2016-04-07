@@ -22,7 +22,6 @@
 		BA52BF9C1CB3E87400941371 /* TimeAxisViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA52BF991CB3E87400941371 /* TimeAxisViewController.m */; };
 		BA52BFB01CB3EACB00941371 /* IcomNSObject.m in Sources */ = {isa = PBXBuildFile; fileRef = BA52BFA91CB3EACB00941371 /* IcomNSObject.m */; };
 		BA52BFB11CB3EACB00941371 /* MineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA52BFAB1CB3EACB00941371 /* MineViewController.m */; };
-		BA52BFB31CB3EACB00941371 /* XXXPlistLocalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BA52BFAF1CB3EACB00941371 /* XXXPlistLocalInfo.m */; };
 		BA52BFC01CB3EBEA00941371 /* 03301.png in Resources */ = {isa = PBXBuildFile; fileRef = BA52BFB51CB3EBEA00941371 /* 03301.png */; };
 		BA52BFC11CB3EBEA00941371 /* 033010.png in Resources */ = {isa = PBXBuildFile; fileRef = BA52BFB61CB3EBEA00941371 /* 033010.png */; };
 		BA52BFC21CB3EBEA00941371 /* 033011.png in Resources */ = {isa = PBXBuildFile; fileRef = BA52BFB71CB3EBEA00941371 /* 033011.png */; };
@@ -122,6 +121,8 @@
 		C30131491CAC06AD00CB857F /* BaiduMapAPI_Location.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C30131481CAC06AD00CB857F /* BaiduMapAPI_Location.framework */; };
 		C301314B1CAC06E700CB857F /* BaiduMapAPI_Map.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C301314A1CAC06E700CB857F /* BaiduMapAPI_Map.framework */; };
 		C301314D1CAC080800CB857F /* BaiduMapAPI_Utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C301314C1CAC080800CB857F /* BaiduMapAPI_Utils.framework */; };
+		C30AC19C1CB49E2100D7E5A7 /* WishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C30AC19B1CB49E2100D7E5A7 /* WishViewController.m */; };
+		C30AC1A01CB4AF2C00D7E5A7 /* WishTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C30AC19F1CB4AF2C00D7E5A7 /* WishTableViewCell.m */; };
 		C32B9C4D1CA4D4D3005430A1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C32B9C4C1CA4D4D3005430A1 /* main.m */; };
 		C32B9C501CA4D4D3005430A1 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = C32B9C4F1CA4D4D3005430A1 /* AppDelegate.mm */; };
 		C32B9C531CA4D4D3005430A1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C32B9C521CA4D4D3005430A1 /* ViewController.m */; };
@@ -170,12 +171,10 @@
 		BA52BF971CB3E87400941371 /* publishViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = publishViewController.m; sourceTree = "<group>"; };
 		BA52BF981CB3E87400941371 /* TimeAxisViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeAxisViewController.h; sourceTree = "<group>"; };
 		BA52BF991CB3E87400941371 /* TimeAxisViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeAxisViewController.m; sourceTree = "<group>"; };
-		BA52BFA81CB3EACB00941371 /* IcomNSObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IcomNSObject.h; sourceTree = "<group>"; };
-		BA52BFA91CB3EACB00941371 /* IcomNSObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IcomNSObject.m; sourceTree = "<group>"; };
+		BA52BFA81CB3EACB00941371 /* IcomNSObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IcomNSObject.h; path = ../../viewController/mine/IcomNSObject.h; sourceTree = "<group>"; };
+		BA52BFA91CB3EACB00941371 /* IcomNSObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IcomNSObject.m; path = ../../viewController/mine/IcomNSObject.m; sourceTree = "<group>"; };
 		BA52BFAA1CB3EACB00941371 /* MineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineViewController.h; sourceTree = "<group>"; };
 		BA52BFAB1CB3EACB00941371 /* MineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineViewController.m; sourceTree = "<group>"; };
-		BA52BFAE1CB3EACB00941371 /* XXXPlistLocalInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXXPlistLocalInfo.h; sourceTree = "<group>"; };
-		BA52BFAF1CB3EACB00941371 /* XXXPlistLocalInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXXPlistLocalInfo.m; sourceTree = "<group>"; };
 		BA52BFB51CB3EBEA00941371 /* 03301.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 03301.png; sourceTree = "<group>"; };
 		BA52BFB61CB3EBEA00941371 /* 033010.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 033010.png; sourceTree = "<group>"; };
 		BA52BFB71CB3EBEA00941371 /* 033011.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 033011.png; sourceTree = "<group>"; };
@@ -297,6 +296,10 @@
 		C30131481CAC06AD00CB857F /* BaiduMapAPI_Location.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Location.framework; path = ../BaiduMapAPI_Location.framework; sourceTree = "<group>"; };
 		C301314A1CAC06E700CB857F /* BaiduMapAPI_Map.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Map.framework; path = ../BaiduMapAPI_Map.framework; sourceTree = "<group>"; };
 		C301314C1CAC080800CB857F /* BaiduMapAPI_Utils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Utils.framework; path = ../BaiduMapAPI_Utils.framework; sourceTree = "<group>"; };
+		C30AC19A1CB49E2100D7E5A7 /* WishViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WishViewController.h; sourceTree = "<group>"; };
+		C30AC19B1CB49E2100D7E5A7 /* WishViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WishViewController.m; sourceTree = "<group>"; };
+		C30AC19E1CB4AF2C00D7E5A7 /* WishTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WishTableViewCell.h; sourceTree = "<group>"; };
+		C30AC19F1CB4AF2C00D7E5A7 /* WishTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WishTableViewCell.m; sourceTree = "<group>"; };
 		C32B9C481CA4D4D3005430A1 /* dropLove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dropLove.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C32B9C4C1CA4D4D3005430A1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C32B9C4E1CA4D4D3005430A1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -422,16 +425,15 @@
 			path = timeAxis;
 			sourceTree = "<group>";
 		};
-		BA52BFA71CB3EACB00941371 /* mine */ = {
+		BA52BFA71CB3EACB00941371 /* mime */ = {
 			isa = PBXGroup;
 			children = (
-				BA52BFA81CB3EACB00941371 /* IcomNSObject.h */,
-				BA52BFA91CB3EACB00941371 /* IcomNSObject.m */,
 				BA52BFAA1CB3EACB00941371 /* MineViewController.h */,
 				BA52BFAB1CB3EACB00941371 /* MineViewController.m */,
-				BA52BFAE1CB3EACB00941371 /* XXXPlistLocalInfo.h */,
-				BA52BFAF1CB3EACB00941371 /* XXXPlistLocalInfo.m */,
+				C30AC19A1CB49E2100D7E5A7 /* WishViewController.h */,
+				C30AC19B1CB49E2100D7E5A7 /* WishViewController.m */,
 			);
+			name = mime;
 			path = mine;
 			sourceTree = "<group>";
 		};
@@ -612,13 +614,23 @@
 			path = memorialimage;
 			sourceTree = "<group>";
 		};
+		C30AC19D1CB4A81900D7E5A7 /* mineicom */ = {
+			isa = PBXGroup;
+			children = (
+				BA52BFA81CB3EACB00941371 /* IcomNSObject.h */,
+				BA52BFA91CB3EACB00941371 /* IcomNSObject.m */,
+				C30AC19E1CB4AF2C00D7E5A7 /* WishTableViewCell.h */,
+				C30AC19F1CB4AF2C00D7E5A7 /* WishTableViewCell.m */,
+			);
+			path = mineicom;
+			sourceTree = "<group>";
+		};
 		C32B9C3F1CA4D4D3005430A1 = {
 			isa = PBXGroup;
 			children = (
 				C32B9C7E1CA4D539005430A1 /* model */,
 				BA5AF64A1CAA61A400293489 /* Framework */,
 				C32B9C7F1CA4D539005430A1 /* service */,
-				C32B9C801CA4D539005430A1 /* source */,
 				C32B9C811CA4D539005430A1 /* viewController */,
 				C32B9C4A1CA4D4D3005430A1 /* dropLove */,
 				C32B9C6F1CA4D4D3005430A1 /* dropLoveUITests */,
@@ -689,6 +701,7 @@
 		C32B9C7F1CA4D539005430A1 /* service */ = {
 			isa = PBXGroup;
 			children = (
+				C30AC19D1CB4A81900D7E5A7 /* mineicom */,
 				BA52BF881CB3E6F400941371 /* socialCell */,
 				BAF7E6741CB34FEE0018E4A5 /* memorialDayCell */,
 				BA5AF7521CABEA0A00293489 /* timeListCell */,
@@ -697,6 +710,7 @@
 				BA5AF71A1CABE75900293489 /* dataService.m */,
 				BA5AF64B1CAA623B00293489 /* weatherServices.h */,
 				BA5AF64C1CAA623B00293489 /* weatherServices.m */,
+				C32B9C801CA4D539005430A1 /* source */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -706,13 +720,14 @@
 			children = (
 				C32B9C9E1CA4DBD3005430A1 /* image */,
 			);
-			path = source;
+			name = source;
+			path = ../source;
 			sourceTree = "<group>";
 		};
 		C32B9C811CA4D539005430A1 /* viewController */ = {
 			isa = PBXGroup;
 			children = (
-				BA52BFA71CB3EACB00941371 /* mine */,
+				BA52BFA71CB3EACB00941371 /* mime */,
 				BA52BF931CB3E87400941371 /* timeAxis */,
 				BA52BF8C1CB3E79200941371 /* social */,
 				C32B9C8B1CA4D643005430A1 /* home */,
@@ -950,8 +965,10 @@
 				C32B9C531CA4D4D3005430A1 /* ViewController.m in Sources */,
 				BA5AF7311CABE89100293489 /* AFHTTPSessionManager.m in Sources */,
 				BA52BF9C1CB3E87400941371 /* TimeAxisViewController.m in Sources */,
+				C30AC19C1CB49E2100D7E5A7 /* WishViewController.m in Sources */,
 				BA52BF9A1CB3E87400941371 /* commentViewController.m in Sources */,
 				C32B9C501CA4D4D3005430A1 /* AppDelegate.mm in Sources */,
+				C30AC1A01CB4AF2C00D7E5A7 /* WishTableViewCell.m in Sources */,
 				BA52BF8B1CB3E6F400941371 /* socialCell.m in Sources */,
 				BAF7E6771CB350540018E4A5 /* memorialTableViewCell.m in Sources */,
 				BA5AF7331CABE89100293489 /* AFSecurityPolicy.m in Sources */,
@@ -966,7 +983,6 @@
 				BA52BF9B1CB3E87400941371 /* publishViewController.m in Sources */,
 				BA5AF7951CAD583500293489 /* piclistcell.m in Sources */,
 				BA5AF79A1CAD599900293489 /* SharkViewController.m in Sources */,
-				BA52BFB31CB3EACB00941371 /* XXXPlistLocalInfo.m in Sources */,
 				C32B9C4D1CA4D4D3005430A1 /* main.m in Sources */,
 				C32B9C951CA4D643005430A1 /* HomeViewController.m in Sources */,
 				BA5AF77A1CAD13AF00293489 /* chatViewController.m in Sources */,

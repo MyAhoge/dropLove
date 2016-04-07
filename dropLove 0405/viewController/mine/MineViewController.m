@@ -8,8 +8,10 @@
 
 #import "MineViewController.h"
 #import "dropHeader.h"
-#import "XXXPlistLocalInfo.h"
+//#import "XXXPlistLocalInfo.h"
 #import "IcomNSObject.h"
+#import "WishViewController.h"
+#import "PlistLocalInfo.h"
 
 @interface MineViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -58,7 +60,7 @@
     self.mutdic = [[NSMutableDictionary alloc]initWithCapacity:0];
     
     // plist
-    XXXPlistLocalInfo *localinfo = [[XXXPlistLocalInfo alloc]init];
+    PlistLocalInfo *localinfo = [[PlistLocalInfo alloc]init];
     self.localpath = [localinfo userInfoPath];
     self.lastpath = [_localpath stringByAppendingPathComponent:@"icom.plist"];
     self.dic = [NSDictionary dictionaryWithContentsOfFile:_lastpath];
@@ -96,13 +98,14 @@
     
     // 头像
    [IcomNSObject icomchange:^(NSDictionary *icomdic) {
-    NSArray *arr = [icomdic objectForKey:@"data"];
-    NSString *str10 = [arr[10] objectForKey:@"user_icomalpha"];
-    NSLog(@"%@",str10);
-    int k = [str10 intValue];
-    self.icompic.alpha = k*0.1;
-    }];
-    
+       if (icomdic != nil) {
+           NSArray *arr = [icomdic objectForKey:@"data"];
+           NSString *str10 = [arr[10] objectForKey:@"user_icomalpha"];
+           NSLog(@"%@",str10);
+           int k = [str10 intValue];
+           self.icompic.alpha = k*0.1;
+       }
+   }];
     self.icompic = [[UIImageView alloc]initWithFrame:CGRectMake(WIDTH_MY/2-35, 50+50-10, 70, 70)];
     self.icompic.layer.cornerRadius =  35;
     self.icompic.layer.masksToBounds = YES;
@@ -120,8 +123,12 @@
     self.bgImageView.userInteractionEnabled = YES;
     self.leftbtn = [[UIButton alloc]initWithFrame:CGRectMake(30, 110+30+50, (WIDTH_MY-60-90)/2, 30)];
     self.leftbtn.backgroundColor = COLOR(236, 86, 100, 1);
-     NSString *icomleft = [self.dic objectForKey:@"icomleft"];
-    [self.leftbtn setTitle:icomleft forState:(UIControlStateNormal)];
+    if (self.dic == nil) {
+        [self.leftbtn setTitle:@"ta是天使+1" forState:(UIControlStateNormal)];
+    }else{
+        NSString *icomleft = [self.dic objectForKey:@"icomleft"];
+        [self.leftbtn setTitle:icomleft forState:(UIControlStateNormal)];
+    }
      self.leftbtn.titleLabel.font = [UIFont systemFontOfSize:15];
      self.leftbtn.layer.cornerRadius = 5;
     [self.leftbtn addTarget:self action:@selector(left:) forControlEvents:UIControlEventTouchUpInside];
@@ -130,8 +137,12 @@
     
     // 右边按钮
     self.rightbtn = [[UIButton alloc]initWithFrame:CGRectMake(30+90+(WIDTH_MY-60-90)/2, 110+30+50, (WIDTH_MY-60-90)/2, 30)];
-    NSString *icomright = [self.dic objectForKey:@"icomright"];
-    [self.rightbtn setTitle:icomright forState:(UIControlStateNormal)];
+    if (self.dic == nil) {
+        [self.rightbtn setTitle:@"ta是恶魔+1" forState:(UIControlStateNormal)];
+    }else{
+        NSString *icomright = [self.dic objectForKey:@"icomright"];
+        [self.rightbtn setTitle:icomright forState:(UIControlStateNormal)];
+    }
     self.rightbtn.titleLabel.font = [UIFont systemFontOfSize:15];
     self.rightbtn.backgroundColor = COLOR(236, 86, 100, 1);
     self.rightbtn.layer.cornerRadius = 5;
@@ -143,6 +154,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (indexPath.section == 0 && indexPath.row == 0 ) {
+        [self presentViewController:[[WishViewController alloc]init] animated:YES completion:nil];
+    }
     
 }
 
@@ -202,6 +217,8 @@
     
 }
 
+
+
 - (void)left:(UIButton *)sender{
     
     NSLog( @"点击按钮");
@@ -235,7 +252,10 @@
         
         NSString *stricom = [NSString stringWithFormat:@"%d",_i];
         NSDictionary *dd = [[NSDictionary alloc]init];
-        [dd setValue:stricom forKey:@"icom"];
+        
+//        [dd setValue:stricom forKey:@"icom"];
+        dd = @{@"nicom":stricom,
+               @"id":@1};
         [IcomNSObject click:dd Andicomchange:^(NSDictionary *icomdic) {
             NSLog(@"插入成功");
         }];
@@ -274,8 +294,7 @@
         NSString *stricom = [NSString stringWithFormat:@"%d",_j];
         NSDictionary *dd = [[NSDictionary alloc]init];
 //        [dd setValue:stricom forKey:@"oicom"];
-        dd = @{@"oicom":stricom,
-               @"nicom":stricom,
+        dd = @{@"nicom":stricom,
                @"id":@1};
         
         [IcomNSObject click:dd Andicomchange:^(NSDictionary *icomdic) {
@@ -283,5 +302,9 @@
         }];
     }
 }
+
+
+
+
 
 @end
