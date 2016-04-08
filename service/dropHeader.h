@@ -83,6 +83,14 @@
 #import "socialcommentViewController.h"
 #import "socialCommentCell.h"
 
+// 0407
+#import "WishViewController.h"
+#import "IcomNSObject.h"
+#import "addwishViewController.h"
+#import "WishTableViewCell.h"
+//0407
+#import "memorialDayModel.h"
+#import "ShareViewController.h"
 
 
 

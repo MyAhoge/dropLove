@@ -19,7 +19,6 @@
         
         self.contentlab = [[UILabel alloc] init];
         
-//        self.contentlab.text = @"gfsdj sfkgdhjkdfhgsk尽快施工方和健康； 后就开始对供货商的和健康；发动机开个会的福建省； 个";
         //设置字体颜色为白色
         self.contentlab.textColor = [UIColor blackColor];
         //文字居中显示
@@ -60,7 +59,7 @@
 
 - (void)setHeight:(NSString *)text{
     CGRect frame = [self frame];
-    CGRect textSize = [text boundingRectWithSize:CGSizeMake(300, 9999) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil];
+    CGRect textSize = [text boundingRectWithSize:CGSizeMake(300, 9999) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]} context:nil];
      self.labheight = textSize.size.height;
     
     frame.size.height = _labheight + (WIDTH_MY-20-6)/3+20+20;
@@ -77,10 +76,9 @@
     
     self.placelab.frame = CGRectMake(WIDTH_MY-110, _labheight+15+(WIDTH_MY-20-6)/3, 100, 20);
     
-    self.image.frame = CGRectMake(10, _labheight+5, (WIDTH_MY-20-6)/3, (WIDTH_MY-20-6)/3);
+    self.image.frame = CGRectMake(10, _labheight+15, (WIDTH_MY-20-6)/3, (WIDTH_MY-20-6)/3);
     
 
-    
 }
 
 

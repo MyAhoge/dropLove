@@ -13,6 +13,12 @@
 
 @property (assign, nonatomic)int height;
 
-@property (strong, nonatomic) NSMutableArray *contentArr;
+//@property (strong, nonatomic) NSMutableArray *contentArr;
+
+@property (strong, nonatomic)UITableView *table;
+
+@property (strong, nonatomic)NSMutableArray *mutArr;
+
+@property (strong, nonatomic)NSMutableDictionary *mutDic;
 
 @end

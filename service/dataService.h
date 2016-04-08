@@ -14,6 +14,8 @@
  *  数据处理
 // */
 
+
+
 + (void)timeAxisDic:(NSDictionary *)dic AndWidth:(void(^)(NSDictionary *resultDic))sucess addWidth:(void(^)(NSDictionary *error))error;
 
 + (void)socialDic:(NSDictionary *)dic AndWidth:(void(^)(NSDictionary *resultDic))sucess addWidth:(void(^)(NSDictionary *error))error;
@@ -26,6 +28,13 @@
  *  @param error  失败返回
  */
 + (void)addDataDic:(NSDictionary *)dic addWith:(void(^)(NSDictionary *resultDic))sucess addWith:(void(^)(NSDictionary *errorDic))error;
+
 + (NSString *)myUserId;
 
+
++ (void)memorialDayDic:(NSDictionary *)dic addWith:(void(^)(NSDictionary *resultDic))sucess addWith:(void(^)(NSDictionary *errorDic))error;
+
+
+
++(void)addWith:(void (^)(NSDictionary *dic))sucess;
 @end

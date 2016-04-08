@@ -14,4 +14,8 @@
 
 + (void)click:(NSDictionary *)dic Andicomchange:(void(^)(NSDictionary *icomdic))success;
 
++ (void)wish:(void(^)(NSDictionary *wishdic))success;
+
++ (void)addwish:(NSDictionary *)addwishdic Andaddwish:(void (^)(NSDictionary *dic))success;
+
 @end

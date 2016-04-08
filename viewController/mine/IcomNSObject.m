@@ -25,11 +25,10 @@
 
 
 
-+ (void)click:(NSDictionary *)dic Andicomchange:(void (^)(NSDictionary *))success{
++ (void)click:(NSDictionary *)dic Andicomchange:(void (^)(NSDictionary *icomdic))success{
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    
     
     [manager POST:@"http://localhost:8888/drapLove/index.php/home/draplove/edim" parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         success(responseObject);
@@ -39,7 +38,40 @@
     
     NSLog(@"%@",dic);
     
+}
+
+
+//  读取愿望
++ (void)wish:(void (^)(NSDictionary *))success{
     
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    [manager POST:@"http://localhost:8888/drapLove/index.php/home/wish/wish" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        success(responseObject);
+        NSLog(@"读取愿望成功");
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"读取愿望失败");
+    }];
+
+    
+}
+
+
++ (void)addwish:(NSDictionary *)addwishdic Andaddwish:(void (^)(NSDictionary *dic))success{
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    NSDictionary *dic1 = addwishdic;
+    
+    [manager POST:@"http://localhost:8888/drapLove/index.php/home/wish/addwish" parameters:dic1 progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        success(responseObject);
+         NSLog(@"添加愿望成功");
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"添加愿望失败");
+    }];
+    
+    NSLog(@"+++++输出添加内容%@",addwishdic);
     
 }
 

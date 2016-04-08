@@ -9,9 +9,9 @@
 #import "MineViewController.h"
 #import "dropHeader.h"
 //#import "XXXPlistLocalInfo.h"
-#import "IcomNSObject.h"
-#import "WishViewController.h"
-#import "PlistLocalInfo.h"
+//#import "IcomNSObject.h"
+//#import "WishViewController.h"
+
 
 @interface MineViewController ()<UITableViewDataSource,UITableViewDelegate>
 
