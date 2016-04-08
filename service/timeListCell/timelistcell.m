@@ -61,7 +61,7 @@
     CGRect textSize = [text boundingRectWithSize:CGSizeMake(300, 9999) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil];
     self.a = textSize.size.height;
     
-    frame.size.height = _a + 40;
+    frame.size.height = _a + 60;
     self.frame = frame;
 }
 #pragma mark 计算高度
@@ -69,7 +69,7 @@
     [super layoutSubviews];
     
     int height              = _a;
-    self.myView.frame       = CGRectMake(0, 0, WIDTH_MY, HEIGHT_MY);
+    self.myView.frame       = CGRectMake(0, 10, WIDTH_MY, self.frame.size.height-20);
     
     self.dateLabel1.frame   = CGRectMake(10, 10, 40, 20);
     

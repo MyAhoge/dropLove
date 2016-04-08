@@ -15,15 +15,22 @@
  */
 @implementation dataService
 
-+ (void)timeAxisAddWidth:(void (^)(NSDictionary *))sucess addWidth:(void (^)(NSDictionary *))error{
+#pragma mark uierId
++ (NSString *)myUserId{
     
+    return @"1";
+}
+#pragma mark 时光轴
++ (void)timeAxisDic:(NSDictionary *)dic AndWidth:(void (^)(NSDictionary *))sucess addWidth:(void (^)(NSDictionary *))error{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    [manager POST:URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    
+    [manager POST:URL parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         sucess(responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
+
 }
 
 #pragma mark 时光轴添加数据
@@ -37,15 +44,18 @@
         
     }];
 }
+
 #pragma mark 社区数据请求
-+ (void)socialAddWidth:(void (^)(NSDictionary *))sucess addWidth:(void (^)(NSDictionary *))error{
++ (void)socialDic:(NSDictionary *)dic AndWidth:(void (^)(NSDictionary *))sucess addWidth:(void (^)(NSDictionary *))error{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
     [manager POST:@"http://10.110.5.58:8888/mylove/index.php/home/social/social" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         sucess(responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
+
 }
 
 #pragma mark 纪念日数据请求

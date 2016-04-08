@@ -9,14 +9,17 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 @interface dataService : NSObject
+
 /**
  *  数据处理
 // */
-//+ (void)uploadImg:(NSDictionary *)imgDic andWidth:(void(^)(NSDictionary *resultDic))sucess andWidth:(void(^)(NSDictionary *error))error;
 
-+ (void)timeAxisAddWidth:(void(^)(NSDictionary *resultDic))sucess addWidth:(void(^)(NSDictionary *error))error;
 
-+ (void)socialAddWidth:(void(^)(NSDictionary *resultDic))sucess addWidth:(void(^)(NSDictionary *error))error;
+
++ (void)timeAxisDic:(NSDictionary *)dic AndWidth:(void(^)(NSDictionary *resultDic))sucess addWidth:(void(^)(NSDictionary *error))error;
+
++ (void)socialDic:(NSDictionary *)dic AndWidth:(void(^)(NSDictionary *resultDic))sucess addWidth:(void(^)(NSDictionary *error))error;
+
 /**
  *  时光轴添加数据
  *
@@ -26,7 +29,11 @@
  */
 + (void)addDataDic:(NSDictionary *)dic addWith:(void(^)(NSDictionary *resultDic))sucess addWith:(void(^)(NSDictionary *errorDic))error;
 
++ (NSString *)myUserId;
+
+
 + (void)memorialDayDic:(NSDictionary *)dic addWith:(void(^)(NSDictionary *resultDic))sucess addWith:(void(^)(NSDictionary *errorDic))error;
+
 
 
 +(void)addWith:(void (^)(NSDictionary *dic))sucess;
