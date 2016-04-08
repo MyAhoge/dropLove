@@ -22,8 +22,9 @@
 
 @property (strong, nonatomic) UIButton *commentBtn;
 
-@property (assign, nonatomic) int labHeight;
+@property (strong, nonatomic) UIButton *deleteBtn;
 
+@property (assign, nonatomic) int labHeight;
 
 - (void)setHeight:(NSString *)text;
 

@@ -51,6 +51,7 @@
     [backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(BackMethod) forControlEvents:UIControlEventTouchUpInside];
 }
+#pragma mark 返回按钮
 - (void)BackMethod{
     [self dismissViewControllerAnimated:YES completion:nil];
 }

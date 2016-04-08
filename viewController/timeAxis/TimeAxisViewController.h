@@ -34,8 +34,6 @@
 
 @property (strong, nonatomic) NSMutableArray *timeArr;
 
-//@property (strong, nonatomic) NSMutableArray *titleArr;
-
 @property (strong, nonatomic) NSMutableArray *dateArr;
 
 
@@ -48,5 +46,9 @@
 
 
 @property (strong, nonatomic) NSMutableArray *sourceArr;
+
+@property (copy, nonatomic) NSString *userId;
+
+
 
 @end

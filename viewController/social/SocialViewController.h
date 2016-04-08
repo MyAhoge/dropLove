@@ -26,5 +26,7 @@
 
 @property (assign, nonatomic) int height;
 
+@property (copy, nonatomic) NSString *userId;
+
 
 @end
