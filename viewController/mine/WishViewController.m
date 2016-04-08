@@ -34,33 +34,54 @@
     
     self.mutdic = [[NSMutableDictionary alloc]initWithCapacity:0];
     
+    self.title = @"点滴爱";
+    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     
-    //  顶部导航栏
-    UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 20)];
-    [self.view addSubview:topView];
-        topView.backgroundColor = COLOR_MINE;
+    self.navigationController.navigationBar.titleTextAttributes = @{
+                                                                    NSFontAttributeName:[UIFont systemFontOfSize:18],
+                                                                    
+                                                                    NSForegroundColorAttributeName:[UIColor whiteColor]
+                                                                    
+                                                                    };
     
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, WIDTH, 44)];
-    [self.view addSubview:headerView];
-    headerView.backgroundColor = COLOR_MINE;
     
-    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 15, 25)];
-    [btn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal ];
-    [btn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-    [headerView addSubview:btn];
     
-    UILabel *titlelab = [[UILabel alloc]initWithFrame:CGRectMake(80, 0, WIDTH_MY-160, 44)];
-    titlelab.textAlignment = NSTextAlignmentCenter;
-    titlelab.text = @"我们的愿望";
-      titlelab.font = FONT(20);
-    titlelab.textColor = [UIColor whiteColor];
-    [headerView addSubview:titlelab];
+    //1.创建UIBarButtonItem对象
+    UIBarButtonItem *rightBtn =[[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemCamera target:self action:@selector(photo:)];
     
-    UIButton *addbtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH_MY-49, 10, 40, 25)];
-    [addbtn setTitle:@"添加" forState:UIControlStateNormal];
-    [addbtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [addbtn addTarget:self action:@selector(addwish) forControlEvents:UIControlEventTouchUpInside];
-    [headerView addSubview:addbtn];
+    //2.把UIBarButtonItem对象赋值给leftBarButtonItem或者rightBarButtonItem
+    rightBtn.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = rightBtn;
+
+    
+    
+//    //  顶部导航栏
+//    UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 20)];
+//    [self.view addSubview:topView];
+//        topView.backgroundColor = COLOR_MINE;
+//    
+//    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, WIDTH, 44)];
+//    [self.view addSubview:headerView];
+//    headerView.backgroundColor = COLOR_MINE;
+//    
+//    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 15, 25)];
+//    [btn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal ];
+//    [btn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+//    [headerView addSubview:btn];
+//    
+//    UILabel *titlelab = [[UILabel alloc]initWithFrame:CGRectMake(80, 0, WIDTH_MY-160, 44)];
+//    titlelab.textAlignment = NSTextAlignmentCenter;
+//    titlelab.text = @"我们的愿望";
+//      titlelab.font = FONT(20);
+//    titlelab.textColor = [UIColor whiteColor];
+//    [headerView addSubview:titlelab];
+//    
+//    UIButton *addbtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH_MY-49, 10, 40, 25)];
+//    [addbtn setTitle:@"添加" forState:UIControlStateNormal];
+//    [addbtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [addbtn addTarget:self action:@selector(addwish) forControlEvents:UIControlEventTouchUpInside];
+//    [headerView addSubview:addbtn];
 
    
     self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, WIDTH_MY, HEIGHT_MY-64) style:UITableViewStyleGrouped];
@@ -194,7 +215,8 @@
 //  返回按钮
 - (void)back{
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+//    [self dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 

@@ -54,6 +54,7 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
     
     self.i = 1;
     self.j = 1;
@@ -156,7 +157,10 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.section == 0 && indexPath.row == 0 ) {
-        [self presentViewController:[[WishViewController alloc]init] animated:YES completion:nil];
+        WishViewController *wish = [[WishViewController alloc]init];
+        wish.hidesBottomBarWhenPushed = YES;
+//        [self presentViewController:[[WishViewController alloc]init] animated:YES completion:nil];
+        [self.navigationController pushViewController:wish animated:YES];
     }
     
 }
@@ -304,7 +308,6 @@
         }];
     }
 }
-
 
 
 

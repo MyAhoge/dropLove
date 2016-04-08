@@ -40,10 +40,16 @@
     nvc.tabBarItem.title = @"首页";
     nvc.navigationBar.barTintColor = COLOR_MINE;
     
+    
+    UINavigationController *minevc = [[UINavigationController alloc]initWithRootViewController:mine];
+    minevc.navigationBar.translucent = NO;
+    minevc.tabBarItem.title = @"我的";
+    minevc.navigationBar.barTintColor = COLOR_MINE;
+
     //
     UITabBarController *tabBar = [[UITabBarController alloc]init];
     //
-    tabBar.viewControllers = @[nvc,time,social,mine];
+    tabBar.viewControllers = @[nvc,time,social,minevc];
     //设置底部图标和title颜色
     tabBar.tabBar.tintColor = COLOR_MINE;
     
