@@ -100,6 +100,13 @@
     self.lable1.text = @"记录一下愿望吧...";
     self.lable1.textAlignment = NSTextAlignmentLeft;
     [self.view1 addSubview:_lable1];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateStyle:NSDateFormatterFullStyle];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
+    NSLog(@"%@",dateString);
+    
   
 }
 
@@ -115,11 +122,12 @@
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     [dateFormatter setDateStyle:NSDateFormatterFullStyle];
-    [dateFormatter setDateFormat:@"yyyy年MM月dd日 HH时mm分ss秒"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
+    NSLog(@"%@",dateString);
+    
     
     NSString *place = @"上海虹桥";
-    
-    NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
     
     NSString *str = self.textView.text;
     
