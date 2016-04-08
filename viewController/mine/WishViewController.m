@@ -18,7 +18,6 @@
 
 @property (assign, nonatomic)int k;
 
-
 @property (copy, nonatomic) NSString *localpath;
 
 @property (copy, nonatomic) NSString *lastpath;
@@ -169,11 +168,11 @@
     if (cell == nil) {
         cell = [[WishTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
-    
+    cell.contentlab.text = @"12233";
     cell.contentlab.text = [self.arrwish[(self.arrwish.count-1-indexPath.section)] objectForKey:@"wish_content"];
-    cell.datelab.text = [self.arrwish[indexPath.section] objectForKey:@"wish_date"];
-    cell.placelab.text = [self.arrwish[indexPath.section] objectForKey:@"wish_place"];
-    NSString *image = [self.arrwish[indexPath.section] objectForKey:@"wish_image"];
+    cell.datelab.text = [self.arrwish[(self.arrwish.count-1-indexPath.section)] objectForKey:@"wish_date"];
+    cell.placelab.text = [self.arrwish[(self.arrwish.count-1-indexPath.section)] objectForKey:@"wish_place"];
+    NSString *image = [self.arrwish[(self.arrwish.count-1-indexPath.section)] objectForKey:@"wish_image"];
     if (image != nil) {
         cell.image.image = [UIImage imageNamed:@"丽江.jpg"];
     }
