@@ -36,5 +36,5 @@
 
 
 
-+(void)addWith:(void (^)(NSDictionary *dic))sucess;
++(void)mmmm:(NSDictionary *)dic addWith:(void (^)(NSDictionary *dic))sucess;
 @end

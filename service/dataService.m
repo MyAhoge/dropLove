@@ -69,10 +69,10 @@
     }];
 }
 
-+(void)addWith:(void (^)(NSDictionary *dic))sucess {
++(void)mmmm:(NSDictionary *)dic addWith:(void (^)(NSDictionary *dic))sucess {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    [manager POST:@"http://10.110.5.58:8888/mylove/index.php/home/Home/MemorialDay" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager POST:@"http://10.110.5.58:8888/mylove/index.php/home/Home/MemorialDay" parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         sucess(responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         

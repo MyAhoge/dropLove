@@ -92,7 +92,7 @@
     
     self.dayLab.frame = CGRectMake(16, 5, 25, 25);
     
-    self.detailLab.frame = CGRectMake(60, 15, 160, 21);
+    self.detailLab.frame = CGRectMake(60, 15, WIDTH_MY-60-85, 21);
     
     self.tianLab.frame = CGRectMake(WIDTH_MY-41, 15, 31, 21);
     
