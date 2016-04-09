@@ -1,6 +1,9 @@
 
 dropLove.xcodeproj/project.pbxproj
 
+<<<<<<< HEAD
+dropLove.xcodeproj/project.xcworkspace/xcuserdata/Mayday_xy.xcuserdatad/UserInterfaceState.xcuserstate
+=======
 dropLove.xcodeproj/project.pbxproj
 
 dropLove.xcodeproj/project.xcworkspace/xcuserdata/administrator.xcuserdatad/UserInterfaceState.xcuserstate
@@ -28,3 +31,18 @@ dropLove 0405/dropLove.xcodeproj/project.pbxproj
 dropLove.xcodeproj/project.pbxproj
 
 dropLove.xcodeproj/project.xcworkspace/xcuserdata/administrator.xcuserdatad/UserInterfaceState.xcuserstate
+>>>>>>> origin/master
+
+*.xcuserstate
+
+*.xcscheme
+
+*.xcbkptlist
+
+*.xcscheme
+
+*.xcbkptlist
+
+*.xcuserstate
+
+*.xcuserstate

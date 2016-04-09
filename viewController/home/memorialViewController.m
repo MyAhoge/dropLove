@@ -124,7 +124,8 @@
     
     
     
-    
+   
+  
     
  
 }
@@ -134,33 +135,52 @@
         cell = [[memorialTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"test"];
     }
     //无色
+    //cell.selectionStyle = UITableViewCellSelectionStyleNone;
     memorialDayModel *me = [[memorialDayModel alloc]init];
-    me = self.Arr[indexPath.row];
+    me = self.cellArr[indexPath.section];
+    //获取当前时间，日期
+    NSDate *currentDate = [NSDate date];
     
-    [dataService addWith:^(NSDictionary *dic) {
-        self.Arr = [dic objectForKey:@"result"];
-        cell.detailLab.text = [self.Arr[indexPath.section]objectForKey:@"memday_content"];
-        NSLog(@"%@",[self.Arr[indexPath.section]objectForKey:@"memday_content"]);
-        
-        cell.yearLab.text = [[self.Arr[indexPath.section]objectForKey:@"memday_date"] substringToIndex:7];
-        
-        cell.dayLab.text = [[self.Arr[indexPath.section]objectForKey:@"memday_date"] substringFromIndex:8];
-//        cell.detailLab.text = contentstr;
-    }];
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     
+    [dateFormatter setDateFormat:@"YYYY-MM-dd"];
+    
+    NSString *dateString = [dateFormatter stringFromDate:currentDate];
+    
+    NSLog(@"dateString:%@",dateString);
+    
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    
+    NSDate *date1=[dateFormatter dateFromString:me.date];
+    
+//    NSLog(@">>>>%@",date1);
+    
+    NSTimeInterval time=[ currentDate timeIntervalSinceDate:date1];
+    
+    int days=((int)time)/(3600*24);
    
+    NSString *dateContent=[[NSString alloc] initWithFormat:@"%i",days];
+    
+//    NSLog(@"%@",dateContent);
+
+
+    if ([dateContent isEqualToString:@"0"]) {
+        cell.numLab.text = @"今";
+        
+        cell.detailLab.text =  me.content;
+    }else{
+        NSString *detailstr = [[NSString alloc]initWithFormat:@"%@已经",me.content];
+        cell.detailLab.text = detailstr;
+        
+         cell.numLab.text = dateContent;
+    }
+
+    cell.yearLab.text = [me.date substringToIndex:7];
+    
+    cell.dayLab.text =[me.date substringFromIndex:8];
     
     cell.tianLab.text = @"天";
     
-    cell.numLab.text = @"300";
-    
-//    cell.yearLab.text = @"2000";
-//    
-//    cell.mouthLab.text = @"08";
-//    
-//    cell.dayLab.text = @"22";
-
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -168,7 +188,7 @@
     return 50;
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 5;
+    return _cellArr.count;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -201,10 +221,13 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+#pragma mark next
 - (void)addmemorial:(UIButton *)sender{
     addMemorialDayViewController *addMem = [[addMemorialDayViewController alloc]init];
     addMem.hidesBottomBarWhenPushed = YES;
+    
+    addMem.delegate = self;
+    
     [self.navigationController pushViewController:addMem animated:YES];
 }
 
@@ -220,48 +243,49 @@
 #pragma mark 数据处理
 - (void)dataSource{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//
+        NSDictionary *dic = @{@"userid":@1};
+        [dataService mmmm:dic addWith:^(NSDictionary *dic) {
+            //给一个空间，未分配
+            self.cellArr = [NSMutableArray arrayWithCapacity:0];
+            
+            for (NSDictionary *dd in [dic objectForKey:@"result"]) {
+                memorialDayModel *memModel = [[memorialDayModel alloc]init];
+                
+                memModel.content = [dd objectForKey:@"memday_content"];
+                
+                memModel.date = [dd objectForKey:@"memday_date"];
+                
+                [self.cellArr addObject:memModel];
+                
+                NSLog(@"%@",memModel.content);
+
+            }
+          
+            
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.table reloadData];
+            });
+        }];
         
-        
-//       [ dataService  socialAddWidth:^(NSDictionary *resultDic) {
-//           NSLog(@"121122112");
-//       } addWidth:^(NSDictionary *error) {
-//           
-//       }];
-//        NSDictionary *dic;
-//        [dataService addWith:^(NSDictionary *dic) {
-//            self.Arr = [dic objectForKey:@"result"];
-//            NSString *contentstr = [self.Arr[0] objectForKey:@"memday_content"];
-//            NSString *datestr = [self.Arr[0] objectForKey:@"memday_date"];
-//        }];
-//        
-        
-        
-//        [dataService timeAxisAddWidth:^(NSDictionary *resultDic) {
-//            self.dic = [[NSDictionary alloc]initWithDictionary:resultDic];
-//            
-//            NSArray *arr = [_dic objectForKey:@"result"];
-//            self.contentArr = [NSMutableArray arrayWithCapacity:0];
-//            self.timeArr = [NSMutableArray arrayWithCapacity:0];
-//            self.dateArr = [NSMutableArray arrayWithCapacity:0];
-//            self.sourceArr = [NSMutableArray arrayWithCapacity:0];
-//            
-//            for (NSDictionary *dic in arr) {
-//                timeaxisModel *model = [[timeaxisModel alloc]init];
-//                
-//                model.content = [dic objectForKey:@"timeaxis_content"];
-//                model.time = [dic objectForKey:@"timeaxis_time"];
-//                model.date = [dic objectForKey:@"timeaxis_date"];
-//                [self.sourceArr addObject:model];
-//                
-//                //                [self.contentArr addObject:[dic objectForKey:@"timeaxis_content"]];
-//                //                [self.timeArr addObject:[dic objectForKey:@"timeaxis_time"]];
-//                //                [self.dateArr addObject:[dic objectForKey:@"timeaxis_date"]];
-//            }
-        
-//        } addWidth:^(NSDictionary *error) {
-//            NSLog(@"error");
-//        }];
     });
 }
+
+-(void)showMemorial:(NSMutableDictionary *)addDic{
+    
+    memorialDayModel *addModel = [[memorialDayModel alloc]init];
+    
+    addModel.content = [addDic objectForKey:@"detail"];
+    
+    addModel.date = [addDic objectForKey:@"date"];
+    
+    [self.cellArr addObject:addModel];
+    
+    [self.table reloadData];
+    
+    
+    
+}
+
+
 @end

@@ -138,12 +138,22 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+#pragma mark  完成
 - (void)overadd:(UIButton *)sender{
     
-    memorialViewController *memorial = [[memorialViewController alloc]init];
+//    memorialViewController *memorial = [[memorialViewController alloc]init];
+//    
+//    memorial.hidesBottomBarWhenPushed = YES;
+    self.dic = @{
+                 @"detail":_textfield.text,
+
+                 @"date":self.dateString,
+                 
+                 };
     
-    memorial.hidesBottomBarWhenPushed = YES;
+    if (_delegate != nil &&[_delegate respondsToSelector:@selector(showMemorial:)]) {
+        [_delegate showMemorial:self.dic];
+    }
     
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -182,9 +192,9 @@
     // 创建一个日期格式器
     NSDateFormatter *pickerFormatter = [[NSDateFormatter alloc] init];
     // 为日期格式器设置格式字符串
-    [pickerFormatter setDateFormat:@"yyyy年MM月dd日"];
-    NSString *dateString = [pickerFormatter stringFromDate:pickerDate];
-    [self.showBtn setTitle: dateString forState:UIControlStateNormal ];
+    [pickerFormatter setDateFormat:@"yyyy-MM-dd"];
+    self.dateString = [pickerFormatter stringFromDate:pickerDate];
+    [self.showBtn setTitle: _dateString forState:UIControlStateNormal ];
     //    self.showLabel.text = dateString;
 }
 
