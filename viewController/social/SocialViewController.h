@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SocialViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@protocol socialDelegate <NSObject>
+
+- (void)socialSendMethod:(NSDictionary *)sender;
+
+@end
+@interface SocialViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,socialDelegate>
 
 @property (strong, nonatomic) UITableView *table;
 
@@ -28,5 +33,6 @@
 
 @property (copy, nonatomic) NSString *userId;
 
+@property (strong, nonatomic) NSDictionary *sendDic;
 
 @end

@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SocialViewController.h"
 
 @interface socialPublishController : UIViewController<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+
+@property (assign, nonatomic) id<socialDelegate> delegate;
 
 @property (copy, nonatomic  ) NSString       *textStr;
 

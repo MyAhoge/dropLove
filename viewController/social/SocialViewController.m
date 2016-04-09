@@ -11,10 +11,29 @@
 
 
 @implementation SocialViewController
+- (void)test{
+    float x1  = 0,    x2=0.792, x3=2.160;
+    float x41 = 0.222,x42=0.221,x43=0.221,x44=2.212;
+    float x51 = 1.108,x52=0.114,x53=2.129,x54=2.147;
+    float x61 = 0.002,x62=0.001,x63=0,x64=0.001,x65=1.992,x66=0.997,x67=0,x68=3.013,x69=3.031;
+   
+    
+    float m1=(440*x1-128*x41+37*x42+37*x43+54*x44-34*x51-7*x52-7*x53+48*x54-202*x61-37*x62+110*x63-37*x64-20*x65+7*x66+110*x67+7*x68+62*x69)/440;
+    
+    float m2=(440*x2+80*x41+25*x42+25*x43-130*x44-130*x51+25*x52+25*x53+80*x54+30*x61-25*x62+110*x63-25*x64-180*x65-25*x66+110*x67-25*x68+30*x69)/440;
+    
+    float m3=(440*x3+48*x41-7*x42-7*x43-34*x44+54*x51+37*x52+37*x53-128*x54+62*x61+7*x62+110*x63+7*x64-20*x65-37*x66+110*x67-37*x68-202*x69)/440;
+    
+//    0.441693--0.112666
+//    333.695/440 =  0.75839773
+//    332.743/440 = 0.75623409
+    NSLog(@"%.6f-%.6f-%.6f", m1,m2,m3);
+}
+
 - (void)viewDidLoad{
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    [self test];
     [self topMethod];
     
     self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, WIDTH, HEIGHT-64-49) style:UITableViewStylePlain];
@@ -28,7 +47,20 @@
     [self dataSource];
     
 }
+#pragma mark 代理传值方法
+- (void)socialSendMethod:(NSDictionary *)sender{
 
+    self.sendDic = sender;
+    socialModel *model = [[socialModel alloc]init];
+    
+    model.content = [sender objectForKey:@"content"];
+    model.date = [sender objectForKey:@"date"];
+    model.time = [sender objectForKey:@"time"];
+    [self.sourceArr addObject:model];
+    
+    [self dataSource];
+    [self.table reloadData];
+}
 - (void)topMethod{
     UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 20)];
     [self.view addSubview:topView];
@@ -53,6 +85,7 @@
 }
 - (void)add{
     socialPublishController *publish = [[socialPublishController alloc]init];
+    publish.delegate = self;
     [self presentViewController:publish animated:YES completion:nil];
 }
 
@@ -71,7 +104,7 @@
         [cell.deleteBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
         [cell.deleteBtn addTarget:self action:@selector(deleteMethod:) forControlEvents:UIControlEventTouchUpInside];
         
-        cell.deleteBtn.tag = indexPath.row;
+        cell.deleteBtn.tag = _sourceArr.count - 1 - indexPath.row;
     }else{
         
     }
@@ -79,10 +112,6 @@
     cell.contentLab.text = model.content;
     cell.headerLab.text = model.name;
     cell.timeLab.text = model.time;
-    
-//    cell.contentLab.text = _contentArr[indexPath.row];
-//    cell.headerLab.text = _nameArr[indexPath.row];
-//    cell.timeLab.text = _timeArr[indexPath.row];
     
     [cell setHeight:model.content];
     self.height = cell.frame.size.height;
@@ -97,10 +126,18 @@
 - (void)deleteMethod:(UIButton *)sender{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"删除心情之后将无法恢复，确认删除吗？" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self.sourceArr removeObjectAtIndex:sender.tag];
-        [self.table reloadData];
-//
-#warning 删除数据库内容
+        
+        
+
+        NSDictionary *dic = @{@"socialid":(socialModel *)[_sourceArr[sender.tag] socialId]};
+        [dataService socialdelete:dic andWithSucess:^(NSDictionary *resultDic) {
+            [self.sourceArr removeObjectAtIndex:sender.tag];
+            [self.table reloadData];
+        } andWithError:^(NSDictionary *error) {
+            
+        }];
+        
+//        [self.table reloadData];
     }];
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:action];
@@ -113,7 +150,7 @@
     socialcommentViewController *comment = [[socialcommentViewController alloc]init];
     
     socialModel *model = [[socialModel alloc]init];
-    model = self.sourceArr[indexPath.row];
+    model = self.sourceArr[_sourceArr.count - 1 - indexPath.row];
     
     comment.name = model.name;
     comment.date = model.date;
@@ -144,16 +181,11 @@
         self.userId = [dataService myUserId];
         
         NSDictionary *idDic = @{@"userid":_userId};
+        
         [dataService socialDic:idDic AndWidth:^(NSDictionary *resultDic){
             NSDictionary *dic = [[NSDictionary alloc]initWithDictionary:resultDic];
             
             NSArray *arr = [dic objectForKey:@"result"];
-            
-//            self.contentArr = [NSMutableArray arrayWithCapacity:0];
-//            self.headerImgArr = [NSMutableArray arrayWithCapacity:0];
-//            self.nameArr = [NSMutableArray arrayWithCapacity:0];
-//            self.timeArr = [NSMutableArray arrayWithCapacity:0];
-//            self.dateArr = [NSMutableArray arrayWithCapacity:0];
             
             self.sourceArr = [NSMutableArray arrayWithCapacity:0];
             
@@ -166,17 +198,12 @@
                 model.time = [dic objectForKey:@"social_time"];
                 model.name = [dic objectForKey:@"user_name"];
                 model.userid = [dic objectForKey:@"t_user_user_id"];
-                [self.sourceArr addObject:model];
+                model.socialId = [dic objectForKey:@"social_id"];
                 
-//                [self.contentArr addObject:[dic objectForKey:@"social_content"]];
-//                [self.headerImgArr addObject:[dic objectForKey:@"user_headerimage"]];
-//                [self.dateArr addObject:[dic objectForKey:@"social_date"]];
-//                [self.timeArr addObject:[dic objectForKey:@"social_time"]];
-//                [self.nameArr addObject:[dic objectForKey:@"user_name"]];
+                [self.sourceArr addObject:model];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.table reloadData];
-                
             });
         } addWidth:^(NSDictionary *error) {
             

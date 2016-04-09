@@ -22,5 +22,6 @@
 
 @property (copy, nonatomic) NSString *userid;
 
+@property (copy, nonatomic) NSString *socialId;
 
 @end

@@ -122,7 +122,25 @@
 }
 
 - (void)add{
+    [self locaTime];
+    NSDictionary *dic = @{@"content":self.text1.text,
+                          @"time":[_prettyVersion substringFromIndex:12],
+                          @"date":[_prettyVersion substringToIndex:10],
+                          @"userid":@1};
     
+    [dataService socialAddDataDic:dic addWith:^(NSDictionary *resultDic) {
+       NSLog(@"%@", resultDic);
+        
+    } addWith:^(NSDictionary *errorDic) {
+        
+    }];
+    
+    
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(socialSendMethod:)]) {
+        [_delegate socialSendMethod:dic];
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 - (void)backMethod{
     

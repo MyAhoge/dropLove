@@ -26,7 +26,7 @@
     [self headerMethod];
     [self mainMethod];
     
-    [self locaTime];
+    
 }
 #pragma mark 输入框和图片位置
 - (void)mainMethod{
@@ -41,7 +41,7 @@
     //    self.textStr = text1.text;
     //    NSLog(@"textstr%@", _textStr);
     
-    UIButton *imageViewBtn = [[UIButton alloc]initWithFrame:CGRectMake(_text1.frame.origin.x, _text1.frame.size.height+_text1.frame.origin.y, (WIDTH-50)/4, (WIDTH-50)/4)];
+    UIButton *imageViewBtn = [[UIButton alloc]initWithFrame:CGRectMake(_text1.frame.origin.x, view1.frame.size.height-(WIDTH-50)/4-10, (WIDTH-50)/4, (WIDTH-50)/4)];
     [view1 addSubview:imageViewBtn];
     imageViewBtn.layer.borderWidth = 2;
     imageViewBtn.layer.borderColor = MICOLOR.CGColor;
@@ -156,17 +156,19 @@
 }
 #pragma mark 发布
 - (void)sendToTime{
+    [self locaTime];
     //    //获取沙盒路径
     NSString *path = [[NSHomeDirectory() stringByAppendingString:@"/documents"] stringByAppendingString:@"/bgimage.png"];
     
     self.dic = @{@"content":_text1.text,
                  @"time":[_prettyVersion substringFromIndex:12],
                  @"date":[_prettyVersion substringToIndex:10],
-                 @"userid":@5
+                 @"userid":@1
                  };
     
     [dataService addDataDic:_dic addWith:^(NSDictionary *resultDic) {
         NSLog(@"result%@",resultDic);
+        
     } addWith:^(NSDictionary *errorDic) {
         
     }];
@@ -243,7 +245,7 @@
     //cccc 星期全名 MM月全名
     //    [dateFormat setDateFormat:@"cccc MM dd, yyyy hh:mm aa"];
     [dateFormat setDateFormat:@"yyyy-MM-dd hh:mm aa"];
-   self.prettyVersion = [dateFormat stringFromDate:[NSDate date]];
+    self.prettyVersion = [dateFormat stringFromDate:[NSDate date]];
     NSLog(@"%@", _prettyVersion);
 }
 @end
