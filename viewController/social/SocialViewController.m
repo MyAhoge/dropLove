@@ -11,24 +11,7 @@
 
 
 @implementation SocialViewController
-//- (void)test{
-//    float x1  = 0,    x2=0.792, x3=2.160;
-//    float x41 = 0.222,x42=0.221,x43=0.221,x44=2.212;
-//    float x51 = 1.108,x52=0.114,x53=2.129,x54=2.147;
-//    float x61 = 0.002,x62=0.001,x63=0,x64=0.001,x65=1.992,x66=0.997,x67=0,x68=3.013,x69=3.031;
-//   
-//    
-//    float m1=(440*x1-128*x41+37*x42+37*x43+54*x44-34*x51-7*x52-7*x53+48*x54-202*x61-37*x62+110*x63-37*x64-20*x65+7*x66+110*x67+7*x68+62*x69)/440;
-//    
-//    float m2=(440*x2+80*x41+25*x42+25*x43-130*x44-130*x51+25*x52+25*x53+80*x54+30*x61-25*x62+110*x63-25*x64-180*x65-25*x66+110*x67-25*x68+30*x69)/440;
-//    
-//    float m3=(440*x3+48*x41-7*x42-7*x43-34*x44+54*x51+37*x52+37*x53-128*x54+62*x61+7*x62+110*x63+7*x64-20*x65-37*x66+110*x67-37*x68-202*x69)/440;
-//    
-////    0.441693--0.112666
-////    333.695/440 =  0.75839773
-////    332.743/440 = 0.75623409
-//    NSLog(@"%.6f-%.6f-%.6f", m1,m2,m3);
-//}
+
 
 - (void)viewDidLoad{
     [super viewDidLoad];
@@ -67,9 +50,8 @@
         model.imgArr = [sender objectForKey:@"imageArr"];
         [self.sourceArr addObject:model];
         
-        [self dataSource];
-        
         dispatch_async(dispatch_get_main_queue(), ^{
+//            [self dataSource];
             [self.table reloadData];
         });
     });
@@ -149,8 +131,6 @@
         
         if ([model.userid isEqualToString:[dataService myUserId]]) {
             cell.deleteBtn.hidden = NO;
-//            [cell.deleteBtn setTitle:@"删除" forState:UIControlStateNormal];
-//            [cell.deleteBtn setTitleColor:COLOR(167, 167, 172, 1) forState:UIControlStateNormal];
             [cell.deleteBtn setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
             [cell.deleteBtn addTarget:self action:@selector(deleteMethod:) forControlEvents:UIControlEventTouchUpInside];
             cell.deleteBtn.tag = _sourceArr.count - 1 - indexPath.row;
@@ -169,6 +149,7 @@
         
         [cell.commentBtn setImage:[UIImage imageNamed:@"comment"] forState:UIControlStateNormal];
         
+        NSLog(@"?>>>>>%@", model.imgArr);
         
         if (model.imgArr.count == 1) {
             cell.image1.image = model.imgArr[0];
@@ -182,7 +163,6 @@
         }else{
             
         }
-        
         return cell;
     }
     

@@ -228,6 +228,8 @@
         comment.timeStr = [model.time substringToIndex:5];
         comment.headHeight = ((timelistcell *)[tableView cellForRowAtIndexPath:indexPath]).contentView.frame.size.height;
         [self presentViewController:comment animated:YES completion:nil];
+    }else{
+        
     }
 }
 #pragma mark 顶部

@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface socialImgCell : UITableViewCell
+/**
+ *  <#Description#>
+ */
 @property (strong, nonatomic) UIView *cellView;
 
 @property (strong, nonatomic) UIImageView *headerImg;

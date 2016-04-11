@@ -65,7 +65,9 @@
     frame.size.height = _labHeight + 110 + (WIDTH_MY-80)/3;
     self.frame = frame;
 }
-
+/**
+ *  <#Description#>
+ */
 - (void)layoutSubviews{
     [super layoutSubviews];
     self.cellView.frame   = CGRectMake(0, 5, WIDTH_MY, self.frame.size.height-10);

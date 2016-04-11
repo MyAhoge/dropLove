@@ -38,7 +38,16 @@
     self.timeLab = [[UILabel alloc]initWithFrame:CGRectMake(_nameLab.frame.origin.x, _nameLab.frame.origin.y+_nameLab.frame.size.height+10, 80, 20)];
     self.contentLab = [[UILabel alloc]initWithFrame:CGRectMake(10, _headerImg.frame.origin.y+_headerImg.frame.size.height+10, WIDTH-20, _height-100)];
     self.commentBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH-10-20, _nameLab.frame.origin.y, 25, 20)];
-    
+//    int a = _imgArr.count / 3;//行
+//    int b = _imgArr.count % 3;
+//    
+//    NSLog(@"%d,%d", a,b);
+//    for (int i = 0; i < _imgArr.count; i ++) {
+//        
+//        UIImageView *img = [[UIImageView alloc]initWithFrame:CGRectMake(10 + (WIDTH- 80)/3 * i, _contentLab.frame.origin.y, (WIDTH- 80)/3, (WIDTH- 80)/3)];
+//        [tabHeaderView addSubview:img];
+//        img.image = [UIImage imageNamed:_imgArr[i]];
+//    }
     
     [tabHeaderView addSubview:_headerImg];
     [tabHeaderView addSubview:_nameLab];
@@ -70,7 +79,7 @@
     [self.view addSubview:headerView];
     headerView.backgroundColor = COLOR_MINE;
     
-    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 15, 25)];
+    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 12.5, 10, 20)];
     [headerView addSubview:backBtn];
     [backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(backMethod) forControlEvents:UIControlEventTouchUpInside];

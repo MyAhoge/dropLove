@@ -136,7 +136,7 @@
     [self.view addSubview:headerView];
     headerView.backgroundColor = COLOR_MINE;
     
-    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 15, 25)];
+    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 12.5, 10, 20)];
     [headerView addSubview:backBtn];
     [backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(backMethod) forControlEvents:UIControlEventTouchUpInside];
