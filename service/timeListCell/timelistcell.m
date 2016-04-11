@@ -80,9 +80,9 @@
 
     self.contentlabel.frame = CGRectMake(70, 10, WIDTH_MY-70-10, _a);
 
-    self.timeLabel.frame    = CGRectMake(_contentlabel.frame.origin.x, _contentlabel.frame.origin.y+_contentlabel.frame.size.height, 80, 20);
+    self.timeLabel.frame    = CGRectMake(_contentlabel.frame.origin.x, _contentlabel.frame.origin.y+_contentlabel.frame.size.height + 10, 80, 20);
 
-    self.deletebtn.frame    = CGRectMake(_timeLabel.frame.size.width+_timeLabel.frame.origin.x, _timeLabel.frame.origin.y, 30, 20);
+    self.deletebtn.frame    = CGRectMake(WIDTH_MY-35-20, _timeLabel.frame.origin.y, 20, 20);
 
     self.btn.frame          = CGRectMake(WIDTH_MY-10-25, _timeLabel.frame.origin.y, 25, 20);
 

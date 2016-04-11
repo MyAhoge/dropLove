@@ -48,17 +48,32 @@
 }
 #pragma mark 代理传值方法
 - (void)socialSendMethod:(NSDictionary *)sender{
-
-    self.sendDic = sender;
-    socialModel *model = [[socialModel alloc]init];
     
-    model.content = [sender objectForKey:@"content"];
-    model.date = [sender objectForKey:@"date"];
-    model.time = [sender objectForKey:@"time"];
-    [self.sourceArr addObject:model];
-
-    [self dataSource];
-    [self.table reloadData];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        self.sendDic = sender;
+        socialModel *model = [[socialModel alloc]init];
+        
+        [dataService socialAddDataDic:sender addWith:^(NSDictionary *resultDic) {
+            
+            NSLog(@"%@", resultDic);
+            
+        } addWith:^(NSDictionary *errorDic) {
+            
+        }];
+        
+        model.content = [sender objectForKey:@"content"];
+        model.date = [sender objectForKey:@"date"];
+        model.time = [sender objectForKey:@"time"];
+        model.imgArr = [sender objectForKey:@"imageArr"];
+        [self.sourceArr addObject:model];
+        
+        [self dataSource];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.table reloadData];
+        });
+    });
+   
 }
 - (void)topMethod{
     UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 20)];
@@ -93,37 +108,84 @@
     socialModel *model = [[socialModel alloc]init];
     model = _sourceArr[_sourceArr.count - 1 - indexPath.row];
     
-    socialCell *cell = [tableView dequeueReusableCellWithIdentifier:@"socialId"];
-    
-    if (cell == nil) {
-        cell = [[socialCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"socialId"];
-    }
-    cell.deleteBtn.hidden = YES;
-
-    if ([model.userid isEqualToString:[dataService myUserId]]) {
-        cell.deleteBtn.hidden = NO;
-        [cell.deleteBtn setTitle:@"删除" forState:UIControlStateNormal];
-        [cell.deleteBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-        [cell.deleteBtn addTarget:self action:@selector(deleteMethod:) forControlEvents:UIControlEventTouchUpInside];
+    if (model.imgArr.count == 0) {
         
-        cell.deleteBtn.tag = _sourceArr.count - 1 - indexPath.row;
+        socialCell *cell = [tableView dequeueReusableCellWithIdentifier:@"socialId"];
+        if (cell == nil) {
+            cell = [[socialCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"socialId"];
+        }
+        cell.deleteBtn.hidden = YES;
+        
+        if ([model.userid isEqualToString:[dataService myUserId]]) {
+            cell.deleteBtn.hidden = NO;
+            
+//            [cell.deleteBtn setTitle:@"删除" forState:UIControlStateNormal];
+//            [cell.deleteBtn setTitleColor:COLOR(167, 167, 172, 1) forState:UIControlStateNormal];
+            [cell.deleteBtn setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
+            [cell.deleteBtn addTarget:self action:@selector(deleteMethod:) forControlEvents:UIControlEventTouchUpInside];
+            cell.deleteBtn.tag = _sourceArr.count - 1 - indexPath.row;
+        }else{
+            
+        }
+        
+        cell.contentLab.text = model.content;
+        cell.headerLab.text = model.name;
+        cell.timeLab.text = model.time;
+        
+        [cell setHeight:model.content];
+        self.height = cell.frame.size.height;
+        //头像路径
+        NSString *path = [NSString stringWithFormat:@"/Applications/MAMP/htdocs/myLove/image/header/%@",model.headerImg];
+        cell.headerImg.image = [UIImage imageWithContentsOfFile:path];
+        
+        [cell.commentBtn setImage:[UIImage imageNamed:@"comment"] forState:UIControlStateNormal];
+        return cell;
     }else{
+        socialImgCell *cell = [tableView dequeueReusableCellWithIdentifier:@"socialImgCellId"];
+        if (cell == nil) {
+            cell = [[socialImgCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"socialImgCellId"];
+        }
+        cell.deleteBtn.hidden = YES;
         
+        if ([model.userid isEqualToString:[dataService myUserId]]) {
+            cell.deleteBtn.hidden = NO;
+//            [cell.deleteBtn setTitle:@"删除" forState:UIControlStateNormal];
+//            [cell.deleteBtn setTitleColor:COLOR(167, 167, 172, 1) forState:UIControlStateNormal];
+            [cell.deleteBtn setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
+            [cell.deleteBtn addTarget:self action:@selector(deleteMethod:) forControlEvents:UIControlEventTouchUpInside];
+            cell.deleteBtn.tag = _sourceArr.count - 1 - indexPath.row;
+        }else{
+            
+        }
+        cell.contentLab.text = model.content;
+        cell.headerLab.text = model.name;
+        cell.timeLab.text = model.time;
+        
+        [cell setHeight:model.content];
+        self.height = cell.frame.size.height;
+        //头像路径
+        NSString *path = [NSString stringWithFormat:@"/Applications/MAMP/htdocs/myLove/image/header/%@",model.headerImg];
+        cell.headerImg.image = [UIImage imageWithContentsOfFile:path];
+        
+        [cell.commentBtn setImage:[UIImage imageNamed:@"comment"] forState:UIControlStateNormal];
+        
+        
+        if (model.imgArr.count == 1) {
+            cell.image1.image = model.imgArr[0];
+        }else if(model.imgArr.count == 2){
+            cell.image1.image = model.imgArr[0];
+            cell.image2.image = model.imgArr[1];
+        }else if (model.imgArr.count == 3){
+            cell.image1.image = model.imgArr[0];
+            cell.image2.image = model.imgArr[1];
+            cell.image3.image = model.imgArr[2];
+        }else{
+            
+        }
+        
+        return cell;
     }
     
-    cell.contentLab.text = model.content;
-    cell.headerLab.text = model.name;
-    cell.timeLab.text = model.time;
-    
-    [cell setHeight:model.content];
-    self.height = cell.frame.size.height;
-    //头像路径
-    NSString *path = [NSString stringWithFormat:@"/Applications/MAMP/htdocs/myLove/image/header/%@",model.headerImg];
-    cell.headerImg.image = [UIImage imageWithContentsOfFile:path];
-    
-    [cell.commentBtn setImage:[UIImage imageNamed:@"comment"] forState:UIControlStateNormal];
-
-    return cell;
 }
 - (void)deleteMethod:(UIButton *)sender{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"删除心情之后将无法恢复，确认删除吗？" preferredStyle:UIAlertControllerStyleAlert];
@@ -142,6 +204,7 @@
     [alert addAction:action1];
     [self presentViewController:alert animated:YES completion:nil];
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
@@ -155,6 +218,7 @@
     comment.time         = model.time;
     comment.content      = model.content;
     comment.headerImgStr = model.headerImg ;
+    comment.imgArr       = model.imgArr;
     
     comment.height = ((timelistcell *)[tableView cellForRowAtIndexPath:indexPath]).contentView.frame.size.height;
     [self presentViewController:comment animated:YES completion:nil];

@@ -17,17 +17,15 @@
     self.sendDic = [[NSDictionary alloc]init];
     [self dataSource];
     
-    self.scroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 64, WIDTH, HEIGHT-64-49)];
-    [self.view addSubview:_scroll];
-    self.scroll.contentSize = CGSizeMake(WIDTH*2, _scroll.frame.size.height);
-    self.scroll.pagingEnabled = YES;
-    self.scroll.showsHorizontalScrollIndicator = NO;
+    self.myView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, WIDTH*2, HEIGHT-64-49)];
+    self.myView.layer.masksToBounds = NO;
+    [self.view addSubview:_myView];
     
     
-    self.timeView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, _scroll.frame.size.height)];
-    [self.scroll addSubview:_timeView];
-    self.picView = [[UIView alloc]initWithFrame:CGRectMake(WIDTH, 0, WIDTH, _scroll.frame.size.height)];
-    [self.scroll addSubview:_picView];
+    self.timeView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, _myView.frame.size.height)];
+    [self.myView addSubview:_timeView];
+    self.picView = [[UIView alloc]initWithFrame:CGRectMake(WIDTH, 0, WIDTH, _myView.frame.size.height)];
+    [self.myView addSubview:_picView];
     
     [self header];
     [self myTableView];
@@ -134,8 +132,9 @@
             [cell setHeight:timeModel.content];
             self.height = cell.frame.size.height;
             
-            [cell.deletebtn setTitle:@"删除" forState:UIControlStateNormal];
-            [cell.deletebtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            [cell.deletebtn setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
+//            [cell.deletebtn setTitle:@"删除" forState:UIControlStateNormal];
+//            [cell.deletebtn setTitleColor:COLOR(167, 167, 172, 1) forState:UIControlStateNormal];
             cell.deletebtn.tag = _sourceArr.count - 1 - indexPath.row;
             [cell.deletebtn addTarget:self action:@selector(deleteMethod:) forControlEvents:UIControlEventTouchUpInside];
             
@@ -158,22 +157,24 @@
             [cell setHeight:timeModel.content];
             self.height = cell.frame.size.height;
             
-            [cell.deletebtn setTitle:@"删除" forState:UIControlStateNormal];
-            [cell.deletebtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+//            [cell.deletebtn setTitle:@"删除" forState:UIControlStateNormal];
+//            [cell.deletebtn setTitleColor:COLOR(167, 167, 172, 1) forState:UIControlStateNormal];
+
+            [cell.deletebtn setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
             cell.deletebtn.tag = _sourceArr.count - 1 - indexPath.row;
             [cell.deletebtn addTarget:self action:@selector(deleteMethod:) forControlEvents:UIControlEventTouchUpInside];
             
             [cell.btn setImage:[UIImage imageNamed:@"comment"] forState:UIControlStateNormal];
             
             if (timeModel.imgArr.count == 1) {
-                cell.image1 = timeModel.imgArr[0];
+                cell.image1.image = timeModel.imgArr[0];
             }else if(timeModel.imgArr.count == 2){
-                cell.image1 = timeModel.imgArr[0];
-                cell.image2 = timeModel.imgArr[1];
+                cell.image1.image = timeModel.imgArr[0];
+                cell.image2.image = timeModel.imgArr[1];
             }else if (timeModel.imgArr.count == 3){
-                cell.image1 = timeModel.imgArr[0];
-                cell.image2 = timeModel.imgArr[1];
-                cell.image3 = timeModel.imgArr[2];
+                cell.image1.image = timeModel.imgArr[0];
+                cell.image2.image = timeModel.imgArr[1];
+                cell.image3.image = timeModel.imgArr[2];
                 
             }else{
                 
@@ -239,23 +240,24 @@
     [self.view addSubview:_headerView];
     self.headerView.backgroundColor = COLOR_MINE;
     
-    UIButton *timeBtn = [[UIButton alloc]initWithFrame:CGRectMake((WIDTH/2-30-9) , 10, 30, 24)];
-    [self.headerView addSubview:timeBtn];
-    [timeBtn setTitle: @"时光" forState:UIControlStateNormal];
-    [timeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    timeBtn.titleLabel.font = FONT(13);
-    [timeBtn addTarget:self action:@selector(timeAxis) forControlEvents:UIControlEventTouchUpInside];
+    self.timeBtn = [[UIButton alloc]initWithFrame:CGRectMake((WIDTH/2-30-9) , 10, 30, 24)];
+    [self.headerView addSubview:_timeBtn];
+    [self.timeBtn setTitle: @"时光" forState:UIControlStateNormal];
     
-    UILabel *linelabel = [[UILabel alloc]initWithFrame:CGRectMake(timeBtn.frame.origin.x+timeBtn.frame.size.width + 10, 10, 2, 24)];
+    [self.timeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.timeBtn.titleLabel.font = FONT(15);
+    [self.timeBtn addTarget:self action:@selector(timeAxis) forControlEvents:UIControlEventTouchUpInside];
+    
+    UILabel *linelabel = [[UILabel alloc]initWithFrame:CGRectMake(_timeBtn.frame.origin.x+_timeBtn.frame.size.width + 10, 10, 2, 24)];
     [self.headerView addSubview:linelabel];
     linelabel.backgroundColor = [UIColor whiteColor];
     
-    UIButton *picBtn = [[UIButton alloc]initWithFrame:CGRectMake(linelabel.frame.size.width+linelabel.frame.origin.x + 9, 10, 30, 24)];
-    [self.headerView addSubview:picBtn];
-    [picBtn setTitle: @"相册" forState:UIControlStateNormal];
-    [picBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    picBtn.titleLabel.font = FONT(13);
-    [picBtn addTarget:self action:@selector(picAxis) forControlEvents:UIControlEventTouchUpInside];
+    self.picBtn = [[UIButton alloc]initWithFrame:CGRectMake(linelabel.frame.size.width+linelabel.frame.origin.x + 9, 10, 30, 24)];
+    [self.headerView addSubview:_picBtn];
+    [self.picBtn setTitle: @"相册" forState:UIControlStateNormal];
+    [self.picBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.picBtn.titleLabel.font = FONT(15);
+    [self.picBtn addTarget:self action:@selector(picAxis) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *photoBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH-24-10, 12, 20, 20)];
     [self.headerView addSubview:photoBtn];
@@ -265,12 +267,22 @@
 }
 #pragma mark 时光栏
 - (void)timeAxis{
-    self.scroll.contentOffset = CGPointMake(0, 0);
     
+//    [self.myView addSubview:_timeView];
+    self.myView.frame = CGRectMake(0, 64, WIDTH * 2, HEIGHT-64-49);
+    self.picBtn.layer.borderWidth = 0;
+    self.timeBtn.layer.borderWidth = 1;
+    self.timeBtn.layer.cornerRadius = 5;
+    self.timeBtn.layer.borderColor = [UIColor whiteColor].CGColor;
 }
 #pragma mark 相册栏
 - (void)picAxis{
-     self.scroll.contentOffset = CGPointMake(WIDTH, 0);
+//    self.myView.frame = CGRectContainsPoint(WIDTH, 64);
+    self.myView.frame = CGRectMake(-WIDTH, 64, WIDTH * 2, HEIGHT-64-49);
+    self.timeBtn.layer.borderWidth = 0;
+    self.picBtn.layer.borderWidth = 1;
+    self.picBtn.layer.cornerRadius = 5;
+    self.picBtn.layer.borderColor = [UIColor whiteColor].CGColor;
     [self.picTable reloadData];
 }
 #pragma mark 点击发布

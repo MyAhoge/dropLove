@@ -24,4 +24,6 @@
 
 @property (copy, nonatomic) NSString *socialId;
 
+@property (strong, nonatomic) NSArray *imgArr;
+
 @end

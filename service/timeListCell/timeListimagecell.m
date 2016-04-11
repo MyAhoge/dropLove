@@ -91,15 +91,15 @@
     self.contentlabel.frame = CGRectMake(70, 10, WIDTH_MY-70-10, _a);
 
    
-    self.image1.frame       = CGRectMake(_contentlabel.frame.origin.x, _a+_contentlabel.frame.origin.y, (WIDTH_MY-80)/3, (WIDTH_MY-80)/3);
+    self.image1.frame       = CGRectMake(_contentlabel.frame.origin.x, _a+_contentlabel.frame.origin.y, (WIDTH_MY-100)/3, (WIDTH_MY-100)/3);
 
-    self.image2.frame       = CGRectMake(_contentlabel.frame.origin.x + (WIDTH_MY-80)/3, _a+_contentlabel.frame.origin.y, (WIDTH_MY-80)/3, (WIDTH_MY-80)/3);
+    self.image2.frame       = CGRectMake(_contentlabel.frame.origin.x +10+ (WIDTH_MY-100)/3, _a+_contentlabel.frame.origin.y, (WIDTH_MY-100)/3, (WIDTH_MY-100)/3);
 
-    self.image3.frame       = CGRectMake(_contentlabel.frame.origin.x + 2*(WIDTH_MY-80)/3, _a+_contentlabel.frame.origin.y, (WIDTH_MY-80)/3, (WIDTH_MY-80)/3);
+    self.image3.frame       = CGRectMake(_contentlabel.frame.origin.x +10+ 2*(WIDTH_MY-80)/3, _a+_contentlabel.frame.origin.y, (WIDTH_MY-100)/3, (WIDTH_MY-100)/3);
     
     self.timeLabel.frame    = CGRectMake(_contentlabel.frame.origin.x, _image1.frame.origin.y+_image1.frame.size.height, 80, 20);
     
-    self.deletebtn.frame    = CGRectMake(_timeLabel.frame.size.width+_timeLabel.frame.origin.x, _timeLabel.frame.origin.y, 30, 20);
+    self.deletebtn.frame    = CGRectMake(WIDTH_MY-35-20, _timeLabel.frame.origin.y, 20, 20);
     
     self.btn.frame          = CGRectMake(WIDTH_MY-10-25, _timeLabel.frame.origin.y, 25, 20);
 

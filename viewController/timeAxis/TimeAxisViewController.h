@@ -16,7 +16,7 @@
 
 @interface TimeAxisViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,sendDicDelegate>
 
-@property (strong, nonatomic) UIScrollView *scroll;
+@property (strong, nonatomic) UIView *myView;
 
 @property (strong, nonatomic) UIView *timeView;
 
@@ -49,6 +49,8 @@
 
 @property (copy, nonatomic) NSString *userId;
 
+@property (strong, nonatomic) UIButton *timeBtn;
 
+@property (strong, nonatomic) UIButton *picBtn;
 
 @end

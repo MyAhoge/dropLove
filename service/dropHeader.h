@@ -97,6 +97,8 @@
 #import "Header.h"
 //0410
 #import "timeListimagecell.h"
+//0411
+#import "socialImgCell.h"
 
 
 //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

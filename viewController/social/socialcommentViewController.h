@@ -43,4 +43,6 @@
 
 @property (strong, nonatomic) NSMutableArray *commentMutArr;
 
+@property (strong, nonatomic) NSArray *imgArr;
+
 @end

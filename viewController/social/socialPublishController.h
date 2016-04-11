@@ -9,9 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "SocialViewController.h"
 
-@interface socialPublishController : UIViewController<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@protocol turnBackDelegate <NSObject>
+- (void)turnImages:(NSMutableArray *)selectAllImages;
+@end
+
+@interface socialPublishController : UIViewController<UINavigationControllerDelegate,UIImagePickerControllerDelegate,turnBackDelegate>
 
 @property (assign, nonatomic) id<socialDelegate> delegate;
+
+@property (strong, nonatomic) UIButton *addImageBtn;
+@property (strong, nonatomic) UIScrollView *imageScroll;
+@property (strong, nonatomic) NSMutableArray *imageViewArr;
+@property (strong, nonatomic) UIButton *deleteBtn;
 
 @property (copy, nonatomic  ) NSString       *textStr;
 

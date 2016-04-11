@@ -72,7 +72,7 @@
     self.dateLab2 = [[UILabel alloc]initWithFrame:CGRectMake(10, _dateLab1.frame.size.height+_dateLab1.frame.origin.y,50, 20)];
     self.dateLab2.font = FONT(10);
     
-    self.contentLab = [[UILabel alloc]initWithFrame:CGRectMake(70, 10,WIDTH-70-10, _headHeight-40)];
+    self.contentLab = [[UILabel alloc]initWithFrame:CGRectMake(70, 10,WIDTH-70-10, _headHeight-60)];
     [self.contentLab setNumberOfLines:0];
     self.contentLab.font = FONT(13);
     

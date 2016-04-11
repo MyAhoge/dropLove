@@ -53,13 +53,7 @@
     frame.size.height = _labHeight + 110;
     self.frame = frame;
 }
-//- (void)setHeight:(NSString *)text{
-//    CGRect frame = [self frame];
-//    CGRect textSize = [text boundingRectWithSize:CGSizeMake(WIDTH_MY-20,_labHeight) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil];
-//    self.labHeight = textSize.size.height;
-//    frame.size.height = _labHeight + 110;
-//    self.frame = frame;
-//}
+
 - (void)layoutSubviews{
     [super layoutSubviews];
     self.cellView.frame   = CGRectMake(0, 5, WIDTH_MY, self.frame.size.height-10);
@@ -74,7 +68,7 @@
 
     self.commentBtn.frame = CGRectMake(WIDTH_MY-10-25, _contentLab.frame.origin.y+_contentLab.frame.size.height+5, 25, 20);
     
-    self.deleteBtn.frame = CGRectMake(10, _contentLab.frame.origin.y+_contentLab.frame.size.height+10, 30, 20);
+    self.deleteBtn.frame = CGRectMake(WIDTH_MY-10-20, _headerLab.frame.origin.y, 20, 20);
 }
 
 @end
