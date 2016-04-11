@@ -18,6 +18,9 @@
 @property (strong, nonatomic) BMKMapView *mapView;
 @property (strong, nonatomic) BMKPoiSearch *poisearch;
 @property (assign, nonatomic) int curPage;
+@property (copy, nonatomic)NSString *citytext;
+@property (copy, nonatomic)NSString *activeandadress;
+
 
 
 

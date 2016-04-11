@@ -11,4 +11,7 @@
 
 @interface SharkViewController : UIViewController
 
+@property (copy, nonatomic)NSString *city;
+@property (copy, nonatomic)NSString *detaladress;
+
 @end

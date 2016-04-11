@@ -40,22 +40,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
     self.view.backgroundColor = [UIColor whiteColor];
-//
-//    UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 20)];
-//    [self.view addSubview:topView];
-//    topView.backgroundColor = COLOR_MINE;
-//    
-//    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, WIDTH, 44)];
-//    [self.view addSubview:headerView];
-//    headerView.backgroundColor = COLOR_MINE;
-//    
-//    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 15, 25)];
-//    [btn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal ];
-//    [btn addTarget:self action:@selector(backMethod) forControlEvents:UIControlEventTouchUpInside];
-//    [headerView addSubview:btn];
-//    
+    
+    self.title = @"摇一摇";
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont systemFontOfSize:18],NSForegroundColorAttributeName:[UIColor whiteColor]};
+    
+    
     // 背景图
     self.bgimg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_MY, HEIGHT_MY)];
     self.bgimg.image = [UIImage imageNamed:@"sharkbg1"];
@@ -84,7 +75,7 @@
     self.fourimg.layer.cornerRadius = 45;
     self.fourimg.layer.masksToBounds = YES;
     [self.view addSubview:_fourimg];
-
+    
     
     // 摇一摇图片
     self.sharkimg = [[UIImageView alloc]initWithFrame:CGRectMake(60, (HEIGHT_MY/2-(WIDTH_MY-120)/2)-64, WIDTH_MY-120, WIDTH_MY-120)];
@@ -98,15 +89,15 @@
     self.arr = @[@"去公园",@"吃火锅",@"看电影",@"吃海鲜",@"唱K"];
     self.arrpic = @[@"1000",@"1001",@"1002",@"1004",@"1005"];
     self.arrnear = @[@"附近公园",@"附近火锅店",@"附近电影院",@"附近海鲜店",@"附近KTV"];
-
+    
     
     //  显示摇出结果文字内容
     self.resultlab = [[UILabel alloc]initWithFrame:CGRectMake(WIDTH/2-50, 60, 100, 35)];
     self.resultlab.textAlignment = NSTextAlignmentCenter;
     self.resultlab.font = [UIFont systemFontOfSize:30];
     self.resultlab.textColor = [UIColor grayColor];
-
-
+    
+    
     
     // 显示摇出结果图片
     self.resultimg = [[UIImageView alloc]initWithFrame:CGRectMake(70, HEIGHT_MY/2-(WIDTH_MY-140)/2-70, WIDTH_MY-140, WIDTH_MY-140)];
@@ -131,31 +122,33 @@
     self.goimg = [[UIImageView alloc]initWithFrame:CGRectMake(WIDTH_MY/2+20+60, HEIGHT_MY/2+90+30, 50, 50)];
     self.goimg.layer.cornerRadius = 25;
     self.goimg.layer.masksToBounds = YES;
-    [self.resultbgimg addSubview:_goimg];
+    self.goimg.userInteractionEnabled = YES;
+    self.goimg.image = [UIImage imageNamed:@"200"];
+    //    [self.view addSubview:_goimg];
+    //    [self.resultbgimg addSubview:_goimg];
     
     // 创建手势
     self.tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(test)];
-    self.sharkimg.userInteractionEnabled = YES;
     self.tap.numberOfTapsRequired = 1;
     self.tap.numberOfTouchesRequired = 1;
     [self.goimg addGestureRecognizer:_tap];
-    [self.resultbgimg addSubview:_goimg];
+    
     
 }
 
 //  开始摇一摇
 - (void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event{
-
+    
     NSLog(@"开始摇动");
 }
 
 
 // 结束摇一摇
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event{
-
+    
     NSLog(@"结束摇动");
     
-    self.resultbgimg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 64, WIDTH_MY, HEIGHT_MY)];
+    self.resultbgimg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_MY, HEIGHT_MY)];
     self.resultbgimg.backgroundColor = COLOR(243,239,230,1);
     [self.view addSubview:_resultbgimg];
     
@@ -166,21 +159,19 @@
     self.resultlab.text = self.arr[i];
     [self.resultbgimg addSubview:_resultlab];
     NSLog(@"%@",self.arr[i]);
-        
+    
     self.resultimg.image = [UIImage imageNamed:self.arrpic[i]];
     [self.resultbgimg addSubview:_resultimg];
     NSLog(@"%@",self.arrpic[i]);
     
-  
+    
     self.resultnearlab.text = self.arrnear[i];
     [self.resultbgimg addSubview:_resultnearlab];
     [self.resultbgimg addSubview:_resultgolab];
     
-    self.goimg.image = [UIImage imageNamed:@"200"];
-    [self.goimg addGestureRecognizer:_tap];
-    [self.resultbgimg addSubview:_goimg];
-    
-    
+    //    self.goimg.image = [UIImage imageNamed:@"200"];
+    //    [self.goimg addGestureRecognizer:_tap];
+    [self.view addSubview:_goimg];
     
     
 }
@@ -188,9 +179,16 @@
 //  进入导航页面
 - (void)test{
     
-    NSLog(@"123456");
+    NSLog(@"进入导航页面");
     
-    [self presentViewController:[[MapViewController alloc]init] animated:YES completion:nil];
+    MapViewController *vc = [[MapViewController alloc]init];
+    vc.citytext = self.city;
+    NSString *str4 = [self.resultnearlab.text substringFromIndex:2];
+    NSString *str5 = [NSString stringWithFormat:@"%@%@",self.detaladress,str4];
+    vc.activeandadress =  str5;
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 
 
