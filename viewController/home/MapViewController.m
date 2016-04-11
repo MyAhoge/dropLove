@@ -7,8 +7,11 @@
 //
 
 #import "MapViewController.h"
+#import "dropHeader.h"
+
 
 @interface MapViewController ()
+
 
 @end
 
@@ -17,33 +20,32 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = @"地图";
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont systemFontOfSize:18],NSForegroundColorAttributeName:[UIColor whiteColor]};
     
-    _mapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)];
+    
+    _mapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_MY, HEIGHT_MY)];
     
     [self.view addSubview:_mapView];
     
-    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(100, 100, 30, 30)];
-    btn.backgroundColor = [UIColor purpleColor];
-    [btn addTarget:self action:@selector(test) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btn];
-    
     self.poisearch = [[BMKPoiSearch alloc]init];
-    
     
     // 设置地图级别
     [_mapView setZoomLevel:13];
     _mapView.isSelectedAnnotationViewFront = YES;
-}
-
-
--(void)test
-{
+    
+    
+    
     _curPage = 0;
     BMKCitySearchOption *citySearchOption = [[BMKCitySearchOption alloc]init];
     citySearchOption.pageIndex = _curPage;
     citySearchOption.pageCapacity = 10;
-    citySearchOption.city= @"苏州";
-    citySearchOption.keyword = @"吴中区KTV";
+    citySearchOption.city= self.citytext;
+    NSLog(@"%@",self.citytext);
+    //    NSString *address = [NSString stringWithFormat:@"%@"]
+    citySearchOption.keyword = self.activeandadress;
+    NSLog(@"%@",self.activeandadress);
     BOOL flag = [self.poisearch poiSearchInCity:citySearchOption];
     if(flag)
     {
@@ -54,8 +56,32 @@
         NSLog(@"城市内检索发送失败");
     }
     
-    
 }
+
+
+//-(void)test{
+//
+//    _curPage = 0;
+//    BMKCitySearchOption *citySearchOption = [[BMKCitySearchOption alloc]init];
+//    citySearchOption.pageIndex = _curPage;
+//    citySearchOption.pageCapacity = 10;
+//    citySearchOption.city= self.citytext;
+//    NSLog(@"%@",self.citytext);
+////    NSString *address = [NSString stringWithFormat:@"%@"]
+//    citySearchOption.keyword = self.activeandadress;
+//    NSLog(@"%@",self.activeandadress);
+//    BOOL flag = [self.poisearch poiSearchInCity:citySearchOption];
+//    if(flag)
+//    {
+//        NSLog(@"城市内检索发送成功");
+//    }
+//    else
+//    {
+//        NSLog(@"城市内检索发送失败");
+//    }
+//
+//
+//}
 
 
 -(void)viewWillAppear:(BOOL)animated {

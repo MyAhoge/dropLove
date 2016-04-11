@@ -29,10 +29,10 @@
     
     
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
-//    顶部导航
+    //    顶部导航
     
     //顶部导航栏
-//    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    //    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     
     self.navigationItem.title = @"点滴爱";
     
@@ -54,44 +54,44 @@
     //2.把UIBarButtonItem对象赋值给leftBarButtonItem或者rightBarButtonItem
     rightBtn.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightBtn;
-
-//    
-//    self.headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 64)];
-//    
-//    [self.view addSubview:self.headView];
-//    
-//    self.topLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 20)];
-//    
-//    self.topLabel.backgroundColor = COLOR_MINE;
-//    
-//    [self.headView addSubview:self.topLabel];
-//    
-//    self.mainLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 20, WIDTH, 44)];
-//    
-//    self.mainLabel.backgroundColor = COLOR_MINE;
-//    
-//    self.mainLabel.text = @"点滴爱";
-//    
-//    self.mainLabel.textAlignment = NSTextAlignmentCenter;
-//    
-//    self.mainLabel.textColor = COLOR(255, 255, 255, 1);
-//    
-//    self.mainLabel.font = FONT(15);
-//    
-//    [self.headView addSubview:self.mainLabel];
-//    
-//    self.changbgBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH-40, 30, 25, 25)];
-//
-//    [self.changbgBtn setImage:[UIImage imageNamed:@"112.png"] forState:UIControlStateNormal];
-//    
-//    [self.changbgBtn addTarget:self action:@selector(photo:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    [self.headView addSubview:self.changbgBtn];
-//    middle 底部49
+    
+    //
+    //    self.headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 64)];
+    //
+    //    [self.view addSubview:self.headView];
+    //
+    //    self.topLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 20)];
+    //
+    //    self.topLabel.backgroundColor = COLOR_MINE;
+    //
+    //    [self.headView addSubview:self.topLabel];
+    //
+    //    self.mainLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 20, WIDTH, 44)];
+    //
+    //    self.mainLabel.backgroundColor = COLOR_MINE;
+    //
+    //    self.mainLabel.text = @"点滴爱";
+    //
+    //    self.mainLabel.textAlignment = NSTextAlignmentCenter;
+    //
+    //    self.mainLabel.textColor = COLOR(255, 255, 255, 1);
+    //
+    //    self.mainLabel.font = FONT(15);
+    //
+    //    [self.headView addSubview:self.mainLabel];
+    //
+    //    self.changbgBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH-40, 30, 25, 25)];
+    //
+    //    [self.changbgBtn setImage:[UIImage imageNamed:@"112.png"] forState:UIControlStateNormal];
+    //
+    //    [self.changbgBtn addTarget:self action:@selector(photo:) forControlEvents:UIControlEventTouchUpInside];
+    //
+    //    [self.headView addSubview:self.changbgBtn];
+    //    middle 底部49
     
     self.middleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, HEIGHT-113)];
     
-//    self.middleView.backgroundColor = [UIColor redColor];
+    //    self.middleView.backgroundColor = [UIColor redColor];
     
     [self.view addSubview:self.middleView];
     
@@ -100,14 +100,14 @@
     //获取沙盒路径
     NSString *homePath = [[NSHomeDirectory() stringByAppendingString:@"/documents"] stringByAppendingString:@"/bgimage.png"];
     if ([UIImage imageWithContentsOfFile:homePath]) {
-    self.middleImage.image = [UIImage imageWithContentsOfFile:homePath];
+        self.middleImage.image = [UIImage imageWithContentsOfFile:homePath];
     }else{
-    self.middleImage.image = [UIImage imageNamed:@"bg.jpg"];
+        self.middleImage.image = [UIImage imageNamed:@"bg.jpg"];
     }
-        [self.middleView addSubview:self.middleImage];
+    [self.middleView addSubview:self.middleImage];
     
     
-//    personView
+    //    personView
     
     self.personView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 55)];
     
@@ -122,11 +122,11 @@
     self.manimage.layer.cornerRadius = 17.5;
     
     self.manimage.layer.masksToBounds = YES;
-//设置边框及边框颜色
-//    self.manimage.layer.borderWidth = 1;
-//
-//    self.manimage.layer.borderColor = [[UIColor groupTableViewBackgroundColor] CGColor];
-//
+    //设置边框及边框颜色
+    //    self.manimage.layer.borderWidth = 1;
+    //
+    //    self.manimage.layer.borderColor = [[UIColor groupTableViewBackgroundColor] CGColor];
+    //
     [self.personView addSubview:self.manimage];
     
     self.mancityLabel = [[UILabel alloc]initWithFrame:CGRectMake(55, 10, 45, 17)];
@@ -135,7 +135,7 @@
     
     self.mancityLabel.font = FONT(12);
     
-//    self.mancityLabel.text = @"苏州";
+    //    self.mancityLabel.text = @"苏州";
     
     self.mancityLabel.textColor = [UIColor blackColor];
     
@@ -147,7 +147,7 @@
     
     self.manweatherLabel.font = FONT(12);
     
-//    self.manweatherLabel.text = @"雨";
+    //    self.manweatherLabel.text = @"雨";
     
     self.manweatherLabel.textColor = [UIColor blackColor];
     
@@ -159,7 +159,7 @@
     
     self.mantempLabel.font = FONT(12);
     
-//    self.mantempLabel.text = @"12℃";
+    //    self.mantempLabel.text = @"12℃";
     
     self.mantempLabel.textColor = [UIColor blackColor];
     
@@ -216,7 +216,7 @@
     
     [self.personView addSubview:self.womantempLabel];
     
-//    menuView
+    //    menuView
     
     self.menuView = [[UIView alloc]initWithFrame:CGRectMake(0, _middleView.frame.size.height-105, WIDTH, 105)];
     
@@ -233,7 +233,7 @@
     self.sharkBtn.layer.borderWidth = 1;
     
     self.sharkBtn.layer.borderColor = [[UIColor groupTableViewBackgroundColor] CGColor];
-
+    
     [self.sharkBtn setImage:[UIImage imageNamed:@"shark.png"] forState:UIControlStateNormal];
     
     [self.sharkBtn addTarget:self action:@selector(shark) forControlEvents:UIControlEventTouchUpInside];
@@ -256,7 +256,7 @@
     [self.menuView addSubview:self.sharkLabel];
     
     
-//
+    //
     self.chatBtn = [[UIButton alloc]initWithFrame:CGRectMake(_menuView.frame.size.width/2-25, 15, 50, 50)];
     
     self.chatBtn.layer.cornerRadius = 25;
@@ -284,7 +284,7 @@
     self.chatLabel.textColor = [UIColor blackColor];
     
     [self.menuView addSubview:self.chatLabel];
-//    
+    //
     self.memorialBtn = [[UIButton alloc]initWithFrame:CGRectMake((_menuView.frame.size.width)*3/4-25, 15, 50, 50)];
     
     self.memorialBtn.layer.cornerRadius = 25;
@@ -313,7 +313,7 @@
     
     [self.menuView addSubview:self.memorialLabel];
     
-  //plist
+    //plist
     
     PlistLocalInfo *Info = [[PlistLocalInfo alloc]init];
     
@@ -328,18 +328,18 @@
     NSString *city = [_cityNameStr substringToIndex:2];
     NSLog(@"%@",city);
     
-//    weatherServices *data = [[weatherServices alloc]init];
-//    [data weatherData:_mancityLabel.text addWithSucess:^(NSDictionary *dic) {
-//        
-//        self.weatherMutDic = [[[dic objectForKey:@"result"] objectForKey:@"data"] objectForKey:@"realtime"];
-//       
-//        self.mantempLabel.text = [self.weatherMutDic objectForKey:@"temperature"];
-//         self.manweatherLabel.text = [self.weatherMutDic objectForKey:@"info"];
-////        self.label2.text = [[self.mutdic objectForKey:@"weather"] objectForKey:@"temperature"];
-//        
-//    } addWithEror:^(NSString *str) {
-//        NSLog(@"%@", str);
-//    }];
+    //    weatherServices *data = [[weatherServices alloc]init];
+    //    [data weatherData:_mancityLabel.text addWithSucess:^(NSDictionary *dic) {
+    //
+    //        self.weatherMutDic = [[[dic objectForKey:@"result"] objectForKey:@"data"] objectForKey:@"realtime"];
+    //
+    //        self.mantempLabel.text = [self.weatherMutDic objectForKey:@"temperature"];
+    //         self.manweatherLabel.text = [self.weatherMutDic objectForKey:@"info"];
+    ////        self.label2.text = [[self.mutdic objectForKey:@"weather"] objectForKey:@"temperature"];
+    //
+    //    } addWithEror:^(NSString *str) {
+    //        NSLog(@"%@", str);
+    //    }];
 }
 
 
@@ -399,153 +399,153 @@
     self.middleImage.image = [UIImage imageWithContentsOfFile:_DocumentsPath];
     [picker dismissViewControllerAnimated:YES completion:nil];
     
-//    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-////    保存图片至本地
-//    NSData *data;
-//    if (UIImagePNGRepresentation(image)) {
-//        data = UIImageJPEGRepresentation(image, 1.0);
-//    }else{
-//        data = UIImagePNGRepresentation(image);
-//    }
-//    
-//    
-//    
-// 
-//    
-//    NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"test.png"];
-//    
-//    [data writeToFile:fullPath atomically:YES];
-//    
-//    UIImage *savedImage = [[UIImage alloc]initWithContentsOfFile:fullPath];
-//    self.middleImage.image = savedImage;
+    //    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    ////    保存图片至本地
+    //    NSData *data;
+    //    if (UIImagePNGRepresentation(image)) {
+    //        data = UIImageJPEGRepresentation(image, 1.0);
+    //    }else{
+    //        data = UIImagePNGRepresentation(image);
+    //    }
+    //
+    //
+    //
+    //
+    //
+    //    NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"test.png"];
+    //
+    //    [data writeToFile:fullPath atomically:YES];
+    //
+    //    UIImage *savedImage = [[UIImage alloc]initWithContentsOfFile:fullPath];
+    //    self.middleImage.image = savedImage;
     
-//
-//    NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
-//    if ([type isEqualToString:@"public.image"]) {
-//        
-//        UIImage *image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
-//        
-//        NSDictionary *dic = [[NSDictionary alloc]init];
-//        [dic writeToFile:_lastPath atomically:YES];
-//
-//        
-////        [UIImagePNGRepresentation(image) writeToFile:_lastPath atomically:YES];
-//    
-//        [picker dismissViewControllerAnimated:YES completion:nil];
-//        NSLog(@"%@",_lastPath);
-//            UIImage *savedImage = [[UIImage alloc]initWithContentsOfFile:_lastPath];
-//        self.middleImage.image = savedImage;
-//    }
-
+    //
+    //    NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
+    //    if ([type isEqualToString:@"public.image"]) {
+    //
+    //        UIImage *image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+    //
+    //        NSDictionary *dic = [[NSDictionary alloc]init];
+    //        [dic writeToFile:_lastPath atomically:YES];
+    //
+    //
+    ////        [UIImagePNGRepresentation(image) writeToFile:_lastPath atomically:YES];
+    //
+    //        [picker dismissViewControllerAnimated:YES completion:nil];
+    //        NSLog(@"%@",_lastPath);
+    //            UIImage *savedImage = [[UIImage alloc]initWithContentsOfFile:_lastPath];
+    //        self.middleImage.image = savedImage;
+    //    }
     
-//    NSLog(@"%@",fullPath);
-//    NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
-//    if ([type isEqualToString:@"public.image"]) {
-//        
-//        UIImage *image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
-//        
-//                NSDictionary *dic = [[NSDictionary alloc]init];
-//                [dic writeToFile:_lastPath atomically:YES];
-//        
-//        [UIImagePNGRepresentation(image) writeToFile:_lastPath atomically:YES];
-//        
-//        [picker dismissViewControllerAnimated:YES completion:nil];
-//        NSLog(@"%@",_lastPath);
-//    }
     
-//    [picker dismissViewControllerAnimated:YES completion:nil];
+    //    NSLog(@"%@",fullPath);
+    //    NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
+    //    if ([type isEqualToString:@"public.image"]) {
+    //
+    //        UIImage *image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+    //
+    //                NSDictionary *dic = [[NSDictionary alloc]init];
+    //                [dic writeToFile:_lastPath atomically:YES];
+    //
+    //        [UIImagePNGRepresentation(image) writeToFile:_lastPath atomically:YES];
+    //
+    //        [picker dismissViewControllerAnimated:YES completion:nil];
+    //        NSLog(@"%@",_lastPath);
+    //    }
+    
+    //    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 
 /*
--(void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    [picker dismissViewControllerAnimated:YES completion:^{
-        
-    }];
-    
-    if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString *)kUTTypeMovie]) {
-        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"提示信息!" message:@"系统只支持图片格式" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
-        
-        
-        [alert show];
-    }else if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString *)kUTTypeImage]) {
-        
-        UIImage *originImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-        
-        //        图片太大，压缩上传
-        
-        UIImage *miniImage = [self scaleImage:originImage toScale:0.3];
-        
-        NSData *data = UIImagePNGRepresentation(miniImage);
-        
-        //将二进制数据生成UIImage
-        //        UIImage *image = [UIImage imageWithData:data];
-        
-        //        为保证图片质量 可以上传原图
-        
-        
-        UIImage *scaleImage = [self scaleImage:originImage toScale:0.7];
-        
-        NSData *scaledata = UIImagePNGRepresentation(scaleImage);
-        
-        //图片保存的路径
-        //这里将图片放在沙盒的documents文件夹中
-        
-        self.paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
-        
-        
-        self.DocumentsPath = [_paths objectAtIndex:0];//[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
-        
-        //文件管理器
-        _fileManager = [NSFileManager defaultManager];
-        
-        //把刚刚图片转换的data对象拷贝至沙盒中 并保存为image.png
-        [_fileManager createDirectoryAtPath:_DocumentsPath withIntermediateDirectories:YES attributes:nil error:nil];
-        [_fileManager createFileAtPath:[_DocumentsPath stringByAppendingPathComponent:@"image.png"] contents:data attributes:nil];
-        [_fileManager createFileAtPath:[_DocumentsPath stringByAppendingPathComponent:@"originimage.png"] contents:scaledata attributes:nil];
-        //得到选择后沙盒中图片的完整路径
-        
-        _imagePath = [_DocumentsPath stringByAppendingPathComponent:@"image.png"];
-        _originimagePath=[_DocumentsPath stringByAppendingPathComponent:@"originimage.png"];
-        
-        NSUserDefaults *path = [NSUserDefaults standardUserDefaults];
-        
-        [path setObject: _imagePath forKey:@"pic"];
-        
-        [path setObject: _originimagePath forKey:@"originpic"];
-        
-        
-        self.middleImage.image=[UIImage imageWithContentsOfFile:_imagePath];
-//        delBtn.hidden=NO;
-    }
-    [picker dismissViewControllerAnimated:YES completion:^{
-        
-    }];
-}
-
-#pragma mark- 缩放图片
--(UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
-{
-    UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize,image.size.height*scaleSize));
-    [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height *scaleSize)];
-    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return scaledImage;
-}
-
--(void) imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    
-    [picker dismissViewControllerAnimated:YES completion:^{
-        
-    }];
-}
-*/
+ -(void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+ {
+ [picker dismissViewControllerAnimated:YES completion:^{
+ 
+ }];
+ 
+ if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString *)kUTTypeMovie]) {
+ UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"提示信息!" message:@"系统只支持图片格式" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
+ 
+ 
+ [alert show];
+ }else if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString *)kUTTypeImage]) {
+ 
+ UIImage *originImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+ 
+ //        图片太大，压缩上传
+ 
+ UIImage *miniImage = [self scaleImage:originImage toScale:0.3];
+ 
+ NSData *data = UIImagePNGRepresentation(miniImage);
+ 
+ //将二进制数据生成UIImage
+ //        UIImage *image = [UIImage imageWithData:data];
+ 
+ //        为保证图片质量 可以上传原图
+ 
+ 
+ UIImage *scaleImage = [self scaleImage:originImage toScale:0.7];
+ 
+ NSData *scaledata = UIImagePNGRepresentation(scaleImage);
+ 
+ //图片保存的路径
+ //这里将图片放在沙盒的documents文件夹中
+ 
+ self.paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+ 
+ 
+ self.DocumentsPath = [_paths objectAtIndex:0];//[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+ 
+ //文件管理器
+ _fileManager = [NSFileManager defaultManager];
+ 
+ //把刚刚图片转换的data对象拷贝至沙盒中 并保存为image.png
+ [_fileManager createDirectoryAtPath:_DocumentsPath withIntermediateDirectories:YES attributes:nil error:nil];
+ [_fileManager createFileAtPath:[_DocumentsPath stringByAppendingPathComponent:@"image.png"] contents:data attributes:nil];
+ [_fileManager createFileAtPath:[_DocumentsPath stringByAppendingPathComponent:@"originimage.png"] contents:scaledata attributes:nil];
+ //得到选择后沙盒中图片的完整路径
+ 
+ _imagePath = [_DocumentsPath stringByAppendingPathComponent:@"image.png"];
+ _originimagePath=[_DocumentsPath stringByAppendingPathComponent:@"originimage.png"];
+ 
+ NSUserDefaults *path = [NSUserDefaults standardUserDefaults];
+ 
+ [path setObject: _imagePath forKey:@"pic"];
+ 
+ [path setObject: _originimagePath forKey:@"originpic"];
+ 
+ 
+ self.middleImage.image=[UIImage imageWithContentsOfFile:_imagePath];
+ //        delBtn.hidden=NO;
+ }
+ [picker dismissViewControllerAnimated:YES completion:^{
+ 
+ }];
+ }
+ 
+ #pragma mark- 缩放图片
+ -(UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
+ {
+ UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize,image.size.height*scaleSize));
+ [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height *scaleSize)];
+ UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+ UIGraphicsEndImageContext();
+ return scaledImage;
+ }
+ 
+ -(void) imagePickerControllerDidCancel:(UIImagePickerController *)picker
+ {
+ 
+ [picker dismissViewControllerAnimated:YES completion:^{
+ 
+ }];
+ }
+ */
 //定位
 -(void)locationManager:(CLLocationManager *)manager
 
-didFailWithError:(NSError *)error {
+      didFailWithError:(NSError *)error {
     
     
     
@@ -587,39 +587,47 @@ didFailWithError:(NSError *)error {
 //定位代理经纬度回调
 -(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    
-    [_locationManager stopUpdatingLocation];
-    
-    
-    NSLog(@"location ok");
-    
-    NSLog(@"%@",[NSString stringWithFormat:@"经度:%3.5f\n纬度:%3.5f",newLocation.coordinate.latitude,newLocation.coordinate.longitude]);
-    
-    CLGeocoder * geoCoder = [[CLGeocoder alloc] init];
-    
-    [geoCoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error) {
-        for (CLPlacemark * placemark in placemarks) {
-            
-            NSDictionary *test = [placemark addressDictionary];
-            //  Country(国家)  State(城市)  SubLocality(区)
-            
-            NSLog(@"City---%@", [test objectForKey:@"City"]);
-            
-            self.cityNameStr = [test objectForKey:@"City"];
-            
-            self.mancityLabel.text = self.cityNameStr;
-            
-        }
-        //天气请求
         
-        NSString *city = [_cityNameStr substringToIndex:2];
-        NSLog(@">>>%@",city);
+        [_locationManager stopUpdatingLocation];
         
+        
+        NSLog(@"location ok");
+        
+        NSLog(@"%@",[NSString stringWithFormat:@"经度:%3.5f\n纬度:%3.5f",newLocation.coordinate.latitude,newLocation.coordinate.longitude]);
+        
+        CLGeocoder * geoCoder = [[CLGeocoder alloc] init];
+        
+        [geoCoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+            for (CLPlacemark * placemark in placemarks) {
+                
+                NSDictionary *test = [placemark addressDictionary];
+                //  Country(国家)  State(城市)  SubLocality(区)
+                
+                NSLog(@"City---%@", [test objectForKey:@"City"]);
+                
+                self.cityNameStr = [test objectForKey:@"City"];
+                
+                self.mancityLabel.text = self.cityNameStr;
+                
+                
+                NSLog(@"%@",test);
+                
+                self.subLocality = [test objectForKey:@"SubLocality"];
+                NSLog(@"%@",self.subLocality);
+                
+                
+                
+            }
+            //天气请求
+            
+            NSString *city = [_cityNameStr substringToIndex:2];
+            NSLog(@">>>%@",city);
+            
             weatherServices *data = [[weatherServices alloc]init];
             [data weatherData:city addWithSucess:^(NSDictionary *dic) {
-//                NSLog(@">>>dic%@",dic);
+                //                NSLog(@">>>dic%@",dic);
                 self.weatherMutDic = [[[[dic objectForKey:@"result"] objectForKey:@"data"] objectForKey:@"realtime"]objectForKey:@"weather"];
-        
+                
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
                     self.mantempLabel.text = [NSString stringWithFormat:@"%@℃",[self.weatherMutDic objectForKey:@"temperature"]];
@@ -628,20 +636,23 @@ didFailWithError:(NSError *)error {
                     
                 });
             } addWithEror:^(NSString *str) {
-//                NSLog(@"%@", str);
+                //                NSLog(@"%@", str);
             }];
+            
+        }];
         
-    }];
-    
     });
-   
-                   
+    
+    
     
 }
 
 //摇一摇跳转
 -(void)shark{
     SharkViewController *loveshark = [[SharkViewController alloc]init];
+    
+    loveshark.city = self.cityNameStr;
+    loveshark.detaladress = self.subLocality;
     
     //隐藏底部tabbar
     loveshark.hidesBottomBarWhenPushed = YES;
@@ -651,7 +662,7 @@ didFailWithError:(NSError *)error {
 //聊天跳转
 -(void)lovechat{
     //新建一个聊天会话View Controller对象
-     chatViewController *chat = [[chatViewController alloc]init];
+    chatViewController *chat = [[chatViewController alloc]init];
     //设置会话的类型，如单聊、讨论组、群聊、聊天室、客服、公众服务会话等
     chat.conversationType = 1;
     //设置会话的目标会话ID。（单聊、客服、公众服务会话为对方的ID，讨论组、群聊、聊天室为会话的ID）
@@ -665,7 +676,7 @@ didFailWithError:(NSError *)error {
     [self.navigationController pushViewController:chat animated:YES];
     
     
-//    [self presentViewController:chat animated:YES completion:nil];
+    //    [self presentViewController:chat animated:YES completion:nil];
 }
 //纪念日跳转
 -(void)memorialDay{

@@ -54,6 +54,7 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
     
     self.i = 1;
     self.j = 1;
@@ -151,14 +152,27 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    
+     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.section == 0 && indexPath.row == 0 ) {
-        [self presentViewController:[[WishViewController alloc]init] animated:YES completion:nil];
+        WishViewController *wish = [[WishViewController alloc]init];
+        wish.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:wish animated:YES];
     }
-    
+    if (indexPath.section == 0 && indexPath.row == 1 ) {
+        WakeViewController *wake = [[WakeViewController alloc]init];
+        wake.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:wake animated:YES];
+    }
+
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -304,7 +318,6 @@
         }];
     }
 }
-
 
 
 

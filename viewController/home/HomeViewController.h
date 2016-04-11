@@ -70,6 +70,8 @@
 @property(strong,nonatomic)NSArray *paths;
 
 @property(copy,nonatomic)NSString *DocumentsPath;
+
+@property (copy, nonatomic)NSString *subLocality;
 //
 //@property(strong,nonatomic)NSFileManager *fileManager;
 //@property(copy,nonatomic)NSString *imagePath;

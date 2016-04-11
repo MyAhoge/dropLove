@@ -57,10 +57,16 @@
     nvc.tabBarItem.selectedImage = [[UIImage imageNamed:@"homeHight@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     nvc.navigationBar.barTintColor = COLOR_MINE;
     
+    
+    UINavigationController *minevc = [[UINavigationController alloc]initWithRootViewController:mine];
+    minevc.navigationBar.translucent = NO;
+    minevc.tabBarItem.title = @"我的";
+    minevc.navigationBar.barTintColor = COLOR_MINE;
+
     //
     UITabBarController *tabBar = [[UITabBarController alloc]init];
     //
-    tabBar.viewControllers = @[nvc,time,social,mine];
+    tabBar.viewControllers = @[nvc,time,social,minevc];
     //设置底部图标和title颜色
     tabBar.tabBar.tintColor = COLOR_MINE;
     
@@ -96,7 +102,7 @@
     
     _mapManager = [[BMKMapManager alloc]init];
     // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
-    BOOL ret = [_mapManager start:@"E4IrvoY7eNwNuYFlXfuQCmjvs7Eskxas"  generalDelegate:nil];
+    BOOL ret = [_mapManager start:@"6PK19NT1x999KtdsBRbO5CmITFVZi5gc"  generalDelegate:nil];
     if (!ret) {
         NSLog(@"manager start failed!");
     }

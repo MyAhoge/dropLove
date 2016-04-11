@@ -22,6 +22,7 @@
 @property (strong, nonatomic)UITextView *textView;
 
 @property (strong, nonatomic)UIButton *addbtn;
+@property (strong, nonatomic)UIBarButtonItem *rightbtn;
 @end
 
 @implementation addwishViewController
@@ -30,35 +31,22 @@
     [super viewDidLoad];
     self.view.backgroundColor = COLOR(243, 239, 230, 1);
     
-    //  顶部导航栏
-    UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 20)];
-    [self.view addSubview:topView];
-    topView.backgroundColor = COLOR_MINE;
+    self.title = @"添加愿望";
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont systemFontOfSize:18],NSForegroundColorAttributeName:[UIColor whiteColor]};
     
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, WIDTH, 44)];
-    [self.view addSubview:headerView];
-    headerView.backgroundColor = COLOR_MINE;
-    
-    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 40, 25)];
-    [btn setTitle:@"取消" forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-    [headerView addSubview:btn];
-    
-    UILabel *titlelab = [[UILabel alloc]initWithFrame:CGRectMake(80, 0, WIDTH_MY-160, 44)];
-    titlelab.textAlignment = NSTextAlignmentCenter;
-    titlelab.font = FONT(20);
-    titlelab.text = @"添加愿望";
-    titlelab.textColor = [UIColor whiteColor];
-    [headerView addSubview:titlelab];
-    
-    self.addbtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH_MY-49, 10, 40, 25)];
 
-//    [self.addbtn setTintColor:[UIColor whiteColor]];
-    [self.addbtn addTarget:self action:@selector(addwish) forControlEvents:UIControlEventTouchUpInside];
-    [headerView addSubview: self.addbtn];
+    self.rightbtn = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(addwish)];
+     self.navigationItem.rightBarButtonItem = _rightbtn;
+
+    
+    UIBarButtonItem *leftbtn = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+    self.navigationItem.leftBarButtonItem = leftbtn;
+    
+
     
     
-    self.view1 = [[UIView alloc]initWithFrame:CGRectMake(0, 64, WIDTH_MY, (WIDTH_MY-30-10)/3+200+40-50-50)];
+    self.view1 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_MY, (WIDTH_MY-30-10)/3+200+40-50-50-10)];
     self.view1.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_view1];
     
@@ -67,7 +55,7 @@
     self.image1.image = [UIImage imageNamed:@"101.jpg"];
     [self.view1 addSubview:_image1];
     
-    self.view2 = [[UIView alloc]initWithFrame:CGRectMake(0, (WIDTH_MY-30-10)/3+200+40+64+10-50-50, WIDTH_MY, 40)];
+    self.view2 = [[UIView alloc]initWithFrame:CGRectMake(0, (WIDTH_MY-30-10)/3+200+40+64+10-50-50-64-10, WIDTH_MY, 40)];
     self.view2.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_view2];
     
@@ -77,7 +65,7 @@
     lable3.textColor = [UIColor blackColor];
     [self.view2 addSubview:lable3];
     
-    UIImageView *image2 = [[UIImageView alloc]initWithFrame:CGRectMake(WIDTH_MY-25, 10, 20, 20)];
+    UIImageView *image2 = [[UIImageView alloc]initWithFrame:CGRectMake(WIDTH_MY-25-5, 12.5, 20, 15)];
     image2.image = [UIImage imageNamed:@"下一页"];
     [self.view2 addSubview:image2];
     
@@ -112,42 +100,56 @@
 
 - (void)back{
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)addwish{
     
-    NSLog(@"添加完成");
+    
+    if ([_textView.text length] == 0) {
+        
+        UIAlertAction *alert = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
+        UIAlertController *alertctl = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入内容" preferredStyle:UIAlertControllerStyleAlert];
+        [alertctl addAction:alert];
+        [self presentViewController:alertctl animated:YES completion:nil];
+        
+        NSLog(@"请输入内容");
+        
+        
+    }else{
+
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+        [dateFormatter setDateStyle:NSDateFormatterFullStyle];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
+        NSLog(@"%@",dateString);
+        
+        
+        NSString *place = @"上海虹桥";
+        
+        NSString *str = self.textView.text;
+        
+        NSMutableDictionary *mutdic1 = [[NSMutableDictionary alloc]initWithCapacity:0];
+        int k = 1;
+        NSString *kk = [NSString stringWithFormat:@"%d",k];
+        [mutdic1 setValue:str forKey:@"content"];
+        [mutdic1 setValue:place forKey:@"place"];
+        [mutdic1 setValue:dateString forKey:@"date"];
+        [mutdic1 setObject:kk forKey:@"id"];
+        
+        WishViewController *vc = [[WishViewController alloc]init];
+        vc.mutDic = mutdic1;
+        
+        [IcomNSObject addwish:mutdic1 Andaddwish:^(NSDictionary *dic) {
+            NSLog(@"++++++添加成功");
+        }];
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        
+        }
 
     
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    [dateFormatter setDateStyle:NSDateFormatterFullStyle];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
-    NSLog(@"%@",dateString);
-    
-    
-    NSString *place = @"上海虹桥";
-    
-    NSString *str = self.textView.text;
-    
-    NSMutableDictionary *mutdic1 = [[NSMutableDictionary alloc]initWithCapacity:0];
-    int k = 1;
-    NSString *kk = [NSString stringWithFormat:@"%d",k];
-    [mutdic1 setValue:str forKey:@"content"];
-    [mutdic1 setValue:place forKey:@"place"];
-    [mutdic1 setValue:dateString forKey:@"date"];
-    [mutdic1 setObject:kk forKey:@"id"];
-    
-    WishViewController *vc = [[WishViewController alloc]init];
-    vc.mutDic = mutdic1;
-    
-    [IcomNSObject addwish:mutdic1 Andaddwish:^(NSDictionary *dic) {
-        NSLog(@"添加成功");
-    }];
-    
 
-    [self dismissViewControllerAnimated:YES completion:nil];
 
 
 }
@@ -163,13 +165,11 @@
     
     if ([textView.text length] == 0) {
         [self.lable1 setHidden:NO];
-        [self.addbtn setHidden:YES];
+       
 
     }else{
         [self.lable1 setHidden:YES];
-        [self.addbtn setHidden:NO];
-        [self.addbtn setTitle:@"完成" forState:UIControlStateNormal];
-        [self.addbtn setTintColor:[UIColor whiteColor]];
+       
     }
 }
 
