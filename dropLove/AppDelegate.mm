@@ -30,14 +30,31 @@
 //    home.tabBarItem.title = @"首页";
     
     time.tabBarItem.title = @"时光轴";
+    
+    time.tabBarItem.image = [[UIImage imageNamed:@"timeAxis@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    time.tabBarItem.selectedImage = [[UIImage imageNamed:@"timeAxisHight@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
  
     social.tabBarItem.title = @"社区";
     
+    social.tabBarItem.image = [[UIImage imageNamed:@"social@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    social.tabBarItem.selectedImage = [[UIImage imageNamed:@"socialHight@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
     mine.tabBarItem.title = @"我的";
+    
+    mine.tabBarItem.image = [[UIImage imageNamed:@"mine1@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    mine.tabBarItem.selectedImage = [[UIImage imageNamed:@"mineHight1@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    
     
     UINavigationController *nvc = [[UINavigationController alloc]initWithRootViewController:home];
       nvc.navigationBar.translucent = NO;
     nvc.tabBarItem.title = @"首页";
+    nvc.tabBarItem.image = [[UIImage imageNamed:@"home@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    nvc.tabBarItem.selectedImage = [[UIImage imageNamed:@"homeHight@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     nvc.navigationBar.barTintColor = COLOR_MINE;
     
     

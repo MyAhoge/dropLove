@@ -15,6 +15,9 @@
     
 }
 @property (strong, nonatomic) CLLocationManager* locationManager;
+
+@property (strong, nonatomic) UIView *view1;
+
 @end
 
 @implementation publishViewController
@@ -26,23 +29,23 @@
     [self headerMethod];
     [self mainMethod];
     
-    [self locaTime];
+    
 }
 #pragma mark 输入框和图片位置
 - (void)mainMethod{
-    UIView *view1 = [[UIView alloc]initWithFrame:CGRectMake(0, 64, WIDTH, 200)];
-    [self.view addSubview:view1];
-    view1.backgroundColor = [UIColor whiteColor];
+    self.view1 = [[UIView alloc]initWithFrame:CGRectMake(0, 64, WIDTH, 200)];
+    [self.view addSubview:_view1];
+    self.view1.backgroundColor = [UIColor whiteColor];
     
     self.text1 = [[UITextView alloc]initWithFrame:CGRectMake(10, 0, WIDTH, 80)];
-    [view1 addSubview:_text1];
+    [self.view1 addSubview:_text1];
     self.text1.font = FONT(15);
     self.text1.scrollEnabled = YES;
     //    self.textStr = text1.text;
     //    NSLog(@"textstr%@", _textStr);
     
-    UIButton *imageViewBtn = [[UIButton alloc]initWithFrame:CGRectMake(_text1.frame.origin.x, _text1.frame.size.height+_text1.frame.origin.y, (WIDTH-50)/4, (WIDTH-50)/4)];
-    [view1 addSubview:imageViewBtn];
+    UIButton *imageViewBtn = [[UIButton alloc]initWithFrame:CGRectMake(_text1.frame.origin.x, _view1.frame.size.height-(WIDTH-50)/4-10, (WIDTH-50)/4, (WIDTH-50)/4)];
+    [self.view1 addSubview:imageViewBtn];
     imageViewBtn.layer.borderWidth = 2;
     imageViewBtn.layer.borderColor = MICOLOR.CGColor;
     [imageViewBtn addTarget:self action:@selector(photoAlert) forControlEvents:UIControlEventTouchUpInside];
@@ -54,9 +57,9 @@
     sLabel.backgroundColor = MICOLOR;
     
     self.imageView = [[UIImageView alloc]initWithFrame:CGRectMake(imageViewBtn.frame.size.width+imageViewBtn.frame.origin.x, imageViewBtn.frame.origin.y, 100, 100)];
-    [view1 addSubview:_imageView];
+    [self.view1 addSubview:_imageView];
     //定位信息
-    UIView *mapView = [[UIView alloc]initWithFrame:CGRectMake(0, view1.frame.origin.y+view1.frame.size.height+20, WIDTH, 50)];
+    UIView *mapView = [[UIView alloc]initWithFrame:CGRectMake(0, _view1.frame.origin.y+_view1.frame.size.height+20, WIDTH, 50)];
     [self.view addSubview:mapView];
     mapView.backgroundColor = [UIColor whiteColor];
     
@@ -78,7 +81,7 @@
 - (void)photoAlert{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"从相册中选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self photo];
+        [self click];
     }];
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"拍一张" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self camera];
@@ -156,27 +159,26 @@
 }
 #pragma mark 发布
 - (void)sendToTime{
-    //    //获取沙盒路径
-    NSString *path = [[NSHomeDirectory() stringByAppendingString:@"/documents"] stringByAppendingString:@"/bgimage.png"];
+    [self locaTime];
     
-    self.dic = @{@"content":_text1.text,
-                 @"time":[_prettyVersion substringFromIndex:12],
-                 @"date":[_prettyVersion substringToIndex:10],
-                 @"userid":@5
+    if (_imageViewArr.count == 0) {
+        self.dic = @{@"content":_text1.text,
+                     @"time":[_prettyVersion substringFromIndex:12],
+                     @"date":[_prettyVersion substringToIndex:10],
+                     @"userid":@1
+                     };
+    }else{
+        self.dic = @{@"content":_text1.text,
+                     @"time":[_prettyVersion substringFromIndex:12],
+                     @"date":[_prettyVersion substringToIndex:10],
+                     @"userid":@1,
+                     @"imgarr":_imageViewArr
                  };
-    
-    [dataService addDataDic:_dic addWith:^(NSDictionary *resultDic) {
-        NSLog(@"result%@",resultDic);
-    } addWith:^(NSDictionary *errorDic) {
-        
-    }];
-    
+    }
     if (_delegate != nil && [_delegate respondsToSelector:@selector(sendMethod:)]) {
         
         [_delegate sendMethod:_dic];
-        path = nil;
         [self dismissViewControllerAnimated:YES completion:nil];
-        
     }
 }
 
@@ -243,7 +245,108 @@
     //cccc 星期全名 MM月全名
     //    [dateFormat setDateFormat:@"cccc MM dd, yyyy hh:mm aa"];
     [dateFormat setDateFormat:@"yyyy-MM-dd hh:mm aa"];
-   self.prettyVersion = [dateFormat stringFromDate:[NSDate date]];
-    NSLog(@"%@", _prettyVersion);
+    self.prettyVersion = [dateFormat stringFromDate:[NSDate date]];
+//    NSLog(@"%@", _prettyVersion);
+}
+
+
+#pragma mark - 点击添加图片按钮
+- (void)click{
+    
+    ImageViewController *vc=[[ImageViewController alloc]init];
+    
+    vc.delegate = self;
+    
+    [self presentViewController:vc animated:YES completion:nil];
+    
+}
+#pragma mark - 代理带回来的图片信息
+- (void)turnImages:(NSMutableArray *)selectAllImages{
+//    view1.frame.size.height-(WIDTH-50)/4-10
+    self.imageScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(107.5, _view1.frame.size.height-(WIDTH-50)/4-10, [UIScreen mainScreen].bounds.size.width - 20, (WIDTH-50)/4)];
+    
+    self.imageScroll.backgroundColor = [UIColor whiteColor];
+    
+    self.imageScroll.contentOffset = CGPointMake(20, 320);
+    
+    self.imageScroll.contentSize = CGSizeMake(selectAllImages.count*(APPWIDTH-80)/5+selectAllImages.count*10, (WIDTH-50)/4);
+    
+    self.imageScroll.showsVerticalScrollIndicator = NO;
+    
+    NSMutableArray *lessTenImageArr = [NSMutableArray arrayWithCapacity:0];
+    
+    if (selectAllImages.count >10) {
+        
+        for (int i = 0; i<10; i++) {
+            
+            [lessTenImageArr addObject:selectAllImages[i]];
+        }
+    }else{
+        
+        lessTenImageArr = selectAllImages;
+        
+    }
+    self.imageViewArr = lessTenImageArr;
+    
+    for (int i = 0; i<lessTenImageArr.count; i++) {
+        
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(i*((WIDTH-50)/4+10), 0, (WIDTH-50)/4, (WIDTH-50)/4)];
+        
+        imageView.image = lessTenImageArr[i];
+        
+        imageView.tag = i+1000;
+        
+        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPress:)];
+        
+        [imageView setUserInteractionEnabled:YES];
+        
+        [imageView addGestureRecognizer:longPress];
+        
+        [self.imageScroll addSubview:imageView];
+    }
+    [self.view1 addSubview:self.imageScroll];
+}
+
+- (void)longPress:(UIGestureRecognizer *)sender{
+    
+    
+    if (sender.state ==  UIGestureRecognizerStateBegan  ) {
+        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake((WIDTH-50)/4-20, 0, 20, 20)];
+        
+        btn.backgroundColor = [UIColor orangeColor];
+        
+        btn.hidden = NO;
+        
+        btn.tag = [sender view].tag;
+        
+        [btn addTarget:self action:@selector(deleteImage:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [[self.imageScroll viewWithTag:[sender view].tag] addSubview:btn];
+    }
+    
+    
+}
+
+- (void)deleteImage:(UIButton *)sender{
+    //
+    for (long int i = sender.tag; i<self.imageViewArr.count+1000-1; i++) {
+        
+        NSLog(@"=======%ld",sender.tag);
+        
+        UIImageView *before = [self.imageScroll viewWithTag:i];
+        
+        UIImageView *afterImage = [self.imageScroll viewWithTag:i+1];
+        
+        before.image = afterImage.image;
+    }
+    
+    [[self.imageScroll viewWithTag:self.imageViewArr.count+1000-1] removeFromSuperview];
+    
+    [self.imageViewArr removeObjectAtIndex:sender.tag-1000];
+    
+    self.imageScroll.contentSize = CGSizeMake(self.imageViewArr.count*(WIDTH-50)/4+self.imageViewArr.count*10, (WIDTH-50)/4);
+    
+    
+    [sender setHidden:YES];
 }
 @end

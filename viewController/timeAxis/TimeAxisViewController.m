@@ -36,19 +36,34 @@
 }
 #pragma mark 代理方法，获得返回值
 - (void)sendMethod:(NSDictionary *)send{
-    self.sendDic = send;
     
-    timeaxisModel *model = [[timeaxisModel alloc]init];
-    
-    model.content = [send objectForKey:@"content"];
-    model.date = [send objectForKey:@"date"];
-    model.time = [send objectForKey:@"time"];
-    [self.sourceArr addObject:model];
-//    [self.dateArr addObject:[send objectForKey:@"date"]];
-//    [self.timeArr addObject:[send objectForKey:@"time"]];
-//    [self.contentArr addObject:[send objectForKey:@"content"]];
-    
-    [self.table reloadData];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+       
+        [dataService addDataDic:send addWith:^(NSDictionary *resultDic) {
+            NSLog(@"result%@",resultDic);
+            
+            [dataService timeaxisSetImg:[send objectForKey:@"imgarr"] andHomeWorkId:12 andSuccess:^(NSString *str) {
+                NSLog(@"%@", str);
+            } andFail:^(NSString *error) {
+                
+            }];
+            
+        } addWith:^(NSDictionary *errorDic) {
+            
+        }];
+        
+        timeaxisModel *model = [[timeaxisModel alloc]init];
+        
+        model.content = [send objectForKey:@"content"];
+        model.date = [send objectForKey:@"date"];
+        model.time = [send objectForKey:@"time"];
+        model.imgArr = [send objectForKey:@"imgarr"];
+        [self.sourceArr addObject:model];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+               [self.table reloadData];
+        });
+    });
 }
 #pragma mark tableView
 - (void)myTableView{
@@ -95,34 +110,76 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([tableView isEqual:_table]) {
-        
-    timelistcell *cell = [tableView dequeueReusableCellWithIdentifier:@"dropLove"];
-        if (cell == nil) {
-            cell = [[timelistcell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"dropLove"];
-        }
-        
-        cell.backgroundColor = MICOLOR;
-        
         timeaxisModel *timeModel = [[timeaxisModel alloc]init];
         timeModel = self.sourceArr[_sourceArr.count - 1 - indexPath.row];
         
-        cell.dateLabel1.text = [timeModel.date substringFromIndex:8];
-        cell.dateLabel2.text = [timeModel.date substringToIndex:7];
-        cell.timeLabel.text = timeModel.time;
-        cell.contentlabel.text = timeModel.content;
-        
-        cell.heartImage.image = [UIImage imageNamed:@"heart"];
-        
-        [cell setHeight:timeModel.content];
-        self.height = cell.frame.size.height;
-
-        [cell.deletebtn setTitle:@"删除" forState:UIControlStateNormal];
-        [cell.deletebtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-        cell.deletebtn.tag = indexPath.row;
-        [cell.deletebtn addTarget:self action:@selector(deleteMethod:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [cell.btn setImage:[UIImage imageNamed:@"comment"] forState:UIControlStateNormal];
-        return cell;
+        if (timeModel.imgArr.count == 0) {
+  
+            timelistcell *cell = [tableView dequeueReusableCellWithIdentifier:@"dropLove"];
+            if (cell == nil) {
+                cell = [[timelistcell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"dropLove"];
+            }
+            
+            cell.backgroundColor = MICOLOR;
+            
+            
+            
+            cell.dateLabel1.text = [timeModel.date substringFromIndex:8];
+            cell.dateLabel2.text = [timeModel.date substringToIndex:7];
+            cell.timeLabel.text = timeModel.time;
+            cell.contentlabel.text = timeModel.content;
+            
+            cell.heartImage.image = [UIImage imageNamed:@"heart"];
+            
+            [cell setHeight:timeModel.content];
+            self.height = cell.frame.size.height;
+            
+            [cell.deletebtn setTitle:@"删除" forState:UIControlStateNormal];
+            [cell.deletebtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            cell.deletebtn.tag = _sourceArr.count - 1 - indexPath.row;
+            [cell.deletebtn addTarget:self action:@selector(deleteMethod:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [cell.btn setImage:[UIImage imageNamed:@"comment"] forState:UIControlStateNormal];
+             return cell;
+        }else{
+            timeListimagecell *cell = [tableView dequeueReusableCellWithIdentifier:@"timeListimagecellid"];
+            if (cell == nil) {
+                cell = [[timeListimagecell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"timeListimagecellid"];
+            }
+            cell.backgroundColor = MICOLOR;
+            
+            cell.dateLabel1.text = [timeModel.date substringFromIndex:8];
+            cell.dateLabel2.text = [timeModel.date substringToIndex:7];
+            cell.timeLabel.text = timeModel.time;
+            cell.contentlabel.text = timeModel.content;
+            
+            cell.heartImage.image = [UIImage imageNamed:@"heart"];
+            
+            [cell setHeight:timeModel.content];
+            self.height = cell.frame.size.height;
+            
+            [cell.deletebtn setTitle:@"删除" forState:UIControlStateNormal];
+            [cell.deletebtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            cell.deletebtn.tag = _sourceArr.count - 1 - indexPath.row;
+            [cell.deletebtn addTarget:self action:@selector(deleteMethod:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [cell.btn setImage:[UIImage imageNamed:@"comment"] forState:UIControlStateNormal];
+            
+            if (timeModel.imgArr.count == 1) {
+                cell.image1 = timeModel.imgArr[0];
+            }else if(timeModel.imgArr.count == 2){
+                cell.image1 = timeModel.imgArr[0];
+                cell.image2 = timeModel.imgArr[1];
+            }else if (timeModel.imgArr.count == 3){
+                cell.image1 = timeModel.imgArr[0];
+                cell.image2 = timeModel.imgArr[1];
+                cell.image3 = timeModel.imgArr[2];
+                
+            }else{
+                
+            }
+            return cell;
+        }
     }else{
         piclistcell *cell2 = [tableView dequeueReusableCellWithIdentifier:@"piclistid"];
         if (cell2 == nil) {
@@ -141,16 +198,21 @@
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"删除心情之后将无法恢复，确认删除吗？" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self.sourceArr removeObjectAtIndex:sender.tag];
-        [self.table reloadData];
-#warning 删除数据库内容
+        
+        NSDictionary *dic = @{@"timeid":(timeaxisModel *)[_sourceArr[sender.tag] timeid]};
+        [dataService timeaxisDelete:dic andWithSucess:^(NSDictionary *resultDic) {
+            [self.sourceArr removeObjectAtIndex:sender.tag];
+            [self.table reloadData];
+        } andWithError:^(NSDictionary *error) {
+            
+        }];
     }];
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:action];
     [alert addAction:action1];
     [self presentViewController:alert animated:YES completion:nil];
 }
-//点击cell事件
+#pragma mark 点击cell事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if ([tableView isEqual:_table]) {
@@ -228,11 +290,8 @@
         NSDictionary *idDic = @{@"userid":@"1",
                                 @"otheruserid":@"2"};
         [dataService timeAxisDic:idDic AndWidth:^(NSDictionary *resultDic) {
-
             NSArray *arr = [resultDic objectForKey:@"result"];
-//            self.contentArr = [NSMutableArray arrayWithCapacity:0];
-//            self.timeArr = [NSMutableArray arrayWithCapacity:0];
-//            self.dateArr = [NSMutableArray arrayWithCapacity:0];
+             NSLog(@"%@",arr);
             self.sourceArr = [NSMutableArray arrayWithCapacity:0];
             
             for (NSDictionary *dic in arr) {
@@ -241,14 +300,12 @@
                 model.content = [dic objectForKey:@"timeaxis_content"];
                 model.time = [dic objectForKey:@"timeaxis_time"];
                 model.date = [dic objectForKey:@"timeaxis_date"];
+                model.timeid = [dic objectForKey:@"timeaxis_id"];
                 [self.sourceArr addObject:model];
-                
-//                [self.contentArr addObject:[dic objectForKey:@"timeaxis_content"]];
-//                [self.timeArr addObject:[dic objectForKey:@"timeaxis_time"]];
-//                [self.dateArr addObject:[dic objectForKey:@"timeaxis_date"]];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.table reloadData];
+               
             });
         } addWidth:^(NSDictionary *error) {
             NSLog(@"error");

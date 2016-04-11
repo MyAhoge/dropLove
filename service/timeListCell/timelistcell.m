@@ -67,27 +67,25 @@
 #pragma mark 计算高度
 - (void)layoutSubviews{
     [super layoutSubviews];
-    
-    int height              = _a;
-    self.myView.frame       = CGRectMake(0, 10, WIDTH_MY, self.frame.size.height-20);
-    
+
+    self.myView.frame       = CGRectMake(0, 0, WIDTH_MY, self.frame.size.height);
+
     self.dateLabel1.frame   = CGRectMake(10, 10, 40, 20);
-    
+
     self.dateLabel2.frame   = CGRectMake(10, _dateLabel1.frame.size.height+_dateLabel1.frame.origin.y, 50, 20);
-    
+
     self.lineLabel.frame    = CGRectMake(60, 0, 2, _myView.frame.size.height);
-    
+
     self.heartImage.frame   = CGRectMake(55, 15, 10, 10);
-    
-//    self.titleLabel.frame   = CGRectMake(70, 10, WIDTH_MY-60-10, 20);
-    self.contentlabel.frame = CGRectMake(70, 10, WIDTH_MY-70-10, height);
-    
+
+    self.contentlabel.frame = CGRectMake(70, 10, WIDTH_MY-70-10, _a);
+
     self.timeLabel.frame    = CGRectMake(_contentlabel.frame.origin.x, _contentlabel.frame.origin.y+_contentlabel.frame.size.height, 80, 20);
-    
-    self.deletebtn.frame = CGRectMake(_timeLabel.frame.size.width+_timeLabel.frame.origin.x, _timeLabel.frame.origin.y, 30, 20);
-    
+
+    self.deletebtn.frame    = CGRectMake(_timeLabel.frame.size.width+_timeLabel.frame.origin.x, _timeLabel.frame.origin.y, 30, 20);
+
     self.btn.frame          = CGRectMake(WIDTH_MY-10-25, _timeLabel.frame.origin.y, 25, 20);
-    
+
 }
 
 @end

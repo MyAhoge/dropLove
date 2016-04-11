@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "memorialViewController.h"
+
 @interface addMemorialDayViewController : UIViewController<UITextFieldDelegate>
 
 @property(strong,nonatomic)UIView *editView;
@@ -25,5 +27,12 @@
 @property(strong,nonatomic)UIButton *showBtn;
 
 @property(assign,nonatomic)int i;
+
+@property(strong, nonatomic) NSDictionary *dic;
+
+@property(assign,nonatomic)id<addMemdayDelegate>delegate;
+
+@property(copy,nonatomic)NSString *dateString;
+
 
 @end

@@ -11,6 +11,9 @@
 =======
 dropLove.xcodeproj/project.pbxproj
 
+<<<<<<< HEAD
+dropLove.xcodeproj/project.xcworkspace/xcuserdata/Mayday_xy.xcuserdatad/UserInterfaceState.xcuserstate
+=======
 dropLove.xcodeproj/project.pbxproj
 
 dropLove.xcodeproj/project.xcworkspace/xcuserdata/administrator.xcuserdatad/UserInterfaceState.xcuserstate
@@ -46,6 +49,7 @@ dropLove.xcodeproj/project.pbxproj
 dropLove.xcodeproj/project.xcworkspace/xcuserdata/administrator.xcuserdatad/UserInterfaceState.xcuserstate
 >>>>>>> origin/master
 
+<<<<<<< HEAD
 dropLove 0405/dropLove.xcodeproj/project.pbxproj
 
 dropLove 0405/dropLove.xcodeproj/project.xcworkspace/contents.xcworkspacedata
@@ -71,3 +75,20 @@ dropLove.xcodeproj/project.xcworkspace/xcuserdata/administrator.xcuserdatad/User
 dropLove 0405/dropLove.xcodeproj/xcuserdata/Mayday_xy.xcuserdatad/xcschemes/dropLove.xcscheme
 
 dropLove 0405/dropLove.xcodeproj/xcuserdata/Mayday_xy.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+=======
+*.xcuserstate
+
+*.xcscheme
+
+*.xcbkptlist
+
+*.xcscheme
+
+*.xcbkptlist
+
+*.xcuserstate
+
+*.xcuserstate
+>>>>>>> origin/master
+
+*.xcuserstate

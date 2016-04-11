@@ -46,8 +46,22 @@
         [self.myView addSubview:_timeLabel];
         self.timeLabel.font = FONT(13);
         
+        self.deletebtn = [[UIButton alloc]init];
+        [self.myView addSubview:_deletebtn];
+        self.deletebtn.titleLabel.font = FONT(13);
+        
         self.btn = [[UIButton alloc]init];
         [self.myView addSubview:_btn];
+        
+        self.image1 = [[UIImageView alloc]init];
+        [self.myView addSubview:_image1];
+        
+        self.image2 = [[UIImageView alloc]init];
+        [self.myView addSubview:_image2];
+        
+        self.image3 = [[UIImageView alloc]init];
+        [self.myView addSubview:_image3];
+        
         
     }
     return self;
@@ -57,23 +71,38 @@
     CGRect textSize = [text boundingRectWithSize:CGSizeMake(300, 9999) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil];
     self.a = textSize.size.height;
     
-    frame.size.height = _a + 60;
+    frame.size.height = _a + 60 + (WIDTH_MY-80)/3;
     self.frame = frame;
 }
 #pragma mark 计算高度
 - (void)layoutSubviews{
     [super layoutSubviews];
-    
-    int height              = _a;
-    self.myView.frame       = CGRectMake(0, 0, WIDTH_MY, HEIGHT_MY);
+
+    self.myView.frame       = CGRectMake(0, 0, WIDTH_MY, self.frame.size.height);
+
     self.dateLabel1.frame   = CGRectMake(10, 10, 40, 20);
+
     self.dateLabel2.frame   = CGRectMake(10, _dateLabel1.frame.size.height+_dateLabel1.frame.origin.y, 50, 20);
+
     self.lineLabel.frame    = CGRectMake(60, 0, 2, _myView.frame.size.height);
+
     self.heartImage.frame   = CGRectMake(55, 15, 10, 10);
-    self.titleLabel.frame   = CGRectMake(70, 10, WIDTH_MY-60-10, 20);
-    self.contentlabel.frame = CGRectMake(_titleLabel.frame.origin.x, _titleLabel.frame.origin.y+_titleLabel.frame.size.height, _titleLabel.frame.size.width, height);
-    self.timeLabel.frame    = CGRectMake(_titleLabel.frame.origin.x, _contentlabel.frame.origin.y+_contentlabel.frame.size.height, 60, 20);
+
+    self.contentlabel.frame = CGRectMake(70, 10, WIDTH_MY-70-10, _a);
+
+   
+    self.image1.frame       = CGRectMake(_contentlabel.frame.origin.x, _a+_contentlabel.frame.origin.y, (WIDTH_MY-80)/3, (WIDTH_MY-80)/3);
+
+    self.image2.frame       = CGRectMake(_contentlabel.frame.origin.x + (WIDTH_MY-80)/3, _a+_contentlabel.frame.origin.y, (WIDTH_MY-80)/3, (WIDTH_MY-80)/3);
+
+    self.image3.frame       = CGRectMake(_contentlabel.frame.origin.x + 2*(WIDTH_MY-80)/3, _a+_contentlabel.frame.origin.y, (WIDTH_MY-80)/3, (WIDTH_MY-80)/3);
+    
+    self.timeLabel.frame    = CGRectMake(_contentlabel.frame.origin.x, _image1.frame.origin.y+_image1.frame.size.height, 80, 20);
+    
+    self.deletebtn.frame    = CGRectMake(_timeLabel.frame.size.width+_timeLabel.frame.origin.x, _timeLabel.frame.origin.y, 30, 20);
+    
     self.btn.frame          = CGRectMake(WIDTH_MY-10-25, _timeLabel.frame.origin.y, 25, 20);
+
 }
 
 

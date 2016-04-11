@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface memorialViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>
+@protocol addMemdayDelegate <NSObject>
+
+-(void)showMemorial:(NSDictionary *)addDic;
+
+@end
+
+@interface memorialViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,addMemdayDelegate>
 
 @property(strong,nonatomic)UITableView *table;
 
@@ -31,5 +37,7 @@
 @property(strong,nonatomic)NSMutableArray *Arr;
 
 @property(strong,nonatomic)NSDictionary *dic;
+
+@property(strong,nonatomic)NSMutableArray *cellArr;
 
 @end

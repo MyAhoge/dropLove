@@ -25,6 +25,8 @@
 
 @property (strong, nonatomic) UILabel *timeLabel;
 
+@property (strong, nonatomic) UIButton *deletebtn;
+
 @property (strong, nonatomic) UIButton *btn;
 
 @property (assign, nonatomic) CGFloat a;
@@ -35,6 +37,6 @@
 
 @property (strong, nonatomic) UIImageView *image3;
 
-
+- (void)setHeight:(NSString *)text;
 
 @end
