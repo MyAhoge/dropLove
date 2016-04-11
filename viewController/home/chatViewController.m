@@ -26,7 +26,7 @@
 //    
 //        [self.view addSubview:self.changbgBtn];
 //
-    self.conversationMessageCollectionView.backgroundView=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg.jpg"]];
+//    self.conversationMessageCollectionView.backgroundView=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg.jpg"]];
     
     //1.创建UIBarButtonItem对象
     UIBarButtonItem *rightBtn =[[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemCamera target:self action:@selector(photo:)];

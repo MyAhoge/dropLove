@@ -26,4 +26,7 @@
 
 @property(assign,nonatomic)int i;
 
+//@property(assign,nonatomic)id<editMemdatDelegate>delegate;
+
+@property(copy,nonatomic)NSString *str;
 @end

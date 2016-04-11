@@ -137,7 +137,7 @@
     
     //    self.mancityLabel.text = @"苏州";
     
-    self.mancityLabel.textColor = [UIColor blackColor];
+    self.mancityLabel.textColor = [UIColor whiteColor];
     
     [self.personView addSubview:self.mancityLabel];
     
@@ -149,7 +149,7 @@
     
     //    self.manweatherLabel.text = @"雨";
     
-    self.manweatherLabel.textColor = [UIColor blackColor];
+    self.manweatherLabel.textColor = [UIColor whiteColor];
     
     [self.personView addSubview:self.manweatherLabel];
     
@@ -161,7 +161,7 @@
     
     //    self.mantempLabel.text = @"12℃";
     
-    self.mantempLabel.textColor = [UIColor blackColor];
+    self.mantempLabel.textColor = [UIColor whiteColor];
     
     [self.personView addSubview:self.mantempLabel];
     
@@ -188,7 +188,7 @@
     
     self.womancityLabel.text = @"扬州";
     
-    self.womancityLabel.textColor = [UIColor blackColor];
+    self.womancityLabel.textColor = [UIColor whiteColor];
     
     [self.personView addSubview:self.womancityLabel];
     
@@ -200,7 +200,7 @@
     
     self.womanweatherLabel.text = @"晴";
     
-    self.womanweatherLabel.textColor = [UIColor blackColor];
+    self.womanweatherLabel.textColor = [UIColor whiteColor];
     
     [self.personView addSubview:self.womanweatherLabel];
     
@@ -212,7 +212,7 @@
     
     self.womantempLabel.text = @"22℃";
     
-    self.womantempLabel.textColor = [UIColor blackColor];
+    self.womantempLabel.textColor = [UIColor whiteColor];
     
     [self.personView addSubview:self.womantempLabel];
     
@@ -249,7 +249,7 @@
     
     self.sharkLabel.font = FONT(13);
     
-    self.sharkLabel.textColor = [UIColor blackColor];
+    self.sharkLabel.textColor = [UIColor whiteColor];
     
     
     
@@ -281,7 +281,7 @@
     
     self.chatLabel.font = FONT(13);
     
-    self.chatLabel.textColor = [UIColor blackColor];
+    self.chatLabel.textColor = [UIColor whiteColor];
     
     [self.menuView addSubview:self.chatLabel];
     //
@@ -309,7 +309,7 @@
     
     self.memorialLabel.font = FONT(13);
     
-    self.memorialLabel.textColor = [UIColor blackColor];
+    self.memorialLabel.textColor = [UIColor whiteColor];
     
     [self.menuView addSubview:self.memorialLabel];
     
