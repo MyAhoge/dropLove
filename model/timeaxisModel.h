@@ -12,12 +12,13 @@
 
 @property (copy, nonatomic) NSString *content;
 
-//@property (copy, nonatomic) NSString *title;
+@property (copy, nonatomic) NSString *timeid;
 
 @property (copy, nonatomic) NSString *time;
 
 @property (copy, nonatomic) NSString *date;
 
+@property (strong, nonatomic) NSArray *imgArr;
 
 
 

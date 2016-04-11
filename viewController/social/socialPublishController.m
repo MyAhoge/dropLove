@@ -129,12 +129,12 @@
                           @"userid":@1};
     
     [dataService socialAddDataDic:dic addWith:^(NSDictionary *resultDic) {
-       NSLog(@"%@", resultDic);
+        
+        NSLog(@"%@", resultDic);
         
     } addWith:^(NSDictionary *errorDic) {
         
     }];
-    
     
     if (_delegate != nil && [_delegate respondsToSelector:@selector(socialSendMethod:)]) {
         [_delegate socialSendMethod:dic];
