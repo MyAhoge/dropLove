@@ -113,7 +113,18 @@
 
     self.showBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight ;
     
-    [self.showBtn setTitle:@"选择纪念日时间" forState:UIControlStateNormal];
+    //获取当前时间，日期
+    NSDate *currentDate = [NSDate date];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    
+    [dateFormatter setDateFormat:@"YYYY年MM月dd日"];
+    
+    NSString *dateString1 = [dateFormatter stringFromDate:currentDate];
+    
+    NSLog(@"dateString:%@",dateString1);
+    
+    [self.showBtn setTitle:dateString1 forState:UIControlStateNormal];
     
     [self.showBtn setTitleColor:COLOR(14, 134, 252, 1) forState:UIControlStateNormal];
     
@@ -130,9 +141,23 @@
 }
 - (void)overedit:(UIButton *)sender{
     
-    memorialViewController *memorial = [[memorialViewController alloc]init];
-    
-    memorial.hidesBottomBarWhenPushed = YES;
+//    memorialViewController *memorial = [[memorialViewController alloc]init];
+//    
+//    memorial.hidesBottomBarWhenPushed = YES;
+//    
+//    self.dic = @{
+//                 @"detail":_textfield.text,
+//                 
+//                 @"date":self.dateString,
+//                 
+//                 };
+//
+//    self.str = 
+//    
+//    
+//    if (_delegate != nil &&[_delegate respondsToSelector:@selector(printDate::)]) {
+//        [_delegate printDate:@""];
+//    }
     
     [self.navigationController popViewControllerAnimated:YES];
 }

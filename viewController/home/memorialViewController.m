@@ -90,7 +90,18 @@
     
     self.lovedateLab = [[UILabel alloc]initWithFrame:CGRectMake(53, 35, 102, 14)];
     
-    self.lovedateLab.text = @"距2015年12月22日";
+    //获取当前时间，日期
+    NSDate *currentDate = [NSDate date];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    
+    [dateFormatter setDateFormat:@"YYYY年MM月dd日"];
+    
+    NSString *dateString1 = [dateFormatter stringFromDate:currentDate];
+    
+    NSLog(@"dateString:%@",dateString1);
+    
+    self.lovedateLab.text = dateString1;
     
     self.lovedateLab.font = FONT(10);
     
@@ -232,13 +243,22 @@
 }
 
 -(void)tapmyview{
-
-    ShareViewController *share = [[ShareViewController alloc]init];
+//
+//    ShareViewController *share = [[ShareViewController alloc]init];
+//    
+//    //隐藏底部tabbar
+//    share.hidesBottomBarWhenPushed = YES;
+//    
+//    [self.navigationController pushViewController:share animated:YES];
     
-    //隐藏底部tabbar
-    share.hidesBottomBarWhenPushed = YES;
+    editMemorialDayViewController *edit = [[editMemorialDayViewController alloc]init];
     
-    [self.navigationController pushViewController:share animated:YES];
+    edit.hidesBottomBarWhenPushed = YES;
+    
+//    edit.delegate = self;
+    
+    [self.navigationController pushViewController:edit animated:YES];
+    
 }
 #pragma mark 数据处理
 - (void)dataSource{
@@ -283,8 +303,14 @@
     
     [self.table reloadData];
     
+}
+
+-(void)printDate:(NSString *)loveDateString{
     
+   
     
+   
+
 }
 
 

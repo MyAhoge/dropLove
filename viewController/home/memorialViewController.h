@@ -8,13 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol addMemdayDelegate <NSObject>
+@protocol addMemdayDelegate<NSObject>
 
 -(void)showMemorial:(NSDictionary *)addDic;
 
+
 @end
 
-@interface memorialViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,addMemdayDelegate>
+@protocol editMemdatDelegate <NSObject>
+
+-(void)printDate:(NSString *)loveDateString;
+
+@end
+
+@interface memorialViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,addMemdayDelegate,editMemdatDelegate>
 
 @property(strong,nonatomic)UITableView *table;
 
