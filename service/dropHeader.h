@@ -105,19 +105,18 @@
 #import "ClockViewController.h"
 #import "ClockModel.h"
 
-<<<<<<< HEAD
+
 //0412
 #import "loginViewController.h"
 #import "registerViewController.h"
 //登录按钮颜色
 #define COLOR_LOGINBTN [UIColor colorWithRed:55/255.0 green:205/255.0 blue:50/255.0 alpha:1]
 
-=======
+
 //0411
 #import "PSInfoViewController.h"
 #import "SetViewController.h"
 #import "PSInfoTableViewCell.h"
->>>>>>> origin/master
 
 
 #endif /* dropHeader_h */
