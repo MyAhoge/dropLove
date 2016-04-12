@@ -124,7 +124,7 @@
     
     NSLog(@"dateString:%@",dateString1);
     
-    [self.showBtn setTitle:dateString1 forState:UIControlStateNormal];
+    [self.showBtn setTitle:@"选择纪念日时间" forState:UIControlStateNormal];
     
     [self.showBtn setTitleColor:COLOR(14, 134, 252, 1) forState:UIControlStateNormal];
     
@@ -155,9 +155,9 @@
 //    self.str = 
 //    
 //    
-//    if (_delegate != nil &&[_delegate respondsToSelector:@selector(printDate::)]) {
-//        [_delegate printDate:@""];
-//    }
+    if (_delegate != nil &&[_delegate respondsToSelector:@selector(printDate:)]) {
+        [_delegate printDate:_dateString];
+    }
     
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -197,8 +197,17 @@
     NSDateFormatter *pickerFormatter = [[NSDateFormatter alloc] init];
     // 为日期格式器设置格式字符串
     [pickerFormatter setDateFormat:@"yyyy年MM月dd日"];
-    NSString *dateString = [pickerFormatter stringFromDate:pickerDate];
-    [self.showBtn setTitle: dateString forState:UIControlStateNormal ];
+    self.dateString = [pickerFormatter stringFromDate:pickerDate];
+    
+  
+    NSDate *dateB = [NSDate date];
+    NSComparisonResult result = [pickerDate compare:dateB];
+    if (result == NSOrderedDescending) {
+        UIAlertView * alterView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"你选取的时间超出范围" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alterView show];
+    }
+    
+    [self.showBtn setTitle: _dateString forState:UIControlStateNormal ];
     //    self.showLabel.text = dateString;
 }
 @end

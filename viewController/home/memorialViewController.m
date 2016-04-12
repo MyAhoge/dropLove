@@ -101,7 +101,7 @@
     
     NSLog(@"dateString:%@",dateString1);
     
-    self.lovedateLab.text = dateString1;
+//    self.lovedateLab.text = dateString1;
     
     self.lovedateLab.font = FONT(10);
     
@@ -109,11 +109,16 @@
     
     [self.myview addSubview:self.lovedateLab];
     
-    self.alldateLab = [[UILabel alloc]initWithFrame:CGRectMake(WIDTH-100, 15, 70, 24)];
     
-    self.alldateLab.text = @"1000";
+    
+    self.alldateLab = [[UILabel alloc]initWithFrame:CGRectMake(WIDTH-100, 15, 70, 24)];
+
+    
+    
     
     self.alldateLab.font = FONT(28);
+    
+    self.alldateLab.textAlignment = NSTextAlignmentRight;
     
     self.alldateLab.textColor = COLOR(46, 204, 255, 1);
     
@@ -134,11 +139,48 @@
     [self.myview addGestureRecognizer:self.tapGesturRecognizer];
     
     
-    
    
+    /**
+     *  读取数据
+     */
+    NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
+    NSString *name1 = [defaults1 objectForKey:@"time"];//根据键值取出name
+    NSLog(@"读取数据%@",name1);
+   
+    self.lovedateLab.text = name1;
+    
   
     
+
+    
  
+}
+
+//我们相爱时间天数计算
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
+    NSString *name1 = [defaults1 objectForKey:@"time"];//根据键值取出name
+//    NSLog(@"读取数据%@",name1);
+    NSDate *localDate = [NSDate date];
+    
+    NSDateFormatter *dateFormatter2 = [[NSDateFormatter alloc] init];
+    
+    [dateFormatter2 setDateFormat:@"yyyy年MM月dd日"];
+    
+    NSDate *date2 = [dateFormatter2 dateFromString:name1];
+    
+    NSTimeInterval time=[ localDate timeIntervalSinceDate:date2];
+    
+    int days=((int)time)/(3600*24);
+    
+    NSString *lovedateContent=[[NSString alloc] initWithFormat:@"%i",days];
+    
+//    NSLog(@"%i",days);
+    
+    self.alldateLab.text = lovedateContent;
+
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     memorialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"test"];
@@ -183,7 +225,7 @@
         NSString *detailstr = [[NSString alloc]initWithFormat:@"%@已经",me.content];
         cell.detailLab.text = detailstr;
         
-         cell.numLab.text = dateContent;
+        cell.numLab.text = dateContent;
     }
 
     cell.yearLab.text = [me.date substringToIndex:7];
@@ -255,7 +297,7 @@
     
     edit.hidesBottomBarWhenPushed = YES;
     
-//    edit.delegate = self;
+    edit.delegate = self;
     
     [self.navigationController pushViewController:edit animated:YES];
     
@@ -308,8 +350,26 @@
 -(void)printDate:(NSString *)loveDateString{
     
    
+   self.lovedateLab.text = loveDateString;
     
-   
+    /**
+     *  写入数据
+     */
+    NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
+//    NSString *str = 
+
+    [defaults setObject:self.lovedateLab.text forKey:@"time"];
+    [defaults synchronize];//用synchronize方法把数据持久化到standardUserDefaults数据库
+    
+//    /**
+//     *  读取数据
+//     */
+//    NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
+//    NSString *name1 = [defaults1 objectForKey:@"time"];//根据键值取出name
+//    NSLog(@"读取数据%@",name1);
+  
+    
+    
 
 }
 

@@ -111,6 +111,9 @@
     self.icompic.layer.cornerRadius =  35;
     self.icompic.layer.masksToBounds = YES;
     self.icompic.image = [UIImage imageNamed:@"icom1"];
+    self.icompic.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(psinfo)];
+    [self.icompic addGestureRecognizer:tap];
     [self.bgImageView addSubview:_icompic];
     
     // 名字
@@ -172,6 +175,12 @@
         wake.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:wake animated:YES];
     }
+    if (indexPath.section == 0 && indexPath.row == 1 ) {
+        WakeViewController *wake = [[WakeViewController alloc]init];
+        wake.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:wake animated:YES];
+    }
+
 
 }
 
@@ -306,8 +315,6 @@
         NSLog(@"%@",_lastpath);
         
         NSString *stricom = [NSString stringWithFormat:@"%d",_j];
-        
-//        [dd setValue:stricom forKey:@"oicom"];
 
         NSDictionary *dd = [[NSDictionary alloc]init];
         dd = @{@"nicom":stricom,
@@ -319,7 +326,12 @@
     }
 }
 
-
+- (void)psinfo{
+    
+    PSInfoViewController *PS = [[PSInfoViewController alloc]init];
+    PS.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:PS animated:YES];
+}
 
 
 @end

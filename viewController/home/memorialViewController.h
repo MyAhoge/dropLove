@@ -47,4 +47,6 @@
 
 @property(strong,nonatomic)NSMutableArray *cellArr;
 
+@property(copy,nonatomic)NSString  *loveStr;
+
 @end
