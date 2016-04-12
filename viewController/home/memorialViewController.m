@@ -109,9 +109,18 @@
     
     [self.myview addSubview:self.lovedateLab];
     
+<<<<<<< HEAD
     
     
     self.alldateLab = [[UILabel alloc]initWithFrame:CGRectMake(WIDTH-130, 15, 100, 24)];
+=======
+    
+    
+    self.alldateLab = [[UILabel alloc]initWithFrame:CGRectMake(WIDTH-100, 15, 70, 24)];
+
+    
+    
+>>>>>>> origin/master
     
     self.alldateLab.font = FONT(28);
     
@@ -143,6 +152,51 @@
     NSLog(@"读取数据%@",name1);
    
     self.lovedateLab.text = name1;
+}
+
+//我们相爱时间天数计算
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
+    NSString *name1 = [defaults1 objectForKey:@"time"];//根据键值取出name
+//    NSLog(@"读取数据%@",name1);
+    NSDate *localDate = [NSDate date];
+    
+<<<<<<< HEAD
+    NSDateFormatter *dateFormatter2 = [[NSDateFormatter alloc] init];
+    
+    [dateFormatter2 setDateFormat:@"yyyy年MM月dd日"];
+    
+    NSDate *date2 = [dateFormatter2 dateFromString:name1];
+    
+    NSTimeInterval time=[ localDate timeIntervalSinceDate:date2];
+    
+    int days=((int)time)/(3600*24);
+    
+    NSString *lovedateContent=[[NSString alloc] initWithFormat:@"%i",days];
+    
+//    NSLog(@"%i",days);
+    
+    self.alldateLab.text = lovedateContent;
+
+=======
+   
+    /**
+     *  读取数据
+     */
+    NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
+    NSString *name1 = [defaults1 objectForKey:@"time"];//根据键值取出name
+    NSLog(@"读取数据%@",name1);
+   
+    self.lovedateLab.text = name1;
+    
+  
+    
+
+    
+ 
+>>>>>>> origin/master
 }
 
 //我们相爱时间天数计算
