@@ -46,4 +46,8 @@
 
 +(void)mmmm:(NSDictionary *)dic addWith:(void (^)(NSDictionary *dic))sucess;
 
++ (void)memorialDataAddDic:(NSDictionary *)dic addWith:(void(^)(NSDictionary *resultDic))sucess addWith:(void(^)(NSDictionary *errorDic))error;
+
++ (void)memorialDatadelete:(NSDictionary *)dic andWithSucess:(void (^)(NSDictionary *result))sucess andWithError:(void (^)(NSDictionary *errorDic))error;
+
 @end

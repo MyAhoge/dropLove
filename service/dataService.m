@@ -145,6 +145,30 @@
         
     }];
 }
+#pragma mark 纪念日添加
 
++(void)memorialDataAddDic:(NSDictionary *)dic addWith:(void (^)(NSDictionary *))sucess addWith:(void (^)(NSDictionary *))error{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    [manager POST:@"http://10.110.5.58:8888/mylove/index.php/home/home/memorialdayadd" parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        sucess(responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error!!!");
+
+    }];
+    
+}
+
+#pragma mark  纪念日删除数据
++ (void)memorialDatadelete:(NSDictionary *)dic andWithSucess:(void (^)(NSDictionary *))sucess andWithError:(void (^)(NSDictionary *))error{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    [manager POST:@"http://10.110.5.58:8888/mylove/index.php/home/home/memorialdaydelete" parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        sucess(responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
 
 @end

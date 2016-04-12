@@ -17,9 +17,8 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
-
-        
-        self.dateView = [[UILabel alloc]init];
+   
+        self.dateView = [[UIView alloc]init];
         
         self.dateView.backgroundColor = COLOR(46, 204, 255, 1);
         
@@ -32,14 +31,6 @@
         self.yearLab.font = FONT(12);
         
         [self.contentView addSubview:self.yearLab];
-//        
-//        self.mouthLab = [[UILabel alloc]init];
-//        
-//        self.mouthLab.textColor = [UIColor whiteColor];
-//        
-//        self.mouthLab.font = FONT(13);
-//        
-//        [self.contentView addSubview:self.mouthLab];
         
         self.dayLab = [[UILabel alloc]init];
         
@@ -49,8 +40,6 @@
         
         [self.contentView addSubview:self.dayLab];
         
-        
-        
         self.detailLab = [[UILabel alloc]init];
         
         self.detailLab.font = FONT(15);
@@ -59,8 +48,6 @@
         
         [self.contentView addSubview:self.detailLab];
         
-        
-        //
         self.tianLab = [[UILabel alloc]init];
         
         self.tianLab.font = FONT(15);
@@ -84,11 +71,10 @@
 - (void)layoutSubviews{
 
     
-    self.dateView.frame = CGRectMake(0, 0, 50, 50);
+    self.dateView.frame = CGRectMake(0, 0, 55, 50);
     
-    self.yearLab.frame = CGRectMake(0, 33, 50, 15);
-    
-//    self.mouthLab.frame = CGRectMake(34, 33, 18, 15);
+
+    self.yearLab.frame = CGRectMake(0, 33, 55, 15);
     
     self.dayLab.frame = CGRectMake(16, 5, 25, 25);
     
@@ -96,7 +82,7 @@
     
     self.tianLab.frame = CGRectMake(WIDTH_MY-41, 15, 31, 21);
     
-    self.numLab.frame = CGRectMake(WIDTH_MY-85, 15, 40, 23);
+    self.numLab.frame = CGRectMake(WIDTH_MY-85, 15, 60, 23);
     
 }
 

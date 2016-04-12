@@ -78,8 +78,6 @@
     
     self.textLab.text = @"我们已经相爱";
     
-//    self.textfield.text = @"撒打算打算打算";
-    
     self.textLab.textAlignment = NSTextAlignmentRight;
     
     self.textLab.font = FONT(12);
@@ -124,7 +122,7 @@
     
     NSLog(@"dateString:%@",dateString1);
     
-    [self.showBtn setTitle:dateString1 forState:UIControlStateNormal];
+    [self.showBtn setTitle:@"选择纪念日时间" forState:UIControlStateNormal];
     
     [self.showBtn setTitleColor:COLOR(14, 134, 252, 1) forState:UIControlStateNormal];
     
@@ -141,25 +139,22 @@
 }
 - (void)overedit:(UIButton *)sender{
     
-//    memorialViewController *memorial = [[memorialViewController alloc]init];
-//    
-//    memorial.hidesBottomBarWhenPushed = YES;
-//    
-//    self.dic = @{
-//                 @"detail":_textfield.text,
-//                 
-//                 @"date":self.dateString,
-//                 
-//                 };
-//
-//    self.str = 
-//    
-//    
-//    if (_delegate != nil &&[_delegate respondsToSelector:@selector(printDate::)]) {
-//        [_delegate printDate:@""];
-//    }
     
-    [self.navigationController popViewControllerAnimated:YES];
+    if (_dateString.length == 0 ) {
+        UIAlertAction *alert = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
+        UIAlertController *alertctl = [UIAlertController alertControllerWithTitle:@"提示" message:@"请选择时间" preferredStyle:UIAlertControllerStyleAlert];
+        [alertctl addAction:alert];
+        [self presentViewController:alertctl animated:YES completion:nil];
+    }else{
+        if (_delegate != nil &&[_delegate respondsToSelector:@selector(printDate:)]) {
+            [_delegate printDate:_dateString];
+        }
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        
+
+    }
+    
 }
 ////点击空白处收回键盘
 //- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -197,8 +192,19 @@
     NSDateFormatter *pickerFormatter = [[NSDateFormatter alloc] init];
     // 为日期格式器设置格式字符串
     [pickerFormatter setDateFormat:@"yyyy年MM月dd日"];
-    NSString *dateString = [pickerFormatter stringFromDate:pickerDate];
-    [self.showBtn setTitle: dateString forState:UIControlStateNormal ];
-    //    self.showLabel.text = dateString;
+    self.dateString = [pickerFormatter stringFromDate:pickerDate];
+    
+  
+    NSDate *dateB = [NSDate date];
+    NSComparisonResult result = [pickerDate compare:dateB];
+    if (result == NSOrderedDescending) {
+        UIAlertAction *alert = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
+        UIAlertController *alertctl = [UIAlertController alertControllerWithTitle:@"提示" message:@"您选取的时间超出范围" preferredStyle:UIAlertControllerStyleAlert];
+        [alertctl addAction:alert];
+        [self presentViewController:alertctl animated:YES completion:nil];
+    }
+    
+    [self.showBtn setTitle: _dateString forState:UIControlStateNormal ];
+  
 }
 @end
