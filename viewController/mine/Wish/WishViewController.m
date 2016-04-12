@@ -163,7 +163,6 @@
     [self.view2 addSubview:image2];
     
     
-    
     [self downline];
 }
 
@@ -242,13 +241,6 @@
         cell = [[WishTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
 
-//    cell.contentlab.text = [self.arrwish[(self.arrwish.count-1-indexPath.section)] objectForKey:@"wish_content"];
-//    cell.datelab.text = [self.arrwish[(self.arrwish.count-1-indexPath.section)] objectForKey:@"wish_date"];
-//    cell.placelab.text = [self.arrwish[(self.arrwish.count-1-indexPath.section)] objectForKey:@"wish_place"];
-//    NSString *image = [self.arrwish[(self.arrwish.count-1-indexPath.section)] objectForKey:@"wish_image"];
-//    if (image != nil) {
-//        cell.image.image = [UIImage imageNamed:@"丽江.jpg"];
-//    }
     
     ClockModel *model = [[ClockModel alloc]init];
     model = self.mutarrwish[self.mutarrwish.count-1-indexPath.section];
@@ -298,7 +290,7 @@
         [self.table setHidden:NO];
         self.addview.frame = CGRectMake(0, HEIGHT_MY, WIDTH_MY, HEIGHT_MY);
         [self.navigationController setNavigationBarHidden:NO animated:YES];
-        
+         [self.view endEditing:YES];
     }];
     
 }

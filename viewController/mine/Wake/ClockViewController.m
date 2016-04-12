@@ -160,11 +160,11 @@
     self.i = (int)self.clockcount.count;
     NSLog(@" 一共有个闹钟 %d",_i);
     NSLog(@"-------%@",self.mutArr1);
-    for (NSString *time1 in self.clockcount) {
+    for (NSString *time2 in self.clockcount) {
         ClockModel *model = [[ClockModel alloc]init];
-        model.time = time1;
-        self.gettime = time1;
-        NSLog(@"进入时取出的闹钟时间%@",time1);
+        model.time = time2;
+        self.gettime = time2;
+        NSLog(@"进入时取出的闹钟时间%@",time2);
         [self.mutArr1 addObject:model];
     }
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(creat) userInfo:nil repeats:YES];

@@ -20,4 +20,12 @@
 
 @property (copy,nonatomic)NSString *image;
 
+@property (copy,nonatomic)NSString *psname;
+
+@property (copy,nonatomic)NSString *pssex;
+
+@property (copy,nonatomic)NSString *psbirthday;
+
+@property (copy,nonatomic)NSString *selfname;
+
 @end

@@ -86,7 +86,7 @@
 // 0407
 #import "WishViewController.h"
 #import "IcomNSObject.h"
-#import "addwishViewController.h"
+
 #import "WishTableViewCell.h"
 //0407
 #import "memorialDayModel.h"
@@ -108,6 +108,7 @@
 //0411
 #import "PSInfoViewController.h"
 #import "SetViewController.h"
+#import "PSInfoTableViewCell.h"
 
 
 #endif /* dropHeader_h */
