@@ -1,9 +1,28 @@
 
 *.pbxproj
 
+<<<<<<< HEAD
 *.xcworkspacedata
 
 *.xcuserstate
+
+=======
+*.xcuserstate
+
+*.xcuserstate
+
+*.xcuserstate
+
+*.xcscheme
+
+>>>>>>> origin/master
+*.xcbkptlist
+
+*.xcscheme
+
+*.xcuserstate
+
+*.xcscheme
 
 *.xcbkptlist
 

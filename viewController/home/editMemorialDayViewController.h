@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "memorialViewController.h"
 
 @interface editMemorialDayViewController : UIViewController<UITextFieldDelegate>
 
@@ -26,7 +27,9 @@
 
 @property(assign,nonatomic)int i;
 
-//@property(assign,nonatomic)id<editMemdatDelegate>delegate;
+@property(assign,nonatomic)id<editMemdatDelegate>delegate;
 
 @property(copy,nonatomic)NSString *str;
+
+@property(strong,nonatomic)NSString * dateString;
 @end

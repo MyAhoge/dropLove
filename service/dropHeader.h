@@ -86,7 +86,7 @@
 // 0407
 #import "WishViewController.h"
 #import "IcomNSObject.h"
-#import "addwishViewController.h"
+
 #import "WishTableViewCell.h"
 //0407
 #import "memorialDayModel.h"
@@ -105,19 +105,19 @@
 #import "ClockViewController.h"
 #import "ClockModel.h"
 
+<<<<<<< HEAD
 //0412
 #import "loginViewController.h"
 #import "registerViewController.h"
 //登录按钮颜色
 #define COLOR_LOGINBTN [UIColor colorWithRed:55/255.0 green:205/255.0 blue:50/255.0 alpha:1]
 
+=======
+//0411
+#import "PSInfoViewController.h"
+#import "SetViewController.h"
+#import "PSInfoTableViewCell.h"
+>>>>>>> origin/master
 
-//dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//
-//
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//
-//    });
-//});
 
 #endif /* dropHeader_h */

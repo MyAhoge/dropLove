@@ -14,4 +14,6 @@
 
 @property(copy,nonatomic)NSString *date;
 
+@property(copy,nonatomic)NSString *memdayid;
+
 @end

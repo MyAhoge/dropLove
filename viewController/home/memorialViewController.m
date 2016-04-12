@@ -101,7 +101,7 @@
     
     NSLog(@"dateString:%@",dateString1);
     
-    self.lovedateLab.text = dateString1;
+//    self.lovedateLab.text = dateString1;
     
     self.lovedateLab.font = FONT(10);
     
@@ -109,11 +109,22 @@
     
     [self.myview addSubview:self.lovedateLab];
     
-    self.alldateLab = [[UILabel alloc]initWithFrame:CGRectMake(WIDTH-100, 15, 70, 24)];
+<<<<<<< HEAD
     
-    self.alldateLab.text = @"1000";
+    
+    self.alldateLab = [[UILabel alloc]initWithFrame:CGRectMake(WIDTH-130, 15, 100, 24)];
+=======
+    
+    
+    self.alldateLab = [[UILabel alloc]initWithFrame:CGRectMake(WIDTH-100, 15, 70, 24)];
+
+    
+    
+>>>>>>> origin/master
     
     self.alldateLab.font = FONT(28);
+    
+    self.alldateLab.textAlignment = NSTextAlignmentRight;
     
     self.alldateLab.textColor = COLOR(46, 204, 255, 1);
     
@@ -132,21 +143,95 @@
     self.tapGesturRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapmyview)];
     
     [self.myview addGestureRecognizer:self.tapGesturRecognizer];
-    
-    
-    
    
+    /**
+     *  读取相爱的日期数据
+     */
+    NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
+    NSString *name1 = [defaults1 objectForKey:@"time"];//根据键值取出name
+    NSLog(@"读取数据%@",name1);
+   
+    self.lovedateLab.text = name1;
+}
+
+//我们相爱时间天数计算
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
+    NSString *name1 = [defaults1 objectForKey:@"time"];//根据键值取出name
+//    NSLog(@"读取数据%@",name1);
+    NSDate *localDate = [NSDate date];
+    
+<<<<<<< HEAD
+    NSDateFormatter *dateFormatter2 = [[NSDateFormatter alloc] init];
+    
+    [dateFormatter2 setDateFormat:@"yyyy年MM月dd日"];
+    
+    NSDate *date2 = [dateFormatter2 dateFromString:name1];
+    
+    NSTimeInterval time=[ localDate timeIntervalSinceDate:date2];
+    
+    int days=((int)time)/(3600*24);
+    
+    NSString *lovedateContent=[[NSString alloc] initWithFormat:@"%i",days];
+    
+//    NSLog(@"%i",days);
+    
+    self.alldateLab.text = lovedateContent;
+
+=======
+   
+    /**
+     *  读取数据
+     */
+    NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
+    NSString *name1 = [defaults1 objectForKey:@"time"];//根据键值取出name
+    NSLog(@"读取数据%@",name1);
+   
+    self.lovedateLab.text = name1;
+    
   
     
+
+    
  
+>>>>>>> origin/master
+}
+
+//我们相爱时间天数计算
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
+    NSString *name1 = [defaults1 objectForKey:@"time"];//根据键值取出name
+//    NSLog(@"读取数据%@",name1);
+    NSDate *localDate = [NSDate date];
+    
+    NSDateFormatter *dateFormatter2 = [[NSDateFormatter alloc] init];
+    
+    [dateFormatter2 setDateFormat:@"yyyy年MM月dd日"];
+    
+    NSDate *date2 = [dateFormatter2 dateFromString:name1];
+    
+    NSTimeInterval time=[ localDate timeIntervalSinceDate:date2];
+    
+    int days=((int)time)/(3600*24);
+    
+    NSString *lovedateContent=[[NSString alloc] initWithFormat:@"%i",days];
+    
+//    NSLog(@"%i",days);
+    
+    self.alldateLab.text = lovedateContent;
+
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     memorialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"test"];
     if (cell ==nil) {
         cell = [[memorialTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"test"];
     }
-    //无色
-    //cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    //cell不显示点击状态
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     memorialDayModel *me = [[memorialDayModel alloc]init];
     me = self.cellArr[indexPath.section];
     //获取当前时间，日期
@@ -183,7 +268,7 @@
         NSString *detailstr = [[NSString alloc]initWithFormat:@"%@已经",me.content];
         cell.detailLab.text = detailstr;
         
-         cell.numLab.text = dateContent;
+        cell.numLab.text = dateContent;
     }
 
     cell.yearLab.text = [me.date substringToIndex:7];
@@ -215,18 +300,43 @@
     
 }
 
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    editMemorialDayViewController *cellEdit = [[editMemorialDayViewController alloc]init];
+    [self.navigationController pushViewController:cellEdit animated:YES];
 }
 
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    [self.Arr removeObjectAtIndex:indexPath.section];
-    
-    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-}
+    NSLog(@"%ld",indexPath.section);
 
+    
+    memorialDayModel *model = [[memorialDayModel alloc]init];
+    model = _cellArr[indexPath.section];
+    
+    
+    NSDictionary *dic = @{@"memdayid":model.memdayid};
+    [dataService memorialDatadelete:dic andWithSucess:^(NSDictionary *result) {
+        
+    } andWithError:^(NSDictionary *errorDic) {
+        
+    }];
+    
+    
+    [self.cellArr removeObjectAtIndex:indexPath.section];
+    
+    [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section]  withRowAnimation:UITableViewRowAnimationRight];
+
+   
+
+    
+    
+}
+- (void)deleteSections:(NSIndexSet *)sections withRowAnimation:(UITableViewRowAnimation)animation;{
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -243,19 +353,12 @@
 }
 
 -(void)tapmyview{
-//
-//    ShareViewController *share = [[ShareViewController alloc]init];
-//    
-//    //隐藏底部tabbar
-//    share.hidesBottomBarWhenPushed = YES;
-//    
-//    [self.navigationController pushViewController:share animated:YES];
     
     editMemorialDayViewController *edit = [[editMemorialDayViewController alloc]init];
     
     edit.hidesBottomBarWhenPushed = YES;
     
-//    edit.delegate = self;
+    edit.delegate = self;
     
     [self.navigationController pushViewController:edit animated:YES];
     
@@ -275,14 +378,12 @@
                 
                 memModel.date = [dd objectForKey:@"memday_date"];
                 
+                memModel.memdayid = [dd objectForKey:@"memday_id"];
+                
                 [self.cellArr addObject:memModel];
                 
                 NSLog(@"%@",memModel.content);
-
             }
-          
-            
-
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.table reloadData];
             });
@@ -293,13 +394,30 @@
 
 -(void)showMemorial:(NSMutableDictionary *)addDic{
     
-    memorialDayModel *addModel = [[memorialDayModel alloc]init];
+  
     
-    addModel.content = [addDic objectForKey:@"detail"];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     
-    addModel.date = [addDic objectForKey:@"date"];
-    
-    [self.cellArr addObject:addModel];
+        memorialDayModel *addModel = [[memorialDayModel alloc]init];
+        
+        addModel.content = [addDic objectForKey:@"content"];
+        
+        addModel.date = [addDic objectForKey:@"date"];
+        
+        [self.cellArr addObject:addModel];
+        
+        
+        [dataService memorialDataAddDic:addDic addWith:^(NSDictionary *resultDic) {
+            NSLog(@">>>%@",resultDic);
+        } addWith:^(NSDictionary *errorDic) {
+            
+        }];
+        [self dataSource];
+  
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.table reloadData];
+        });
+    });
     
     [self.table reloadData];
     
@@ -308,8 +426,26 @@
 -(void)printDate:(NSString *)loveDateString{
     
    
+   self.lovedateLab.text = loveDateString;
     
-   
+    /**
+     *  写入数据
+     */
+    NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
+//    NSString *str = 
+
+    [defaults setObject:self.lovedateLab.text forKey:@"time"];
+    [defaults synchronize];//用synchronize方法把数据持久化到standardUserDefaults数据库
+    
+//    /**
+//     *  读取数据
+//     */
+//    NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
+//    NSString *name1 = [defaults1 objectForKey:@"time"];//根据键值取出name
+//    NSLog(@"读取数据%@",name1);
+  
+    
+    
 
 }
 

@@ -145,17 +145,19 @@
 //    
 //    memorial.hidesBottomBarWhenPushed = YES;
     self.dic = @{
-                 @"detail":_textfield.text,
-
+                 @"content":_textfield.text,
+                 
                  @"date":self.dateString,
                  
+                 @"userid":@1
                  };
     
     if (_delegate != nil &&[_delegate respondsToSelector:@selector(showMemorial:)]) {
-        [_delegate showMemorial:self.dic];
+        [_delegate showMemorial:_dic];
+        [self.navigationController popViewControllerAnimated:YES];
     }
     
-    [self.navigationController popViewControllerAnimated:YES];
+   
 }
 //点击空白处收回键盘
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
