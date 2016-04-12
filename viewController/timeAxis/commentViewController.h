@@ -38,5 +38,6 @@
 
 @property (strong, nonatomic) UITextView *textView;
 
+@property (strong, nonatomic) NSArray *imgArr;
 
 @end

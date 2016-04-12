@@ -25,13 +25,14 @@
     return self;
 }
 
-- (void)setHeight:(NSString *)text{
+- (float)setHeight:(NSString *)text{
     CGRect frame = [self frame];
     CGRect textSize = [text boundingRectWithSize:CGSizeMake(300, 9999) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} context:nil];
     self.a = textSize.size.height;
     
     frame.size.height = _a + 10;
     self.frame = frame;
+    return _a;
 }
 - (void)layoutSubviews{
     

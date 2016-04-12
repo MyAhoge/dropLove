@@ -28,35 +28,38 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = MICOLOR;
-    [self topMethod];
+    UIBarButtonItem *photoBtn = [[UIBarButtonItem alloc]initWithTitle:@"发布" style:UIBarButtonItemStylePlain target:self action:@selector(add)];
+    self.navigationItem.rightBarButtonItem = photoBtn;
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+//    [self topMethod];
     [self mainMethod];
     
 }
 
 - (void)topMethod{
-    UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 20)];
-    [self.view addSubview:topView];
-    topView.backgroundColor = COLOR_MINE;
-    
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, WIDTH, 44)];
-    [self.view addSubview:headerView];
-    headerView.backgroundColor = COLOR_MINE;
-    
-    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 12.5, 10, 20)];
-    [headerView addSubview:backBtn];
-    [backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-    [backBtn addTarget:self action:@selector(backMethod) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIButton *photoBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH-24-10, 12, 30, 20)];
-    [headerView addSubview:photoBtn];
-    photoBtn.titleLabel.font = FONT(15);
-    [photoBtn setTitle:@"发布" forState:UIControlStateNormal];
-    [photoBtn addTarget:self action:@selector(add) forControlEvents:UIControlEventTouchUpInside];
+//    UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 20)];
+//    [self.view addSubview:topView];
+//    topView.backgroundColor = COLOR_MINE;
+//    
+//    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, WIDTH, 44)];
+//    [self.view addSubview:headerView];
+//    headerView.backgroundColor = COLOR_MINE;
+//    
+//    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 12.5, 10, 20)];
+//    [headerView addSubview:backBtn];
+//    [backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+//    [backBtn addTarget:self action:@selector(backMethod) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    UIButton *photoBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH-24-10, 12, 30, 20)];
+//    [headerView addSubview:photoBtn];
+//    photoBtn.titleLabel.font = FONT(15);
+//    [photoBtn setTitle:@"发布" forState:UIControlStateNormal];
+//    [photoBtn addTarget:self action:@selector(add) forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark 输入框和图片位置
 - (void)mainMethod{
-    self.view1 = [[UIView alloc]initWithFrame:CGRectMake(0, 64, WIDTH, 200)];
+    self.view1 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 200)];
     [self.view addSubview:_view1];
     self.view1.backgroundColor = [UIColor whiteColor];
     
@@ -66,7 +69,7 @@
     self.text1.font = FONT(15);
     self.text1.scrollEnabled = YES;
     //+
-    UIButton *imageViewBtn = [[UIButton alloc]initWithFrame:CGRectMake(_text1.frame.origin.x, _view1.frame.size.height - 10 - (WIDTH-50)/4, (WIDTH-50)/4, (WIDTH-50)/4)];
+    UIButton *imageViewBtn = [[UIButton alloc]initWithFrame:CGRectMake(_text1.frame.origin.x, _view1.frame.size.height - 10 - (WIDTH-80)/5, (WIDTH-80)/5, (WIDTH-80)/5)];
     [self.view1 addSubview:imageViewBtn];
     imageViewBtn.layer.borderWidth = 2;
     imageViewBtn.layer.borderColor = MICOLOR.CGColor;
@@ -119,18 +122,7 @@
         [self presentViewController:picker animated:YES completion:nil];
     }
 }
-//#pragma mark choose图片
-//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
-//    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-//    //获取沙盒路径
-//    self.homePath = [[NSHomeDirectory() stringByAppendingString:@"/documents"] stringByAppendingString:@"/bgimage.png"];
-//    //把图片直接保存到指定的路径
-//    [UIImagePNGRepresentation(image) writeToFile:_homePath atomically:YES];
-//    [self.imgArr addObject:[UIImage imageWithContentsOfFile:_homePath]];
-//    
-//    self.imageView.image = [UIImage imageWithContentsOfFile:_homePath];
-//    [picker dismissViewControllerAnimated:YES completion:nil];
-//}
+
 #pragma mark 发布
 - (void)add{
     [self locaTime];
@@ -181,13 +173,13 @@
 #pragma mark - 代理带回来的图片信息
 - (void)turnImages:(NSMutableArray *)selectAllImages{
     //    view1.frame.size.height-(WIDTH-50)/4-10
-    self.imageScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(107.5, _view1.frame.size.height-(WIDTH-50)/4-10, [UIScreen mainScreen].bounds.size.width - 20, (WIDTH-50)/4)];
+    self.imageScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(68, _view1.frame.size.height-(WIDTH-80)/5-10, [UIScreen mainScreen].bounds.size.width - 20, (WIDTH-80)/5)];
     
     self.imageScroll.backgroundColor = [UIColor whiteColor];
     
     self.imageScroll.contentOffset = CGPointMake(20, 320);
     
-    self.imageScroll.contentSize = CGSizeMake(selectAllImages.count*(APPWIDTH-80)/5+selectAllImages.count*10, (WIDTH-50)/4);
+    self.imageScroll.contentSize = CGSizeMake(selectAllImages.count*(APPWIDTH-80)/5+selectAllImages.count*10, (WIDTH-80)/5);
     
     self.imageScroll.showsVerticalScrollIndicator = NO;
     
@@ -208,7 +200,7 @@
     
     for (int i = 0; i<lessTenImageArr.count; i++) {
         
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(i*((WIDTH-50)/4+10), 0, (WIDTH-50)/4, (WIDTH-50)/4)];
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(i*((WIDTH-80)/5+10), 0, (WIDTH-80)/5, (WIDTH-80)/5)];
         
         imageView.image = lessTenImageArr[i];
         
@@ -228,7 +220,7 @@
 - (void)longPress:(UIGestureRecognizer *)sender{
     
     if (sender.state ==  UIGestureRecognizerStateBegan  ) {
-        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake((WIDTH-50)/4-20, 0, 20, 20)];
+        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake((WIDTH-80)/5-20, 0, 20, 20)];
         
         btn.backgroundColor = [UIColor orangeColor];
         
@@ -261,7 +253,7 @@
     
     [self.imageViewArr removeObjectAtIndex:sender.tag-1000];
     
-    self.imageScroll.contentSize = CGSizeMake(self.imageViewArr.count*(WIDTH-50)/4+self.imageViewArr.count*10, (WIDTH-50)/4);
+    self.imageScroll.contentSize = CGSizeMake(self.imageViewArr.count*(WIDTH-80)/5+self.imageViewArr.count*10, (WIDTH-80)/5);
     
     
     [sender setHidden:YES];

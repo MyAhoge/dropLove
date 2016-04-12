@@ -105,7 +105,11 @@
 #import "ClockViewController.h"
 #import "ClockModel.h"
 
-//0410
+//0412
+#import "loginViewController.h"
+#import "registerViewController.h"
+//登录按钮颜色
+#define COLOR_LOGINBTN [UIColor colorWithRed:55/255.0 green:205/255.0 blue:50/255.0 alpha:1]
 
 
 //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

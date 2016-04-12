@@ -17,11 +17,24 @@
     CLLocationManager* _locationManager;
     
 }
-
 //定位
 @property (strong, nonatomic) CLLocationManager* locationManager;
+
 @end
+
 @implementation HomeViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    BOOL isLogin = NO;
+    if (isLogin == NO) {
+        [UIView animateWithDuration:0 animations:^{
+            loginViewController *login = [[loginViewController alloc]init];
+            [self presentViewController:login animated:YES completion:nil];
+            
+        }];
+    }
+    
+}
 - (void)viewDidLoad{
     [super viewDidLoad];
     

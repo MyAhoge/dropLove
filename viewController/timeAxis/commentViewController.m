@@ -15,8 +15,14 @@
     [super viewDidLoad];
     self.view.backgroundColor = COLOR_MINE;
     self.sourceArr = [NSMutableArray arrayWithCapacity:0];
+    
+    [self.navigationController.navigationBar setBarTintColor:COLOR_MINE];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    
+    UIBarButtonItem *sendBtn = [[UIBarButtonItem alloc]initWithTitle:@"发布" style:UIBarButtonItemStylePlain target:self action:@selector(BackMethod)];
+    self.navigationItem.rightBarButtonItem = sendBtn;
 
-    [self headerMethod];
+//    [self headerMethod];
     [self mytable];
     
     [self commentMethod];
@@ -40,25 +46,26 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return _sourceArr.count;
 }
-#pragma mark 顶部导航
-- (void)headerMethod{
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, WIDTH, 44)];
-    [self.view addSubview:headerView];
-    headerView.backgroundColor = COLOR_MINE;
-    
-    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 12.5, 10, 20)];
-    [headerView addSubview:backBtn];
-    [backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-    [backBtn addTarget:self action:@selector(BackMethod) forControlEvents:UIControlEventTouchUpInside];
-}
+//#pragma mark 顶部导航
+//- (void)headerMethod{
+//    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, WIDTH, 44)];
+//    [self.view addSubview:headerView];
+//    headerView.backgroundColor = COLOR_MINE;
+//    
+//    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 12.5, 10, 20)];
+//    [headerView addSubview:backBtn];
+//    [backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+//    [backBtn addTarget:self action:@selector(BackMethod) forControlEvents:UIControlEventTouchUpInside];
+//}
 #pragma mark 返回按钮
 - (void)BackMethod{
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+//    [self dismissViewControllerAnimated:YES completion:nil];
 }
 #pragma mark table
 - (void)mytable{
     
-    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, WIDTH, HEIGHT-64) style:UITableViewStylePlain];
+    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, HEIGHT) style:UITableViewStylePlain];
     [self.view addSubview:_table];
     self.table.delegate = self;
     self.table.dataSource = self;

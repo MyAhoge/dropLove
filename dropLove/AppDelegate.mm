@@ -26,36 +26,37 @@
     TimeAxisViewController *time = [[TimeAxisViewController alloc]init];
     SocialViewController *social = [[SocialViewController alloc]init];
     MineViewController *mine     = [[MineViewController alloc]init];
-    //
-//    home.tabBarItem.title = @"首页";
-    
-    time.tabBarItem.title = @"时光轴";
-    
-    time.tabBarItem.image = [[UIImage imageNamed:@"timeAxis@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
-    time.tabBarItem.selectedImage = [[UIImage imageNamed:@"timeAxisHight@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+
+   
  
-    social.tabBarItem.title = @"社区";
-    
-    social.tabBarItem.image = [[UIImage imageNamed:@"social@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
-    social.tabBarItem.selectedImage = [[UIImage imageNamed:@"socialHight@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+   
     
     mine.tabBarItem.title = @"我的";
-    
     mine.tabBarItem.image = [[UIImage imageNamed:@"mine1@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
     mine.tabBarItem.selectedImage = [[UIImage imageNamed:@"mineHight1@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
     
     
     UINavigationController *nvc = [[UINavigationController alloc]initWithRootViewController:home];
-      nvc.navigationBar.translucent = NO;
+    nvc.navigationBar.translucent = NO;
     nvc.tabBarItem.title = @"首页";
     nvc.tabBarItem.image = [[UIImage imageNamed:@"home@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
     nvc.tabBarItem.selectedImage = [[UIImage imageNamed:@"homeHight@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     nvc.navigationBar.barTintColor = COLOR_MINE;
+    
+    UINavigationController *timeNvc = [[UINavigationController alloc]initWithRootViewController:time];
+    time.tabBarItem.title = @"时光轴";
+    timeNvc.navigationBar.translucent = NO;
+    timeNvc.navigationBar.backgroundColor = COLOR_MINE;
+    time.tabBarItem.image = [[UIImage imageNamed:@"timeAxis@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    time.tabBarItem.selectedImage = [[UIImage imageNamed:@"timeAxisHight@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    UINavigationController *socialNvc = [[UINavigationController alloc]initWithRootViewController:social];
+    social.tabBarItem.title = @"社区";
+    socialNvc.navigationBar.translucent = NO;
+    socialNvc.navigationBar.backgroundColor = COLOR_MINE;
+    social.tabBarItem.image = [[UIImage imageNamed:@"social@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    social.tabBarItem.selectedImage = [[UIImage imageNamed:@"socialHight@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
     
     UINavigationController *minevc = [[UINavigationController alloc]initWithRootViewController:mine];
@@ -66,7 +67,13 @@
     //
     UITabBarController *tabBar = [[UITabBarController alloc]init];
     //
-    tabBar.viewControllers = @[nvc,time,social,minevc];
+    tabBar.viewControllers = @[nvc,timeNvc,socialNvc,minevc];
+    //设置标题颜色、大小
+    NSDictionary *dic = [[NSDictionary alloc]initWithObjectsAndKeys:
+                         [UIColor whiteColor], NSForegroundColorAttributeName,
+                         [UIFont systemFontOfSize:18],NSFontAttributeName, nil];
+    [[UINavigationBar appearance] setTitleTextAttributes:dic];
+    
     //设置底部图标和title颜色
     tabBar.tabBar.tintColor = COLOR_MINE;
     

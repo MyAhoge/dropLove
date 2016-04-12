@@ -34,6 +34,6 @@
 
 @property (strong, nonatomic) UIImageView *image3;
 
-- (void)setHeight:(NSString *)text;
+- (float)setHeight:(NSString *)text;
 
 @end

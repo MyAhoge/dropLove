@@ -16,9 +16,14 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    [self topMethod];
+    self.navigationItem.title = @"社区";
+    [self.navigationController.navigationBar setBarTintColor:COLOR_MINE];
+    //
+    UIBarButtonItem *photoBtn = [[UIBarButtonItem alloc]initWithTitle:@"发布" style:UIBarButtonItemStylePlain target:self action:@selector(add)];
+    self.navigationItem.rightBarButtonItem = photoBtn;
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     
-    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, WIDTH, HEIGHT-64-49) style:UITableViewStylePlain];
+    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, HEIGHT-49) style:UITableViewStylePlain];
     [self.view addSubview:_table];
     //去掉分割线
     //    self.table.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -57,32 +62,13 @@
     });
    
 }
-- (void)topMethod{
-    UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 20)];
-    [self.view addSubview:topView];
-    topView.backgroundColor = COLOR_MINE;
-    
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, WIDTH, 44)];
-    [self.view addSubview:headerView];
-    headerView.backgroundColor = COLOR_MINE;
-    
-    UILabel *headerLabel = [[UILabel alloc]initWithFrame:CGRectMake(WIDTH/2-30, 12, 60, 20)];
-    [headerView addSubview:headerLabel];
-    headerLabel.textColor = [UIColor whiteColor];
-    headerLabel.text = @"社区";
-    headerLabel.font = FONT(18);
-    
-    UIButton *photoBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH-30-10, 12, 30, 20)];
-    [headerView addSubview:photoBtn];
-    photoBtn.titleLabel.font = FONT(15);
-    [photoBtn setTitle:@"发布" forState:UIControlStateNormal];
-    [photoBtn addTarget:self action:@selector(add) forControlEvents:UIControlEventTouchUpInside];
-    
-}
 - (void)add{
     socialPublishController *publish = [[socialPublishController alloc]init];
     publish.delegate = self;
-    [self presentViewController:publish animated:YES completion:nil];
+//    [self presentViewController:publish animated:YES completion:nil];
+    publish.hidesBottomBarWhenPushed = YES;
+    
+    [self.navigationController pushViewController:publish animated:YES];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -141,7 +127,7 @@
         cell.headerLab.text = model.name;
         cell.timeLab.text = model.time;
         
-        [cell setHeight:model.content];
+      self.labHeight = [cell setHeight:model.content];
         self.height = cell.frame.size.height;
         //头像路径
         NSString *path = [NSString stringWithFormat:@"/Applications/MAMP/htdocs/myLove/image/header/%@",model.headerImg];
@@ -167,6 +153,7 @@
     }
     
 }
+#pragma mark 删除
 - (void)deleteMethod:(UIButton *)sender{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"删除心情之后将无法恢复，确认删除吗？" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -199,9 +186,11 @@
     comment.content      = model.content;
     comment.headerImgStr = model.headerImg ;
     comment.imgArr       = model.imgArr;
-    
-    comment.height = ((timelistcell *)[tableView cellForRowAtIndexPath:indexPath]).contentView.frame.size.height;
-    [self presentViewController:comment animated:YES completion:nil];
+    comment.height = _labHeight;
+//    comment.height = ((timelistcell *)[tableView cellForRowAtIndexPath:indexPath]).contentView.frame.size.height;
+//    [self presentViewController:comment animated:YES completion:nil];
+    comment.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:comment animated:YES];
   
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

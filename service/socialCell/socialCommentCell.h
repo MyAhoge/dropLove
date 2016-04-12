@@ -22,6 +22,6 @@
 
 @property (assign, nonatomic) int labHeight;
 
-- (void)setHeight:(NSString *)text;
+- (float)setHeight:(NSString *)text;
 
 @end

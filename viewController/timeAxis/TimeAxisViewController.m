@@ -9,28 +9,53 @@
 #import "TimeAxisViewController.h"
 #import "dropHeader.h"
 
-
 @implementation TimeAxisViewController
 - (void)viewDidLoad{
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    [self.navigationController.navigationBar setBarTintColor:COLOR_MINE];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    //TODO:navigationItem选择器
+    NSArray *arr = [NSArray arrayWithObjects:@"时光",@"相册", nil];
+    UISegmentedControl *segment = [[UISegmentedControl alloc]initWithItems:arr];
+    self.navigationItem.titleView = segment;
+    segment.selectedSegmentIndex = 0;
+    [segment addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
+    
+    //
+    UIBarButtonItem *addBtn = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(add)];
+    self.navigationItem.rightBarButtonItem = addBtn;
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+
     self.sendDic = [[NSDictionary alloc]init];
     [self dataSource];
     
-    self.myView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, WIDTH*2, HEIGHT-64-49)];
+    self.myView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH*2, HEIGHT-49)];
     self.myView.layer.masksToBounds = NO;
     [self.view addSubview:_myView];
-    
     
     self.timeView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, _myView.frame.size.height)];
     [self.myView addSubview:_timeView];
     self.picView = [[UIView alloc]initWithFrame:CGRectMake(WIDTH, 0, WIDTH, _myView.frame.size.height)];
     [self.myView addSubview:_picView];
-    
-    [self header];
-    [self myTableView];
 
-    
+    [self myTableView];
+}
+
+- (void)segmentAction:(UISegmentedControl *)seg{
+    NSInteger index = seg.selectedSegmentIndex;
+    switch (index) {
+        case 0:
+            [self  timeAxis];
+            break;
+        case 1:
+            [self picAxis];
+            break;
+        default:
+            break;
+    }
 }
 #pragma mark 代理方法，获得返回值
 - (void)sendMethod:(NSDictionary *)send{
@@ -65,12 +90,12 @@
 }
 #pragma mark tableView
 - (void)myTableView{
-    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, HEIGHT-64-49) style:UITableViewStylePlain];
+    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, HEIGHT-49) style:UITableViewStylePlain];
     [self.timeView addSubview:_table];
     self.table.backgroundColor = MICOLOR;
     self.table.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.picTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, HEIGHT-64-49) style:UITableViewStylePlain];
+    self.picTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, HEIGHT-49) style:UITableViewStylePlain];
     [self.picView addSubview:_picTable];
     self.table.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -157,9 +182,6 @@
             [cell setHeight:timeModel.content];
             self.height = cell.frame.size.height;
             
-//            [cell.deletebtn setTitle:@"删除" forState:UIControlStateNormal];
-//            [cell.deletebtn setTitleColor:COLOR(167, 167, 172, 1) forState:UIControlStateNormal];
-
             [cell.deletebtn setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
             cell.deletebtn.tag = _sourceArr.count - 1 - indexPath.row;
             [cell.deletebtn addTarget:self action:@selector(deleteMethod:) forControlEvents:UIControlEventTouchUpInside];
@@ -201,6 +223,7 @@
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         NSDictionary *dic = @{@"timeid":(timeaxisModel *)[_sourceArr[sender.tag] timeid]};
+        
         [dataService timeaxisDelete:dic andWithSucess:^(NSDictionary *resultDic) {
             [self.sourceArr removeObjectAtIndex:sender.tag];
             [self.table reloadData];
@@ -218,8 +241,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if ([tableView isEqual:_table]) {
         commentViewController *comment = [[commentViewController alloc]init];
+        
         timeaxisModel *model = [[timeaxisModel alloc]init];
-//        timeaxisModel *timeModel = [[timeaxisModel alloc]init];
         model = self.sourceArr[indexPath.row];
         
         comment.dateStr1 = [model.date substringFromIndex:8];
@@ -227,80 +250,48 @@
         comment.contentStr = model.content;
         comment.timeStr = [model.time substringToIndex:5];
         comment.headHeight = ((timelistcell *)[tableView cellForRowAtIndexPath:indexPath]).contentView.frame.size.height;
-        [self presentViewController:comment animated:YES completion:nil];
-    }else{
-        
+        comment.imgArr = model.imgArr;
+        //隐藏底部导航
+        comment.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:comment animated:YES];
+//        [self presentViewController:comment animated:YES completion:nil];
     }
 }
-#pragma mark 顶部
-- (void)header{
-    UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 20)];
-    [self.view addSubview:topView];
-    topView.backgroundColor = COLOR_MINE;
-    
-    self.headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, WIDTH, 44)];
-    [self.view addSubview:_headerView];
-    self.headerView.backgroundColor = COLOR_MINE;
-    
-    self.timeBtn = [[UIButton alloc]initWithFrame:CGRectMake((WIDTH/2-30-9) , 10, 30, 24)];
-    [self.headerView addSubview:_timeBtn];
-    [self.timeBtn setTitle: @"时光" forState:UIControlStateNormal];
-    
-    [self.timeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    self.timeBtn.titleLabel.font = FONT(15);
-    [self.timeBtn addTarget:self action:@selector(timeAxis) forControlEvents:UIControlEventTouchUpInside];
-    
-    UILabel *linelabel = [[UILabel alloc]initWithFrame:CGRectMake(_timeBtn.frame.origin.x+_timeBtn.frame.size.width + 10, 10, 2, 24)];
-    [self.headerView addSubview:linelabel];
-    linelabel.backgroundColor = [UIColor whiteColor];
-    
-    self.picBtn = [[UIButton alloc]initWithFrame:CGRectMake(linelabel.frame.size.width+linelabel.frame.origin.x + 9, 10, 30, 24)];
-    [self.headerView addSubview:_picBtn];
-    [self.picBtn setTitle: @"相册" forState:UIControlStateNormal];
-    [self.picBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    self.picBtn.titleLabel.font = FONT(15);
-    [self.picBtn addTarget:self action:@selector(picAxis) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIButton *photoBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH-24-10, 12, 20, 20)];
-    [self.headerView addSubview:photoBtn];
-    [photoBtn setImage:[UIImage imageNamed:@"+"] forState:UIControlStateNormal];
-    [photoBtn addTarget:self action:@selector(add) forControlEvents:UIControlEventTouchUpInside];
-    
-}
+
 #pragma mark 时光栏
 - (void)timeAxis{
     
+    self.myView.frame = CGRectMake(0, 0, WIDTH * 2, HEIGHT-64-49);
 //    [self.myView addSubview:_timeView];
-    self.myView.frame = CGRectMake(0, 64, WIDTH * 2, HEIGHT-64-49);
-    self.picBtn.layer.borderWidth = 0;
-    self.timeBtn.layer.borderWidth = 1;
-    self.timeBtn.layer.cornerRadius = 5;
-    self.timeBtn.layer.borderColor = [UIColor whiteColor].CGColor;
+//    self.picBtn.layer.borderWidth = 0;
+//    self.timeBtn.layer.borderWidth = 1;
+//    self.timeBtn.layer.cornerRadius = 5;
+//    self.timeBtn.layer.borderColor = [UIColor whiteColor].CGColor;
 }
 #pragma mark 相册栏
 - (void)picAxis{
+
+    self.myView.frame = CGRectMake(-WIDTH, 0, WIDTH * 2, HEIGHT-64-49);
 //    self.myView.frame = CGRectContainsPoint(WIDTH, 64);
-    self.myView.frame = CGRectMake(-WIDTH, 64, WIDTH * 2, HEIGHT-64-49);
-    self.timeBtn.layer.borderWidth = 0;
-    self.picBtn.layer.borderWidth = 1;
-    self.picBtn.layer.cornerRadius = 5;
-    self.picBtn.layer.borderColor = [UIColor whiteColor].CGColor;
-    [self.picTable reloadData];
+//    self.timeBtn.layer.borderWidth = 0;
+//    self.picBtn.layer.borderWidth = 1;
+//    self.picBtn.layer.cornerRadius = 5;
+//    self.picBtn.layer.borderColor = [UIColor whiteColor].CGColor;
+//    [self.picTable reloadData];
 }
 #pragma mark 点击发布
 - (void)add{
     publishViewController *pblish = [[publishViewController alloc]init];
     pblish.delegate = self;
-    [self presentViewController:pblish animated:YES completion:nil];
+    
+    pblish.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:pblish animated:YES];
     
 }
 #pragma mark 数据处理
 - (void)dataSource{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-
-//        self.userId
-       
         NSDictionary *idDic = @{@"userid":@"1",
                                 @"otheruserid":@"2"};
         [dataService timeAxisDic:idDic AndWidth:^(NSDictionary *resultDic) {

@@ -35,4 +35,7 @@
 
 @property (strong, nonatomic) NSDictionary *sendDic;
 
+@property (assign, nonatomic) float labHeight;
+
+
 @end

@@ -10,7 +10,7 @@
 
 @interface commentcell : UITableViewCell
 
-- (void)setHeight:(NSString *)text;
+- (float)setHeight:(NSString *)text;
 
 @property (strong, nonatomic) UIView  *myView;
 
