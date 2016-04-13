@@ -15,11 +15,17 @@
     [super viewDidLoad];
     self.view.backgroundColor = COLOR_MINE;
     self.sourceArr = [NSMutableArray arrayWithCapacity:0];
+    
+    [self.navigationController.navigationBar setBarTintColor:COLOR_MINE];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    
+    UIBarButtonItem *sendBtn = [[UIBarButtonItem alloc]initWithTitle:@"发布" style:UIBarButtonItemStylePlain target:self action:@selector(BackMethod)];
+    self.navigationItem.rightBarButtonItem = sendBtn;
 
-    [self headerMethod];
+//    [self headerMethod];
     [self mytable];
     
-    
+    [self commentMethod];
     
 }
 
@@ -40,25 +46,26 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return _sourceArr.count;
 }
-#pragma mark 顶部导航
-- (void)headerMethod{
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, WIDTH, 44)];
-    [self.view addSubview:headerView];
-    headerView.backgroundColor = COLOR_MINE;
-    
-    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 15, 25)];
-    [headerView addSubview:backBtn];
-    [backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-    [backBtn addTarget:self action:@selector(BackMethod) forControlEvents:UIControlEventTouchUpInside];
-}
+//#pragma mark 顶部导航
+//- (void)headerMethod{
+//    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, WIDTH, 44)];
+//    [self.view addSubview:headerView];
+//    headerView.backgroundColor = COLOR_MINE;
+//    
+//    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 12.5, 10, 20)];
+//    [headerView addSubview:backBtn];
+//    [backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+//    [backBtn addTarget:self action:@selector(BackMethod) forControlEvents:UIControlEventTouchUpInside];
+//}
 #pragma mark 返回按钮
 - (void)BackMethod{
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+//    [self dismissViewControllerAnimated:YES completion:nil];
 }
 #pragma mark table
 - (void)mytable{
     
-    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, WIDTH, HEIGHT-64) style:UITableViewStylePlain];
+    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, HEIGHT) style:UITableViewStylePlain];
     [self.view addSubview:_table];
     self.table.delegate = self;
     self.table.dataSource = self;
@@ -92,25 +99,70 @@
     self.dateLab2.text = _dateStr2;
     self.contentLab.text = _contentStr;
     self.timeLab.text = _timeStr;
+    
     [commentBtn setImage:[UIImage imageNamed:@"comment"] forState:UIControlStateNormal];
-    [commentBtn addTarget:self action:@selector(import) forControlEvents:UIControlEventTouchUpInside];
+    [commentBtn addTarget:self action:@selector(commentMethod) forControlEvents:UIControlEventTouchUpInside];
    
 }
-- (void)import{
-    //提示框评论
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"评论" message:@"请输入您的评论" preferredStyle:UIAlertControllerStyleAlert];
-    //输入评论
-    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = @"您想说点什么呢？";
-    }];
+
+#pragma mark 输入框
+- (void)commentMethod{
+    self.footView = [[UIView alloc]initWithFrame:CGRectMake(0, HEIGHT-40, WIDTH, 40)];
+    [self.view addSubview:_footView];
+    self.footView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
-    //点击添加
-    UIAlertAction *action = [UIAlertAction actionWithTitle:@"添加" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self.sourceArr addObject:alert.textFields[0].text];
+    self.textView = [[UITextView alloc]initWithFrame:CGRectMake(10, 5, WIDTH-10-50, 30)];
+    [self.footView addSubview:_textView];
+    //    self.textView.backgroundColor = MICOLOR;
+    
+    UIButton *sendBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH-30-10, 5, 30, 30)];
+    [self.footView addSubview:sendBtn];
+    sendBtn.titleLabel.font = FONT(15);
+    [sendBtn setTitle:@"发送" forState:UIControlStateNormal];
+    [sendBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [sendBtn addTarget:self action:@selector(sendContentMethod) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.textView.delegate = self;
+}
+#pragma mark 点击发送
+-(void)sendContentMethod{
+    if ([_textView.text isEqualToString:@""]) {
+        UILabel *alertlab = [[UILabel alloc]initWithFrame:CGRectMake((WIDTH-150)/2, (HEIGHT-50)/2, 150, 50)];
+        alertlab.text = @"您还没有输入评论呢，请输入评论吧";
+        [self.view addSubview:alertlab];
+        
+        [UIView animateWithDuration:2 animations:^{
+            alertlab.alpha = 0;
+        }];
+    }else{
+        [self.sourceArr addObject:_textView.text];
         [self.table reloadData];
+        self.textView.text = nil;
+        [self.textView resignFirstResponder];
+    }
+}
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
+    CGFloat offSet= self.view.frame.size.height- (_textView.frame.origin.y+_textView.frame.size.height+216+50);
+    if (offSet >= 0) {
+        [UIView animateWithDuration:0.5 animations:^{
+            CGRect frame = self.footView.frame;
+            frame.origin.y = offSet;
+            self.footView.frame = frame;
+        }];
+    }
+    return YES;
+}
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView{
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect frame = self.footView.frame;
+        frame.origin.y = HEIGHT-40;
+        self.footView.frame = frame;
     }];
-    [alert addAction:action];
-    [self presentViewController:alert animated:YES completion:nil];
+    return YES;
+}
+//点击空白处收回键盘
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
 }
 
 @end

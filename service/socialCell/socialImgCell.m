@@ -57,15 +57,18 @@
     }
     return self;
 }
-- (void)setHeight:(NSString *)text{
+- (float)setHeight:(NSString *)text{
     CGRect frame = [self frame];
-    CGRect textSize = [text boundingRectWithSize:CGSizeMake(WIDTH_MY-20, 9999) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil];
+    CGRect textSize = [text boundingRectWithSize:CGSizeMake(WIDTH_MY-20, 9999) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil];
     self.labHeight = textSize.size.height;
     
     frame.size.height = _labHeight + 110 + (WIDTH_MY-80)/3;
     self.frame = frame;
+    return _labHeight;
 }
-
+/**
+ *  <#Description#>
+ */
 - (void)layoutSubviews{
     [super layoutSubviews];
     self.cellView.frame   = CGRectMake(0, 5, WIDTH_MY, self.frame.size.height-10);

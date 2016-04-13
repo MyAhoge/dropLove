@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface commentViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface commentViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>
 
 //@property (strong, nonatomic) NSDictionary *sourceDic;
 
@@ -34,5 +34,10 @@
 
 @property (strong, nonatomic) UILabel *dateLab2;
 
+@property (strong, nonatomic) UIView *footView;
+
+@property (strong, nonatomic) UITextView *textView;
+
+@property (strong, nonatomic) NSArray *imgArr;
 
 @end

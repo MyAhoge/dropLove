@@ -17,7 +17,7 @@
     [super viewDidLoad];
     self.commentMutArr = [NSMutableArray arrayWithCapacity:0];
     
-    [self topMethod];
+//    [self topMethod];
     
     [self myTable];
     
@@ -25,19 +25,29 @@
 }
 #pragma mark table
 - (void)myTable{
-    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, WIDTH, HEIGHT) style:UITableViewStylePlain];
+    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, HEIGHT-40) style:UITableViewStylePlain];
     self.table.backgroundColor = MICOLOR;
     [self.view addSubview:_table];
     self.table.delegate = self;
     self.table.dataSource = self;
-    UIView *tabHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, _height)];
+    
+    UIView *tabHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, _height+100+(WIDTH-20+10)*_imgArr.count)];
     self.table.tableHeaderView = tabHeaderView;
     
     self.headerImg = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 50, 50)];
     self.nameLab = [[UILabel alloc]initWithFrame:CGRectMake(_headerImg.frame.origin.x+_headerImg.frame.size.width+10, 10, 100, 20)];
     self.timeLab = [[UILabel alloc]initWithFrame:CGRectMake(_nameLab.frame.origin.x, _nameLab.frame.origin.y+_nameLab.frame.size.height+10, 80, 20)];
-    self.contentLab = [[UILabel alloc]initWithFrame:CGRectMake(10, _headerImg.frame.origin.y+_headerImg.frame.size.height+10, WIDTH-20, _height-100)];
+    self.contentLab = [[UILabel alloc]initWithFrame:CGRectMake(10, _headerImg.frame.origin.y+_headerImg.frame.size.height+10, WIDTH-20, _height)];
     self.commentBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH-10-20, _nameLab.frame.origin.y, 25, 20)];
+
+    
+    for (int i = 0; i < _imgArr.count; i ++) {
+            
+            UIImageView *img = [[UIImageView alloc]initWithFrame:CGRectMake(10 , 10+_contentLab.frame.origin.y+_contentLab.frame.size.height+(WIDTH- 20+10)*i, (WIDTH- 20), (WIDTH- 20))];
+            [tabHeaderView addSubview:img];
+            img.image = _imgArr[i];
+       
+    }
     
     
     [tabHeaderView addSubview:_headerImg];
@@ -61,21 +71,21 @@
     
 }
 #pragma mark 顶部
-- (void)topMethod{
-    UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 20)];
-    [self.view addSubview:topView];
-    topView.backgroundColor  =COLOR_MINE;
-    
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, WIDTH, 44)];
-    [self.view addSubview:headerView];
-    headerView.backgroundColor = COLOR_MINE;
-    
-    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 15, 25)];
-    [headerView addSubview:backBtn];
-    [backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-    [backBtn addTarget:self action:@selector(backMethod) forControlEvents:UIControlEventTouchUpInside];
-    
-}
+//- (void)topMethod{
+//    UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 20)];
+//    [self.view addSubview:topView];
+//    topView.backgroundColor  =COLOR_MINE;
+//    
+//    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, WIDTH, 44)];
+//    [self.view addSubview:headerView];
+//    headerView.backgroundColor = COLOR_MINE;
+//    
+//    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 12.5, 10, 20)];
+//    [headerView addSubview:backBtn];
+//    [backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+//    [backBtn addTarget:self action:@selector(backMethod) forControlEvents:UIControlEventTouchUpInside];
+//    
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     socialCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"socialCommentCellId"];

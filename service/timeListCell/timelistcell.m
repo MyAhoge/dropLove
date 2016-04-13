@@ -56,13 +56,14 @@
     }
     return self;
 }
-- (void)setHeight:(NSString *)text{
+- (float)setHeight:(NSString *)text{
     CGRect frame = [self frame];
     CGRect textSize = [text boundingRectWithSize:CGSizeMake(300, 9999) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil];
     self.a = textSize.size.height;
     
     frame.size.height = _a + 60;
     self.frame = frame;
+    return _a;
 }
 #pragma mark 计算高度
 - (void)layoutSubviews{
