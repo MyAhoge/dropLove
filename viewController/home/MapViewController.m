@@ -59,29 +59,6 @@
 }
 
 
-//-(void)test{
-//
-//    _curPage = 0;
-//    BMKCitySearchOption *citySearchOption = [[BMKCitySearchOption alloc]init];
-//    citySearchOption.pageIndex = _curPage;
-//    citySearchOption.pageCapacity = 10;
-//    citySearchOption.city= self.citytext;
-//    NSLog(@"%@",self.citytext);
-////    NSString *address = [NSString stringWithFormat:@"%@"]
-//    citySearchOption.keyword = self.activeandadress;
-//    NSLog(@"%@",self.activeandadress);
-//    BOOL flag = [self.poisearch poiSearchInCity:citySearchOption];
-//    if(flag)
-//    {
-//        NSLog(@"城市内检索发送成功");
-//    }
-//    else
-//    {
-//        NSLog(@"城市内检索发送失败");
-//    }
-//
-//
-//}
 
 
 -(void)viewWillAppear:(BOOL)animated {

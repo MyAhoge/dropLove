@@ -139,8 +139,7 @@
 }
 - (void)overedit:(UIButton *)sender{
     
-<<<<<<< HEAD
-=======
+
 //    memorialViewController *memorial = [[memorialViewController alloc]init];
 //    
 //    memorial.hidesBottomBarWhenPushed = YES;
@@ -155,10 +154,10 @@
 //    self.str = 
 //    
 //    
-    if (_delegate != nil &&[_delegate respondsToSelector:@selector(printDate:)]) {
-        [_delegate printDate:_dateString];
-    }
->>>>>>> origin/master
+//    if (_delegate != nil &&[_delegate respondsToSelector:@selector(printDate:)]) {
+//        [_delegate printDate:_dateString];
+//    }
+
     
     if (_dateString.length == 0 ) {
         UIAlertAction *alert = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
@@ -218,7 +217,7 @@
     NSDate *dateB = [NSDate date];
     NSComparisonResult result = [pickerDate compare:dateB];
     if (result == NSOrderedDescending) {
-<<<<<<< HEAD
+
         UIAlertAction *alert = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
         UIAlertController *alertctl = [UIAlertController alertControllerWithTitle:@"提示" message:@"您选取的时间超出范围" preferredStyle:UIAlertControllerStyleAlert];
         [alertctl addAction:alert];
@@ -227,13 +226,13 @@
     
     [self.showBtn setTitle: _dateString forState:UIControlStateNormal ];
   
-=======
+
         UIAlertView * alterView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"你选取的时间超出范围" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alterView show];
     }
     
-    [self.showBtn setTitle: _dateString forState:UIControlStateNormal ];
+//    [self.showBtn setTitle: _dateString forState:UIControlStateNormal ];
     //    self.showLabel.text = dateString;
->>>>>>> origin/master
-}
+
+
 @end
