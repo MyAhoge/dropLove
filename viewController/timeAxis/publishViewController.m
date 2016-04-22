@@ -8,6 +8,7 @@
 
 #import "publishViewController.h"
 #import "dropHeader.h"
+#import "Header.h"
 
 @interface publishViewController ()<CLLocationManagerDelegate>
 {
@@ -33,11 +34,8 @@
     
     UIBarButtonItem *sendBtn = [[UIBarButtonItem alloc]initWithTitle:@"发布" style:UIBarButtonItemStylePlain target:self action:@selector(sendToTime)];
     self.navigationItem.rightBarButtonItem = sendBtn;
-    
-    
-//    [self headerMethod];
+
     [self mainMethod];
-    
     
 }
 #pragma mark 输入框和图片位置
@@ -50,8 +48,6 @@
     [self.view1 addSubview:_text1];
     self.text1.font = FONT(15);
     self.text1.scrollEnabled = YES;
-    //    self.textStr = text1.text;
-    //    NSLog(@"textstr%@", _textStr);
     
     UIButton *imageViewBtn = [[UIButton alloc]initWithFrame:CGRectMake(_text1.frame.origin.x, _view1.frame.size.height-(WIDTH-80)/5-10, (WIDTH-80)/5, (WIDTH-80)/5)];
     [self.view1 addSubview:imageViewBtn];

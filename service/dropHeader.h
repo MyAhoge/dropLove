@@ -13,20 +13,17 @@
 #import "MineViewController.h"
 #import "SocialViewController.h"
 #import "TimeAxisViewController.h"
-
+//
 #import "PlistLocalInfo.h"
 #import "SharkViewController.h"
-
 #import <CoreLocation/CoreLocation.h>
 #import "AFNetworking.h"
 #import "weatherServices.h"
-
 //0330
 #import <RongIMKit/RongIMKit.h>
 #import "AppDelegate.h"
 #import "timelistcell.h"
 #import "piclistcell.h"
-//#import "TimeCommentViewController.h"
 #import "dataService.h"
 //0331
 #import "commentViewController.h"
@@ -35,14 +32,70 @@
 //0405
 #import "memorialViewController.h"
 #import "memorialTableViewCell.h"
-
 #import "socialCell.h"
 #import "socialPublishController.h"
 //0406
-
-
 #import "editMemorialDayViewController.h"
 #import "addMemorialDayViewController.h"
+
+//***********************************//
+//0406
+#import "timeaxisModel.h"
+#import "socialModel.h"
+#import "socialcommentViewController.h"
+#import "socialCommentCell.h"
+
+// 0407
+#import "WishViewController.h"
+#import "IcomNSObject.h"
+#import "WishTableViewCell.h"
+//0407
+#import "memorialDayModel.h"
+#import "ShareViewController.h"
+//0409
+#import "ImageViewController.h"
+#import "BIDContentCell.h"
+//0410
+#import "timeListimagecell.h"
+//0411
+#import "socialImgCell.h"
+
+//0408
+#import "WakeViewController.h"
+#import "ClockViewController.h"
+#import "ClockModel.h"
+
+//0412
+#import "loginViewController.h"
+#import "registerViewController.h"
+
+#import "PSInfoTableViewCell.h"
+#import "ClockModel.h"
+#import "SetViewController.h"
+#import "PSInfoViewController.h"
+//0413
+#import "forgetViewController.h"
+#import "marryViewController.h"
+
+//0413
+#import "NumSetViewController.h"
+#import "NumSafetyViewController.h"
+#import "ScreenPasswordViewController.h"
+
+//0414
+#import <SMS_SDK/SMSSDK.h>
+#import "reTwoViewController.h"
+#import "forTwoViewController.h"
+
+// 0414
+#import "NoticeTableViewCell.h"
+#import "NoticeViewController.h"
+#import "OpinionViewController.h"
+#import "TouchIDViewController.h"
+
+//0415
+#import "requestViewController.h"
+#import "invitationViewController.h"
 
 
 #pragma mark 常用宏
@@ -65,58 +118,28 @@
 
 #define WEATHER_URL @"http://op.juhe.cn/onebox/weather/query"
 
-
 //0330
-
+//荣云
 #define RONGYUN_KEY @"e5t4ouvptd73a"
-
 #define TOKEN @"FRKLiEKf8ni4+me2R37Q55e+9qvH6fp6vNYL7dFl8kGJmQkqmrIilIiVdFmckTgRX79ocALvDncwOZjzsN0ejA=="
-
-#define URL @"http://10.110.5.58:8888/mylove/index.php/home/timeaxis/timeaxis"
-
 #define MICOLOR [UIColor colorWithRed:243.0/255.0 green:239.0/255.0 blue:230.0/255.0 alpha:1]
-
-//***********************************//
-//0406
-#import "timeaxisModel.h"
-#import "socialModel.h"
-#import "socialcommentViewController.h"
-#import "socialCommentCell.h"
-
-// 0407
-#import "WishViewController.h"
-#import "IcomNSObject.h"
-
-#import "WishTableViewCell.h"
-//0407
-#import "memorialDayModel.h"
-#import "ShareViewController.h"
-//0409
-#import "ImageViewController.h"
-#import "BIDContentCell.h"
-#import "Header.h"
-//0410
-#import "timeListimagecell.h"
-//0411
-#import "socialImgCell.h"
-
-//0408
-#import "WakeViewController.h"
-#import "ClockViewController.h"
-#import "ClockModel.h"
-
-
-//0412
-#import "loginViewController.h"
-#import "registerViewController.h"
 //登录按钮颜色
 #define COLOR_LOGINBTN [UIColor colorWithRed:55/255.0 green:205/255.0 blue:50/255.0 alpha:1]
 
+//0414
+//短信验证码
+#define APPKEY    @"11a6b2e6af542"
+#define APPSECRET @"1b92eca49c155223ba9df4eefc5b754e"
+//返回按钮frame
+#define BACK_FRAME [[UIButton alloc]initWithFrame:CGRectMake(10, 32.5, 10, 20)]
 
-//0411
-#import "PSInfoViewController.h"
-#import "SetViewController.h"
-#import "PSInfoTableViewCell.h"
 
+//dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//
+//
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//
+//    });
+//});
 
 #endif /* dropHeader_h */

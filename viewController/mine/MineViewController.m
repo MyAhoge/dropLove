@@ -188,6 +188,12 @@
         set.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:set animated:YES];
     }
+    if (indexPath.section == 0 && indexPath.row == 2 ) {
+        NoticeViewController *nvc = [[NoticeViewController alloc]init];
+        nvc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:nvc animated:YES];
+    }
+
 
 }
 
@@ -409,9 +415,8 @@
         
         NSString *stricom = [NSString stringWithFormat:@"%d",_j];
 
-        NSDictionary *dd = [[NSDictionary alloc]init];
-        dd = @{@"nicom":stricom,
-               @"id":@1};
+        NSDictionary *dd = @{@"nicom":stricom,
+                             @"id":@1};
         
         [IcomNSObject click:dd Andicomchange:^(NSDictionary *icomdic) {
             NSLog(@"插入成功");

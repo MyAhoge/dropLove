@@ -8,6 +8,7 @@
 
 #import "socialPublishController.h"
 #import "dropHeader.h"
+#import "Header.h"
 
 @interface socialPublishController ()<CLLocationManagerDelegate>
 {
@@ -142,13 +143,9 @@
 
     if (_delegate != nil && [_delegate respondsToSelector:@selector(socialSendMethod:)]) {
         [_delegate socialSendMethod:_dic];
-        
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self.navigationController popViewControllerAnimated:YES];
+//        [self dismissViewControllerAnimated:YES completion:nil];
     }
-}
-- (void)backMethod{
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (void)locaTime{
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];

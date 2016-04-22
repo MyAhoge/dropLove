@@ -16,6 +16,8 @@
     if (self) {
         self.myView = [[UIView alloc]init];
         [self.contentView addSubview:_myView];
+        self.myView.layer.cornerRadius = 10;
+        self.myView.layer.masksToBounds = YES;
         
         self.dateLabel1 = [[UILabel alloc]init];
         [self.myView addSubview:_dateLabel1];
@@ -61,7 +63,7 @@
     CGRect textSize = [text boundingRectWithSize:CGSizeMake(300, 9999) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil];
     self.a = textSize.size.height;
     
-    frame.size.height = _a + 60;
+    frame.size.height = _a + 80;
     self.frame = frame;
     return _a;
 }
@@ -69,7 +71,7 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
 
-    self.myView.frame       = CGRectMake(0, 0, WIDTH_MY, self.frame.size.height);
+    self.myView.frame       = CGRectMake(0, 5, WIDTH_MY, self.frame.size.height-10);
 
     self.dateLabel1.frame   = CGRectMake(10, 10, 40, 20);
 

@@ -22,7 +22,6 @@
     UIBarButtonItem *sendBtn = [[UIBarButtonItem alloc]initWithTitle:@"发布" style:UIBarButtonItemStylePlain target:self action:@selector(BackMethod)];
     self.navigationItem.rightBarButtonItem = sendBtn;
 
-//    [self headerMethod];
     [self mytable];
     
     [self commentMethod];
@@ -35,59 +34,54 @@
         cell = [[commentcell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"commentcellid"];
     }
     [cell setHeight:_sourceArr[indexPath.row]];
-    self.headHeight = cell.frame.size.height;
- 
+    self.cellHeight = cell.frame.size.height;
     cell.contentLabel.text = _sourceArr[indexPath.row];
+    
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return _headHeight;
+    return _cellHeight;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return _sourceArr.count;
 }
-//#pragma mark 顶部导航
-//- (void)headerMethod{
-//    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, WIDTH, 44)];
-//    [self.view addSubview:headerView];
-//    headerView.backgroundColor = COLOR_MINE;
-//    
-//    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 12.5, 10, 20)];
-//    [headerView addSubview:backBtn];
-//    [backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-//    [backBtn addTarget:self action:@selector(BackMethod) forControlEvents:UIControlEventTouchUpInside];
-//}
 #pragma mark 返回按钮
 - (void)BackMethod{
     [self.navigationController popViewControllerAnimated:YES];
-//    [self dismissViewControllerAnimated:YES completion:nil];
 }
 #pragma mark table
 - (void)mytable{
-    
+    NSLog(@"_headHeight-%d", _headHeight);
     self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, HEIGHT) style:UITableViewStylePlain];
     [self.view addSubview:_table];
     self.table.delegate = self;
     self.table.dataSource = self;
     self.table.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    UIView *headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, _headHeight)];
+    UIView *headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, _headHeight + 70 +(WIDTH+10)*_imgArr.count)];
     self.table.tableHeaderView = headView;
     
     self.dateLab1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 10,40, 20)];
     
-    self.dateLab2 = [[UILabel alloc]initWithFrame:CGRectMake(10, _dateLab1.frame.size.height+_dateLab1.frame.origin.y,50, 20)];
+    self.dateLab2 = [[UILabel alloc]initWithFrame:CGRectMake(10, _dateLab1.frame.size.height+_dateLab1.frame.origin.y+10,50, 20)];
     self.dateLab2.font = FONT(10);
     
-    self.contentLab = [[UILabel alloc]initWithFrame:CGRectMake(70, 10,WIDTH-70-10, _headHeight-60)];
+    self.contentLab = [[UILabel alloc]initWithFrame:CGRectMake(70, 10,WIDTH-70-10, _headHeight)];
     [self.contentLab setNumberOfLines:0];
     self.contentLab.font = FONT(13);
     
-    self.timeLab = [[UILabel alloc]initWithFrame:CGRectMake(_contentLab.frame.origin.x, _contentLab.frame.origin.y+_contentLab.frame.size.height, 60, 20)];
+    
+    
+    self.timeLab = [[UILabel alloc]initWithFrame:CGRectMake(_contentLab.frame.origin.x, _contentLab.frame.origin.y+_contentLab.frame.size.height+10, 60, 20)];
     self.timeLab.font = FONT(13);
     
     UIButton *commentBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH-10-25, _timeLab.frame.origin.y, 25, 20)];
     
+    for (int i = 0; i < _imgArr.count; i ++) {
+        UIImageView *imgs = [[UIImageView alloc]initWithFrame:CGRectMake(10 , 10+_timeLab.frame.origin.y+_timeLab.frame.size.height+(WIDTH-10)*i, WIDTH - 20, WIDTH - 20)];
+        [headView addSubview:imgs];
+        imgs.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_imgArr[i]]]];
+    }
     
     [headView addSubview:_dateLab1];
     [headView addSubview:_dateLab2];
@@ -102,9 +96,7 @@
     
     [commentBtn setImage:[UIImage imageNamed:@"comment"] forState:UIControlStateNormal];
     [commentBtn addTarget:self action:@selector(commentMethod) forControlEvents:UIControlEventTouchUpInside];
-   
 }
-
 #pragma mark 输入框
 - (void)commentMethod{
     self.footView = [[UIView alloc]initWithFrame:CGRectMake(0, HEIGHT-40, WIDTH, 40)];
@@ -113,7 +105,6 @@
     
     self.textView = [[UITextView alloc]initWithFrame:CGRectMake(10, 5, WIDTH-10-50, 30)];
     [self.footView addSubview:_textView];
-    //    self.textView.backgroundColor = MICOLOR;
     
     UIButton *sendBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH-30-10, 5, 30, 30)];
     [self.footView addSubview:sendBtn];
@@ -164,5 +155,4 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
 }
-
 @end

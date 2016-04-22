@@ -10,6 +10,10 @@
 #import "dropHeader.h"
 #import <BaiduMapAPI_Base/BMKBaseComponent.h>//引入base相关所有的头文件
 
+
+//#define KEY @"10450bac46bb9"
+//#define SE @"c315e46eab32c704fd21dd596b6a8cac"
+
 @interface AppDelegate ()<RCIMUserInfoDataSource>
 @property (strong, nonatomic) BMKMapManager *mapManager;
 @end
@@ -18,6 +22,11 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    //
+    NSString *isLogin = @"NO";
+    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+    [userDef setObject:isLogin forKey:@"user"];
+    
     
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
@@ -26,17 +35,11 @@
     TimeAxisViewController *time = [[TimeAxisViewController alloc]init];
     SocialViewController *social = [[SocialViewController alloc]init];
     MineViewController *mine     = [[MineViewController alloc]init];
-
-   
  
-   
-    
     mine.tabBarItem.title = @"我的";
     mine.tabBarItem.image = [[UIImage imageNamed:@"mine1@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     mine.tabBarItem.selectedImage = [[UIImage imageNamed:@"mineHight1@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
-    
-    
+  
     UINavigationController *nvc = [[UINavigationController alloc]initWithRootViewController:home];
     nvc.navigationBar.translucent = NO;
     nvc.tabBarItem.title = @"首页";
@@ -65,9 +68,9 @@
     minevc.navigationBar.barTintColor = COLOR_MINE;
 
     //
-    UITabBarController *tabBar = [[UITabBarController alloc]init];
+   self.tabBar = [[UITabBarController alloc]init];
     //
-    tabBar.viewControllers = @[nvc,timeNvc,socialNvc,minevc];
+    self.tabBar.viewControllers = @[nvc,timeNvc,socialNvc,minevc];
     //设置标题颜色、大小
     NSDictionary *dic = [[NSDictionary alloc]initWithObjectsAndKeys:
                          [UIColor whiteColor], NSForegroundColorAttributeName,
@@ -75,13 +78,28 @@
     [[UINavigationBar appearance] setTitleTextAttributes:dic];
     
     //设置底部图标和title颜色
-    tabBar.tabBar.tintColor = COLOR_MINE;
+    self.tabBar.tabBar.tintColor = COLOR_MINE;
     
-    self.window.rootViewController = tabBar;
+    
+//    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+//    [userDef setObject:isLogin forKey:@"user"];
+    
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] isEqualToString:@"YES"]) {
+         self.window.rootViewController = _tabBar;
+        
+    }else{
+        loginViewController *loginVc = [[loginViewController alloc]init];
+        self.window.rootViewController = loginVc;
+    }
+    
+    
+//    self.window.rootViewController = tabBar;
     [self.window makeKeyAndVisible];
+    
+    [UIApplication sharedApplication].statusBarHidden = YES;
     // Override point for customization after application launch.
     
-    
+/*****************************************************************************/
     //    初始化融云sdk
     [[RCIM sharedRCIM] initWithAppKey:RONGYUN_KEY];
     
@@ -98,21 +116,17 @@
         NSLog(@"token错误");
     }];
     
-   
-    
-    
-    
-    
-    
-    
-    
-    
     _mapManager = [[BMKMapManager alloc]init];
     // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
     BOOL ret = [_mapManager start:@"6PK19NT1x999KtdsBRbO5CmITFVZi5gc"  generalDelegate:nil];
     if (!ret) {
         NSLog(@"manager start failed!");
     }
+    /*****************************************************************************/
+    //TODO:短信验证码
+    [SMSSDK registerApp:APPKEY withSecret:APPSECRET];
+    
+    
     
     
     return YES;

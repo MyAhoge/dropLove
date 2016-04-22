@@ -62,7 +62,7 @@
     CGRect textSize = [text boundingRectWithSize:CGSizeMake(WIDTH_MY-20, 9999) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil];
     self.labHeight = textSize.size.height;
     
-    frame.size.height = _labHeight + 110 + (WIDTH_MY-80)/3;
+    frame.size.height = _labHeight + 120 + (WIDTH_MY-40)/3;
     self.frame = frame;
     return _labHeight;
 }
@@ -82,13 +82,13 @@
     self.contentLab.frame = CGRectMake(10, _headerImg.frame.origin.y+_headerImg.frame.size.height +10, WIDTH_MY- 20, _labHeight);
     
     
-    self.image1.frame       = CGRectMake(_contentLab.frame.origin.x, _contentLab.frame.size.height+_contentLab.frame.origin.y, (WIDTH_MY-100)/3, (WIDTH_MY-100)/3);
+    self.image1.frame       = CGRectMake(_contentLab.frame.origin.x, _contentLab.frame.size.height+_contentLab.frame.origin.y+10, (WIDTH_MY-40)/3, (WIDTH_MY-40)/3);
     
-    self.image2.frame       = CGRectMake(_contentLab.frame.origin.x +10+ (WIDTH_MY-80)/3, _contentLab.frame.size.height+_contentLab.frame.origin.y, (WIDTH_MY-100)/3, (WIDTH_MY-100)/3);
+    self.image2.frame       = CGRectMake(20+ (WIDTH_MY-40)/3, _image1.frame.origin.y, (WIDTH_MY-40)/3, (WIDTH_MY-40)/3);
     
-    self.image3.frame       = CGRectMake(_contentLab.frame.origin.x +10+ 2*(WIDTH_MY-80)/3, _contentLab.frame.size.height+_contentLab.frame.origin.y, (WIDTH_MY-100)/3, (WIDTH_MY-100)/3);
+    self.image3.frame       = CGRectMake(30+ 2*(WIDTH_MY-40)/3, _image1.frame.origin.y, (WIDTH_MY-40)/3, (WIDTH_MY-40)/3);
     
-    self.commentBtn.frame = CGRectMake(WIDTH_MY-10-25, _image1.frame.origin.y+_image1.frame.size.height+5, 25, 20);
+    self.commentBtn.frame = CGRectMake(WIDTH_MY-10-25, _image1.frame.origin.y+_image1.frame.size.height+10, 25, 20);
     
     self.deleteBtn.frame = CGRectMake(WIDTH_MY-10-20, _headerLab.frame.origin.y, 20, 20);
 }

@@ -36,12 +36,9 @@
         
         self.image3 = [[UIImageView alloc]init];
         [self.myView addSubview:_image3];
-        
-        
     }
     return self;
 }
-
 
 - (void)layoutSubviews{
     [super layoutSubviews];

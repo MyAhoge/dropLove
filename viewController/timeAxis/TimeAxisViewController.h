@@ -24,11 +24,9 @@
 
 @property (strong, nonatomic) UIView *headerView;
 
-
 @property (strong, nonatomic) UITableView *table;
 
 @property (strong, nonatomic) UITableView *picTable;
-
 
 @property (strong, nonatomic) NSMutableArray *contentArr;
 
@@ -36,21 +34,28 @@
 
 @property (strong, nonatomic) NSMutableArray *dateArr;
 
-
 @property (strong, nonatomic) NSDictionary  *dic;
 
 @property (strong, nonatomic) NSDictionary *sendDic;
 
-
 @property (assign, nonatomic) int height;
 
-
 @property (strong, nonatomic) NSMutableArray *sourceArr;
+
+@property (strong, nonatomic) NSMutableArray *timeidArr;
+
+@property (strong, nonatomic) NSMutableArray *imgPathArr;
 
 @property (copy, nonatomic) NSString *userId;
 
 @property (strong, nonatomic) UIButton *timeBtn;
 
 @property (strong, nonatomic) UIButton *picBtn;
+
+@property (strong, nonatomic) UIImage *img1;
+
+@property (strong, nonatomic) UIImage *img2;
+
+@property (strong, nonatomic) UIImage *img3;
 
 @end

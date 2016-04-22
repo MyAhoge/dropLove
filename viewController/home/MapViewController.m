@@ -59,15 +59,41 @@
 }
 
 
+//-(void)test{
+//
+//    _curPage = 0;
+//    BMKCitySearchOption *citySearchOption = [[BMKCitySearchOption alloc]init];
+//    citySearchOption.pageIndex = _curPage;
+//    citySearchOption.pageCapacity = 10;
+//    citySearchOption.city= self.citytext;
+//    NSLog(@"%@",self.citytext);
+////    NSString *address = [NSString stringWithFormat:@"%@"]
+//    citySearchOption.keyword = self.activeandadress;
+//    NSLog(@"%@",self.activeandadress);
+//    BOOL flag = [self.poisearch poiSearchInCity:citySearchOption];
+//    if(flag)
+//    {
+//        NSLog(@"城市内检索发送成功");
+//    }
+//    else
+//    {
+//        NSLog(@"城市内检索发送失败");
+//    }
+//
+//
+//}
 
 
 -(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     [_mapView viewWillAppear];
     _mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
     _poisearch.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     [_mapView viewWillDisappear];
     _mapView.delegate = nil; // 不用时，置nil
     _poisearch.delegate = nil; // 不用时，置nil

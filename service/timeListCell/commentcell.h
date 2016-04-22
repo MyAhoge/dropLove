@@ -16,8 +16,13 @@
 
 @property (strong, nonatomic) UILabel *contentLabel;
 
+@property (strong, nonatomic) UIImageView *headerImg;
+
+@property (strong, nonatomic) UILabel *timeLab;
+
+
+
 @property (assign, nonatomic) int a;
 
-//@property (assign, nonatomic) int height;
 
 @end

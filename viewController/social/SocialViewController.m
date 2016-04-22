@@ -31,7 +31,17 @@
     self.table.delegate = self;
     self.table.dataSource = self;
     
-    [self dataSource];
+    [self updata];
+    
+}
+#pragma mark 无数据时刷新符号
+- (void)updata{
+    UIRefreshControl *refresh = [[UIRefreshControl alloc]init];
+    refresh.attributedTitle = [[NSAttributedString alloc]initWithString:@"刷新"];
+    [refresh addTarget:self action:@selector(dataSource:) forControlEvents:UIControlEventValueChanged];
+    [self.table addSubview:refresh];
+    [refresh beginRefreshing];
+    [self dataSource:refresh];
     
 }
 #pragma mark 代理传值方法
@@ -40,10 +50,13 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         self.sendDic = sender;
         socialModel *model = [[socialModel alloc]init];
-        
         [dataService socialAddDataDic:sender addWith:^(NSDictionary *resultDic) {
-            
-            NSLog(@"%@", resultDic);
+//            NSLog(@"social添加数据成功-%@", resultDic);
+            [dataService socialSetImg:[sender objectForKey:@"imageArr"] andSocialId:[resultDic objectForKey:@"result"]  andSuccess:^(NSString *result) {
+                NSLog(@"上传图片成功-%@", result);
+            } andFail:^(NSString *result) {
+                
+            }];
             
         } addWith:^(NSDictionary *errorDic) {
             
@@ -56,23 +69,19 @@
         [self.sourceArr addObject:model];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-//            [self dataSource];
-            [self.table reloadData];
+            [self updata];
         });
     });
-   
 }
 - (void)add{
     socialPublishController *publish = [[socialPublishController alloc]init];
     publish.delegate = self;
-//    [self presentViewController:publish animated:YES completion:nil];
     publish.hidesBottomBarWhenPushed = YES;
-    
     [self.navigationController pushViewController:publish animated:YES];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    self.labHeight = 0;
     socialModel *model = [[socialModel alloc]init];
     model = _sourceArr[_sourceArr.count - 1 - indexPath.row];
     
@@ -81,75 +90,85 @@
         socialCell *cell = [tableView dequeueReusableCellWithIdentifier:@"socialId"];
         if (cell == nil) {
             cell = [[socialCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"socialId"];
-        }
-        cell.deleteBtn.hidden = YES;
-        
-        if ([model.userid isEqualToString:[dataService myUserId]]) {
-            cell.deleteBtn.hidden = NO;
+            cell.deleteBtn.hidden = YES;
             
-//            [cell.deleteBtn setTitle:@"删除" forState:UIControlStateNormal];
-//            [cell.deleteBtn setTitleColor:COLOR(167, 167, 172, 1) forState:UIControlStateNormal];
-            [cell.deleteBtn setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
-            [cell.deleteBtn addTarget:self action:@selector(deleteMethod:) forControlEvents:UIControlEventTouchUpInside];
-            cell.deleteBtn.tag = _sourceArr.count - 1 - indexPath.row;
-        }else{
+            if ([model.userid isEqualToString:[dataService myUserId]]) {
+                cell.deleteBtn.hidden = NO;
+                [cell.deleteBtn setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
+                [cell.deleteBtn addTarget:self action:@selector(deleteMethod:) forControlEvents:UIControlEventTouchUpInside];
+                cell.deleteBtn.tag = _sourceArr.count - 1 - indexPath.row;
+            }else{
+                
+            }
             
+            cell.contentLab.text = model.content;
+            cell.headerLab.text = model.name;
+            cell.timeLab.text = model.time;
+            
+            self.labHeight = [cell setHeight:model.content];
+            self.height = cell.frame.size.height;
+            
+            NSURL *url = [NSURL URLWithString:model.headerImg];
+            NSData *imgData = [NSData dataWithContentsOfURL:url];
+            cell.headerImg.image = [UIImage imageWithData:imgData];
+            
+            [cell.commentBtn setImage:[UIImage imageNamed:@"comment"] forState:UIControlStateNormal];
         }
-        
-        cell.contentLab.text = model.content;
-        cell.headerLab.text = model.name;
-        cell.timeLab.text = model.time;
-        
-        [cell setHeight:model.content];
-        self.height = cell.frame.size.height;
-        //头像路径
-        NSString *path = [NSString stringWithFormat:@"/Applications/MAMP/htdocs/myLove/image/header/%@",model.headerImg];
-        cell.headerImg.image = [UIImage imageWithContentsOfFile:path];
-        
-        [cell.commentBtn setImage:[UIImage imageNamed:@"comment"] forState:UIControlStateNormal];
         return cell;
     }else{
-        socialImgCell *cell = [tableView dequeueReusableCellWithIdentifier:@"socialImgCellId"];
-        if (cell == nil) {
-            cell = [[socialImgCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"socialImgCellId"];
-        }
-        cell.deleteBtn.hidden = YES;
-        
-        if ([model.userid isEqualToString:[dataService myUserId]]) {
-            cell.deleteBtn.hidden = NO;
-            [cell.deleteBtn setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
-            [cell.deleteBtn addTarget:self action:@selector(deleteMethod:) forControlEvents:UIControlEventTouchUpInside];
-            cell.deleteBtn.tag = _sourceArr.count - 1 - indexPath.row;
-        }else{
+        socialImgCell *cell1 = [tableView dequeueReusableCellWithIdentifier:@"socialImgCellId"];
+        if (cell1 == nil) {
+            cell1 = [[socialImgCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"socialImgCellId"];
             
-        }
-        cell.contentLab.text = model.content;
-        cell.headerLab.text = model.name;
-        cell.timeLab.text = model.time;
-        
-      self.labHeight = [cell setHeight:model.content];
-        self.height = cell.frame.size.height;
-        //头像路径
-        NSString *path = [NSString stringWithFormat:@"/Applications/MAMP/htdocs/myLove/image/header/%@",model.headerImg];
-        cell.headerImg.image = [UIImage imageWithContentsOfFile:path];
-        
-        [cell.commentBtn setImage:[UIImage imageNamed:@"comment"] forState:UIControlStateNormal];
-        
-        NSLog(@"?>>>>>%@", model.imgArr);
-        
-        if (model.imgArr.count == 1) {
-            cell.image1.image = model.imgArr[0];
-        }else if(model.imgArr.count == 2){
-            cell.image1.image = model.imgArr[0];
-            cell.image2.image = model.imgArr[1];
-        }else if (model.imgArr.count == 3){
-            cell.image1.image = model.imgArr[0];
-            cell.image2.image = model.imgArr[1];
-            cell.image3.image = model.imgArr[2];
-        }else{
+            cell1.deleteBtn.hidden = YES;
             
+            if ([model.userid isEqualToString:[dataService myUserId]]) {
+                cell1.deleteBtn.hidden = NO;
+                [cell1.deleteBtn setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
+                [cell1.deleteBtn addTarget:self action:@selector(deleteMethod:) forControlEvents:UIControlEventTouchUpInside];
+                cell1.deleteBtn.tag = _sourceArr.count - 1 - indexPath.row;
+            }else{
+                
+            }
+            cell1.contentLab.text = model.content;
+            cell1.headerLab.text = model.name;
+            cell1.timeLab.text = model.time;
+            
+            self.labHeight = [cell1 setHeight:model.content];
+            self.height = cell1.frame.size.height;
+            
+            NSURL *url = [NSURL URLWithString:model.headerImg];
+            NSData *imgData = [NSData dataWithContentsOfURL:url];
+            cell1.headerImg.image = [UIImage imageWithData:imgData];
+            
+            [cell1.commentBtn setImage:[UIImage imageNamed:@"comment"] forState:UIControlStateNormal];
+            
+            if (model.imgArr.count == 1) {
+                cell1.image1.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[model.imgArr[0] objectForKey:@"socialimg_path"]]]];
+            }else if(model.imgArr.count == 2){
+                cell1.image1.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[model.imgArr[0] objectForKey:@"socialimg_path"]]]];
+                cell1.image2.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[model.imgArr[1] objectForKey:@"socialimg_path"]]]];
+            }else if (model.imgArr.count == 3){
+                cell1.image1.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[model.imgArr[0] objectForKey:@"socialimg_path"]]]];
+                cell1.image2.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[model.imgArr[1] objectForKey:@"socialimg_path"]]]];
+                cell1.image3.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[model.imgArr[2] objectForKey:@"socialimg_path"]]]];
+            }else{
+                
+                
+                cell1.image1.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[model.imgArr[0] objectForKey:@"socialimg_path"]]]];
+                cell1.image2.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[model.imgArr[1] objectForKey:@"socialimg_path"]]]];
+                cell1.image3.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[model.imgArr[2] objectForKey:@"socialimg_path"]]]];
+                
+                UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(cell1.image3.frame.size.width-10-40, cell1.image3.frame.size.height-10-20, 40, 20)];
+                [cell1.image3 addSubview:lab];
+                lab.text = [NSString stringWithFormat:@"共%ld张",model.imgArr.count];
+                lab.font = FONT(10);
+                lab.textAlignment = NSTextAlignmentRight;
+                
+            }
         }
-        return cell;
+       
+        return cell1;
     }
     
 }
@@ -186,9 +205,12 @@
     comment.content      = model.content;
     comment.headerImgStr = model.headerImg ;
     comment.imgArr       = model.imgArr;
-    comment.height = _labHeight;
-//    comment.height = ((timelistcell *)[tableView cellForRowAtIndexPath:indexPath]).contentView.frame.size.height;
-//    [self presentViewController:comment animated:YES completion:nil];
+    //label的高
+    if (model.imgArr.count > 0) {
+        comment.height = ((timelistcell *)[tableView cellForRowAtIndexPath:indexPath]).contentView.frame.size.height - 110-(WIDTH-80)/3;
+    }else{
+        comment.height = ((timelistcell *)[tableView cellForRowAtIndexPath:indexPath]).contentView.frame.size.height - 110;
+    }
     comment.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:comment animated:YES];
   
@@ -204,7 +226,8 @@
         return _height;
     }
 }
-- (void)dataSource{
+//TODO:数据请求
+- (void)dataSource:(UIRefreshControl *)send{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         self.userId = [dataService myUserId];
@@ -213,26 +236,48 @@
         
         [dataService socialDic:idDic AndWidth:^(NSDictionary *resultDic){
             NSDictionary *dic = [[NSDictionary alloc]initWithDictionary:resultDic];
-            
+            NSLog(@"社区请求数据-%@", dic);
             NSArray *arr = [dic objectForKey:@"result"];
             
             self.sourceArr = [NSMutableArray arrayWithCapacity:0];
             
-            for (NSDictionary *dic in arr) {
-                socialModel *model = [[socialModel alloc]init];
-                
-                model.content = [dic objectForKey:@"social_content"];
-                model.headerImg = [dic objectForKey:@"user_headerimage"];
-                model.date = [dic objectForKey:@"social_date"];
-                model.time = [dic objectForKey:@"social_time"];
-                model.name = [dic objectForKey:@"user_name"];
-                model.userid = [dic objectForKey:@"t_user_user_id"];
-                model.socialId = [dic objectForKey:@"social_id"];
-                
-                [self.sourceArr addObject:model];
+            NSArray *imgpathArr = [dic objectForKey:@"imgpath"];
+            
+            if (imgpathArr.count > 0) {
+                for (NSDictionary *dic in arr) {
+                    socialModel *model = [[socialModel alloc]init];
+                    
+                    model.content = [dic objectForKey:@"social_content"];
+                    model.headerImg = [dic objectForKey:@"user_headerimage"];
+                    model.date = [dic objectForKey:@"social_date"];
+                    model.time = [dic objectForKey:@"social_time"];
+                    model.name = [dic objectForKey:@"user_name"];
+                    model.userid = [dic objectForKey:@"t_user_user_id"];
+                    model.socialId = [dic objectForKey:@"social_id"];
+                    model.imgArr = imgpathArr;
+                    [self.sourceArr addObject:model];
+                }
+            }else{
+                for (NSDictionary *dic in arr) {
+                    socialModel *model = [[socialModel alloc]init];
+                    
+                    model.content = [dic objectForKey:@"social_content"];
+                    model.headerImg = [dic objectForKey:@"user_headerimage"];
+                    model.date = [dic objectForKey:@"social_date"];
+                    model.time = [dic objectForKey:@"social_time"];
+                    model.name = [dic objectForKey:@"user_name"];
+                    model.userid = [dic objectForKey:@"t_user_user_id"];
+                    model.socialId = [dic objectForKey:@"social_id"];
+                    
+                    [self.sourceArr addObject:model];
+                }
             }
+            
             dispatch_async(dispatch_get_main_queue(), ^{
+                
                 [self.table reloadData];
+                
+                [send endRefreshing];
             });
         } addWidth:^(NSDictionary *error) {
             

@@ -26,6 +26,8 @@
 
 @property (assign, nonatomic) int headHeight;
 
+@property (assign, nonatomic) int cellHeight;
+
 @property (strong, nonatomic) UILabel *contentLab;
 
 @property (strong, nonatomic) UILabel *timeLab;

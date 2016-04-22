@@ -18,7 +18,7 @@
 
 @property (copy, nonatomic) NSString *date;
 
-@property (strong, nonatomic) NSArray *imgArr;
+@property (strong, nonatomic) NSMutableArray *imgArr;
 
 
 

@@ -156,8 +156,14 @@
      *  读取模型数据（起床闹钟）
      */
     NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
-    self.clockcount = [defaults1 objectForKey:@"time"];//根据键值取出name
-    self.i = (int)self.clockcount.count;
+    self.clockcount = [defaults1 objectForKey:@"time5"];//根据键值取出name
+    if (self.clockcount == nil) {
+        self.i = 0;
+    }else{
+        NSLog(@"%lu",(unsigned long)self.clockcount.count);
+         self.i = (int)self.clockcount.count;
+    }
+   
     NSLog(@" 一共有个闹钟 %d",_i);
     NSLog(@"-------%@",self.mutArr1);
     for (NSString *time2 in self.clockcount) {
@@ -340,25 +346,25 @@
      */
     NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
     [self.mutArr addObject:self.timestr];
-    [defaults setObject:self.mutArr forKey:@"time"];
+    [defaults setObject:self.mutArr forKey:@"time5"];
     [defaults synchronize];//用synchronize方法把数据持久化到standardUserDefaults数据库
     
     /**
      *  读取数据
      */
     NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
-    NSString *name1 = [defaults1 objectForKey:@"time"];//根据键值取出name
+    NSString *name1 = [defaults1 objectForKey:@"time5"];//根据键值取出name
     NSLog(@"读取数据%@",name1);
     
     
     /**
      *  显示提醒闹钟页面
      */
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.0001 animations:^{
         
         [self.table setHidden:NO];
         self.view1.frame = CGRectMake(0, HEIGHT_MY, WIDTH_MY, HEIGHT_MY);
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        [self.navigationController setNavigationBarHidden:NO animated:NO];
         
     }];
     
@@ -371,11 +377,11 @@
 - (void)addclock{
     
     NSLog(@"进入添加闹钟界面");
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:0.0001 animations:^{
         
         [self.table setHidden:YES];
         self.view1.frame = CGRectMake(0, 0, WIDTH_MY, HEIGHT_MY);
-        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        [self.navigationController setNavigationBarHidden:YES animated:NO];
         
     }];
 }
@@ -385,11 +391,11 @@
  */
 - (void)cancle{
     
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.0001 animations:^{
         
         [self.table setHidden:NO];
         self.view1.frame = CGRectMake(0, HEIGHT_MY, WIDTH_MY, HEIGHT_MY);
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        [self.navigationController setNavigationBarHidden:NO animated:NO];
         
     }];
 }

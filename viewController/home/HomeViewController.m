@@ -11,6 +11,7 @@
 
 #import "chatViewController.h"
 //#import "MapViewController.h"
+#import "AppDelegate.h"
 
 @interface HomeViewController ()<CLLocationManagerDelegate>
 {
@@ -24,22 +25,15 @@
 
 @implementation HomeViewController
 
-- (void)viewWillAppear:(BOOL)animated{
-    BOOL isLogin = NO;
-    if (isLogin == NO) {
-        [UIView animateWithDuration:0 animations:^{
-            loginViewController *login = [[loginViewController alloc]init];
-            [self presentViewController:login animated:YES completion:nil];
-            
-        }];
-    }
-    
-}
+//- (void)viewWillAppear:(BOOL)animated{
+//    AppDelegate *app = [[AppDelegate alloc]init];
+//    app.window.rootViewController = app.tabBar;
+//    [app.window makeKeyAndVisible];
+//}
 - (void)viewDidLoad{
     [super viewDidLoad];
-    
-    
-    
+//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"number"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
     
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     //    顶部导航
@@ -353,10 +347,8 @@
     //    } addWithEror:^(NSString *str) {
     //        NSLog(@"%@", str);
     //    }];
+
 }
-
-
-
 
 
 

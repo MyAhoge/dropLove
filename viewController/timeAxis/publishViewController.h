@@ -10,7 +10,9 @@
 #import "TimeAxisViewController.h"
 
 @protocol turnBackDelegate <NSObject>
+
 - (void)turnImages:(NSMutableArray *)selectAllImages;
+
 @end
 
 @interface publishViewController : UIViewController<UINavigationControllerDelegate,UIImagePickerControllerDelegate,turnBackDelegate>

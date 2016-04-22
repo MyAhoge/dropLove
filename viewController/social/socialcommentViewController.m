@@ -16,22 +16,19 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     self.commentMutArr = [NSMutableArray arrayWithCapacity:0];
-    
-//    [self topMethod];
-    
     [self myTable];
     
     [self commentMethod];
 }
 #pragma mark table
 - (void)myTable{
-    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, HEIGHT-40) style:UITableViewStylePlain];
+    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, HEIGHT-64-40) style:UITableViewStylePlain];
     self.table.backgroundColor = MICOLOR;
     [self.view addSubview:_table];
     self.table.delegate = self;
     self.table.dataSource = self;
     
-    UIView *tabHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, _height+100+(WIDTH-20+10)*_imgArr.count)];
+    UIView *tabHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, _height+WIDTH*_imgArr.count)];
     self.table.tableHeaderView = tabHeaderView;
     
     self.headerImg = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 50, 50)];
@@ -45,20 +42,20 @@
             
             UIImageView *img = [[UIImageView alloc]initWithFrame:CGRectMake(10 , 10+_contentLab.frame.origin.y+_contentLab.frame.size.height+(WIDTH- 20+10)*i, (WIDTH- 20), (WIDTH- 20))];
             [tabHeaderView addSubview:img];
-            img.image = _imgArr[i];
+            img.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[_imgArr[i] objectForKey:@"socialimg_path"]]]];
        
     }
-    
     
     [tabHeaderView addSubview:_headerImg];
     [tabHeaderView addSubview:_nameLab];
     [tabHeaderView addSubview:_timeLab];
     [tabHeaderView addSubview:_contentLab];
     [tabHeaderView addSubview:_commentBtn];
+    //头像
+    NSURL *url = [NSURL URLWithString:_headerImgStr];
+    NSData *imgData = [NSData dataWithContentsOfURL:url];
+    self.headerImg.image = [UIImage imageWithData:imgData];
     
-    NSString *path = [NSString stringWithFormat:@"/Applications/MAMP/htdocs/myLove/image/header/%@",_headerImgStr];
-    
-    self.headerImg.image = [UIImage imageWithContentsOfFile:path];;
     self.nameLab.text    = _name;
     self.timeLab.text    = _time;
     self.contentLab.text = _content;
@@ -70,22 +67,6 @@
     self.contentLab.numberOfLines = 0;
     
 }
-#pragma mark 顶部
-//- (void)topMethod{
-//    UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 20)];
-//    [self.view addSubview:topView];
-//    topView.backgroundColor  =COLOR_MINE;
-//    
-//    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, WIDTH, 44)];
-//    [self.view addSubview:headerView];
-//    headerView.backgroundColor = COLOR_MINE;
-//    
-//    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 12.5, 10, 20)];
-//    [headerView addSubview:backBtn];
-//    [backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-//    [backBtn addTarget:self action:@selector(backMethod) forControlEvents:UIControlEventTouchUpInside];
-//    
-//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     socialCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"socialCommentCellId"];
@@ -107,20 +88,16 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return _cellHeight;
 }
-#pragma mark 返回
-- (void)backMethod{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
+
 #pragma mark 输入框
 - (void)commentMethod{
-    self.footView = [[UIView alloc]initWithFrame:CGRectMake(0, HEIGHT-40, WIDTH, 40)];
+    self.footView = [[UIView alloc]initWithFrame:CGRectMake(0, HEIGHT-40-64, WIDTH, 40)];
     [self.view addSubview:_footView];
     self.footView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
     self.textView = [[UITextView alloc]initWithFrame:CGRectMake(10, 5, WIDTH-10-50, 30)];
     [self.footView addSubview:_textView];
-//    self.textView.backgroundColor = MICOLOR;
-    
+  
     UIButton *sendBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH-30-10, 5, 30, 30)];
     [self.footView addSubview:sendBtn];
     sendBtn.titleLabel.font = FONT(15);
@@ -141,7 +118,9 @@
             alertlab.alpha = 0;
         }];
     }else{
-        [self.commentMutArr addObject:_textView.text];
+        NSString *str = _textView.text;
+        [self.commentMutArr addObject:str];
+        NSLog(@"%@", _commentMutArr);
         [self.table reloadData];
         self.textView.text = nil;
         [self.textView resignFirstResponder];
@@ -166,6 +145,17 @@
     }];
     return YES;
 }
+- (void)socialDataService{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        
+    
+        dispatch_async(dispatch_get_main_queue(), ^{
+    
+        });
+    });
+}
+
 //点击空白处收回键盘
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
