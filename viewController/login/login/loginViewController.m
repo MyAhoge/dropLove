@@ -8,6 +8,7 @@
 
 #import "loginViewController.h"
 #import "dropHeader.h"
+
 /**
  *  登录
  */
@@ -70,27 +71,9 @@
     
     
 }
-#pragma mark 返回参数
-//{ "code": "200",
-//    "reason": "login sucess!",
-//    "data":
-//    {
-//        "user_id": "1",
-//        "user_name": "侃侃",
-//        "user_password": "222222",
-//        "user_headerimage": "http://115.159.215.216/mylove/image/header/2016-04-19/57159ee2c1356.jpg",
-//        "user_phone": "11111111111",
-//        "user_brithday": "1995-04-20",
-//        "user_signature": "",
-//        "user_number": "370178",
-//        "user_city": "苏州",
-//        "user_icomalpha": "5"
-//    },
-//    "number": 1
-//}
 #pragma mark 登录
 - (void)loginMethod{
-   
+    
     if ([_textPhone.text isEqualToString:@""] || [_textPassWord.text isEqualToString:@""]) {
         
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您还没有输入手机号和密码哦！" preferredStyle:UIAlertControllerStyleAlert];
@@ -106,13 +89,12 @@
                                   @"password":_textPassWord.text};
             
             [dataService loginDic:dic andWithSucess:^(NSDictionary *resultDic) {
+                NSUserDefaults *userNumber = [NSUserDefaults standardUserDefaults];
+                [userNumber setObject:resultDic forKey:@"number"];
+                [userNumber setObject:[resultDic objectForKey:@"data"] forKey:@"data"];
+                
+                NSString *str = [NSString stringWithFormat:@"%@",[resultDic objectForKey:@"number"]];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    NSUserDefaults *userNumber = [NSUserDefaults standardUserDefaults];
-                    [userNumber setObject:resultDic forKey:@"number"];
-                    [userNumber setObject:[resultDic objectForKey:@"data"] forKey:@"data"];
-                    
-                    NSString *str = [NSString stringWithFormat:@"%@",[resultDic objectForKey:@"number"]];
                     
                     if ([str isEqualToString:@"1"]) {
                         marryViewController *marry = [[marryViewController alloc]init];
@@ -125,11 +107,9 @@
             } andWithFaile:^(NSDictionary *faile) {
                 NSLog(@"%@", faile);
             }];
-            
         });
     }
 }
-//TODO: 第三方登录
 - (void)otherLoginMethod{
     
     self.otherLab = [[UILabel alloc]initWithFrame:CGRectMake((WIDTH-80)/2, _lineLab.frame.origin.y+_lineLab.frame.size.height+20, 80, 20)];
@@ -170,13 +150,70 @@
     
 }
 - (void)qqLogin{
+    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToQQ];
+    
+    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
+        
+        //          获取微博用户名、uid、token等
+        
+        if (response.responseCode == UMSResponseCodeSuccess) {
+            
+            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:UMShareToQQ];
+            marryViewController *marry = [[marryViewController alloc]init];
+            
+            [self presentViewController:marry animated:YES completion:nil];
+            
+            NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
+            
+        }});
     
 }
 - (void)sinaLogin{
     
+    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina];
+    
+    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
+        
+        //          获取微博用户名、uid、token等
+        
+        if (response.responseCode == UMSResponseCodeSuccess) {
+            
+            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:UMShareToSina];
+            
+            marryViewController *marry = [[marryViewController alloc]init];
+            
+            [self presentViewController:marry animated:YES completion:nil];
+            
+            NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
+            
+        }});
+    [[UMSocialDataService defaultDataService] requestUnOauthWithType:UMShareToSina  completion:^(UMSocialResponseEntity *response){
+        NSLog(@"response is %@",response);
+    }];
+    
+
+    
 }
 - (void)wechatLogin{
+    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
     
+    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
+        
+        if (response.responseCode == UMSResponseCodeSuccess) {
+            
+            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary]valueForKey:UMShareToWechatSession];
+            
+            marryViewController *marry = [[marryViewController alloc]init];
+            
+            [self presentViewController:marry animated:YES completion:nil];
+            
+            NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
+            
+        }
+        
+    });
+    
+  
 }
 - (void)forget{
     forgetViewController *forget = [[forgetViewController alloc]init];

@@ -156,27 +156,27 @@
      *  读取模型数据（起床闹钟）
      */
     NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
-    self.clockcount = [defaults1 objectForKey:@"time5"];//根据键值取出name
-    if (self.clockcount == nil) {
-        self.i = 0;
-    }else{
-        NSLog(@"%lu",(unsigned long)self.clockcount.count);
-         self.i = (int)self.clockcount.count;
+    self.clockcount = [defaults1 objectForKey:@"time50"];//根据键值取出name
+    NSLog(@"*****------%@",_clockcount);
+    if ((self.clockcount != nil && ![self.clockcount isKindOfClass:[NSNull class]] && self.clockcount.count != 0)) {
+        self.i = (int)self.clockcount.count;
+        NSLog(@" 一共有个闹钟 %d",_i);
+        NSLog(@"-------%@",self.mutArr1);
+        for (NSString *time2 in self.clockcount) {
+            ClockModel *model = [[ClockModel alloc]init];
+            model.time = time2;
+            self.gettime = time2;
+            NSLog(@"进入时取出的闹钟时间%@",time2);
+            [self.mutArr1 addObject:model];
+        }
+        
+        NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(creat) userInfo:nil repeats:YES];
+        [timer fire];
+        
     }
-   
-    NSLog(@" 一共有个闹钟 %d",_i);
-    NSLog(@"-------%@",self.mutArr1);
-    for (NSString *time2 in self.clockcount) {
-        ClockModel *model = [[ClockModel alloc]init];
-        model.time = time2;
-        self.gettime = time2;
-        NSLog(@"进入时取出的闹钟时间%@",time2);
-        [self.mutArr1 addObject:model];
-    }
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(creat) userInfo:nil repeats:YES];
-    [timer fire];
     
-   
+    
+    
     /**
      闹钟停止按钮
      */
@@ -193,7 +193,7 @@
     self.stopclock.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.stopclock.titleLabel.textAlignment = UIControlContentVerticalAlignmentCenter;
     [self.view2 addSubview:_stopclock];
- 
+    
     
 }
 
@@ -207,19 +207,19 @@
     [dateFormatter setDateStyle:NSDateFormatterFullStyle];
     [dateFormatter setDateFormat:@"HH:mm:ss"];
     NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
-//    NSLog(@"输出本地时间:%@",dateString);
+    //    NSLog(@"输出本地时间:%@",dateString);
     int hour = [[dateString substringToIndex:2]intValue];
-//    NSLog(@"%d",hour);
+    //    NSLog(@"%d",hour);
     int minute = [[dateString substringWithRange:NSMakeRange(3,2)]intValue];
-//    NSLog(@"%d",minute);
+    //    NSLog(@"%d",minute);
     int second = [[dateString substringFromIndex:6] intValue];
-//    NSLog(@"%d",second);
+    //    NSLog(@"%d",second);
     
     int huor1 = [[self.clockcount[_j] substringToIndex:2]intValue];
     int minute1 = [[self.clockcount[_j] substringFromIndex:3]intValue];
-//    NSLog(@"%d  +  %d",huor1,_j);
-//    NSLog(@"%d",minute1);
-//    
+    //    NSLog(@"%d  +  %d",huor1,_j);
+    //    NSLog(@"%d",minute1);
+    //
     if (hour >= huor1 && minute > minute1) {
         if (self.j < _i-1) {
             self.j++;
@@ -265,6 +265,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     return self.mutArr1.count;
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -346,14 +347,14 @@
      */
     NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
     [self.mutArr addObject:self.timestr];
-    [defaults setObject:self.mutArr forKey:@"time5"];
+    [defaults setObject:self.mutArr forKey:@"time50"];
     [defaults synchronize];//用synchronize方法把数据持久化到standardUserDefaults数据库
     
     /**
      *  读取数据
      */
     NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
-    NSString *name1 = [defaults1 objectForKey:@"time5"];//根据键值取出name
+    NSString *name1 = [defaults1 objectForKey:@"time50"];//根据键值取出name
     NSLog(@"读取数据%@",name1);
     
     
@@ -436,6 +437,10 @@
     }
     return _myplayer;
 }
+
+
+
+
 
 
 

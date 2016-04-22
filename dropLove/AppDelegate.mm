@@ -11,9 +11,6 @@
 #import <BaiduMapAPI_Base/BMKBaseComponent.h>//引入base相关所有的头文件
 
 
-//#define KEY @"10450bac46bb9"
-//#define SE @"c315e46eab32c704fd21dd596b6a8cac"
-
 @interface AppDelegate ()<RCIMUserInfoDataSource>
 @property (strong, nonatomic) BMKMapManager *mapManager;
 @end
@@ -22,12 +19,19 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    //
-    NSString *isLogin = @"NO";
+    
+    /**
+     *  改变导航栏字体颜色（白色）
+     */
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+
     NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
-    [userDef setObject:isLogin forKey:@"user"];
-    
-    
+    if ([[userDef objectForKey:@"user"] isEqualToString:@"YES"]) {
+        
+    }else{
+        NSString *isLogin = @"NO";
+        [userDef setObject:isLogin forKey:@"user"];
+    }
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     //
@@ -35,17 +39,8 @@
     TimeAxisViewController *time = [[TimeAxisViewController alloc]init];
     SocialViewController *social = [[SocialViewController alloc]init];
     MineViewController *mine     = [[MineViewController alloc]init];
- 
-    mine.tabBarItem.title = @"我的";
-    mine.tabBarItem.image = [[UIImage imageNamed:@"mine1@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    mine.tabBarItem.selectedImage = [[UIImage imageNamed:@"mineHight1@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-  
-    UINavigationController *nvc = [[UINavigationController alloc]initWithRootViewController:home];
-    nvc.navigationBar.translucent = NO;
-    nvc.tabBarItem.title = @"首页";
-    nvc.tabBarItem.image = [[UIImage imageNamed:@"home@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    nvc.tabBarItem.selectedImage = [[UIImage imageNamed:@"homeHight@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    nvc.navigationBar.barTintColor = COLOR_MINE;
+    //
+//    home.tabBarItem.title = @"首页";
     
     UINavigationController *timeNvc = [[UINavigationController alloc]initWithRootViewController:time];
     time.tabBarItem.title = @"时光轴";
@@ -61,6 +56,22 @@
     social.tabBarItem.image = [[UIImage imageNamed:@"social@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     social.tabBarItem.selectedImage = [[UIImage imageNamed:@"socialHight@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
+    mine.tabBarItem.title = @"我的";
+    
+    mine.tabBarItem.image = [[UIImage imageNamed:@"mine1@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    mine.tabBarItem.selectedImage = [[UIImage imageNamed:@"mineHight1@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    
+    
+    UINavigationController *nvc = [[UINavigationController alloc]initWithRootViewController:home];
+      nvc.navigationBar.translucent = NO;
+    nvc.tabBarItem.title = @"首页";
+    nvc.tabBarItem.image = [[UIImage imageNamed:@"home@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    nvc.tabBarItem.selectedImage = [[UIImage imageNamed:@"homeHight@2x.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    nvc.navigationBar.barTintColor = COLOR_MINE;
+    
     
     UINavigationController *minevc = [[UINavigationController alloc]initWithRootViewController:mine];
     minevc.navigationBar.translucent = NO;
@@ -68,38 +79,25 @@
     minevc.navigationBar.barTintColor = COLOR_MINE;
 
     //
-   self.tabBar = [[UITabBarController alloc]init];
+    self.tabBar = [[UITabBarController alloc]init];
     //
     self.tabBar.viewControllers = @[nvc,timeNvc,socialNvc,minevc];
-    //设置标题颜色、大小
-    NSDictionary *dic = [[NSDictionary alloc]initWithObjectsAndKeys:
-                         [UIColor whiteColor], NSForegroundColorAttributeName,
-                         [UIFont systemFontOfSize:18],NSFontAttributeName, nil];
-    [[UINavigationBar appearance] setTitleTextAttributes:dic];
-    
     //设置底部图标和title颜色
     self.tabBar.tabBar.tintColor = COLOR_MINE;
     
-    
-//    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
-//    [userDef setObject:isLogin forKey:@"user"];
-    
+    self.window.rootViewController = _tabBar;
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] isEqualToString:@"YES"]) {
-         self.window.rootViewController = _tabBar;
+        self.window.rootViewController = _tabBar;
         
     }else{
         loginViewController *loginVc = [[loginViewController alloc]init];
         self.window.rootViewController = loginVc;
     }
     
-    
-//    self.window.rootViewController = tabBar;
     [self.window makeKeyAndVisible];
-    
-    [UIApplication sharedApplication].statusBarHidden = YES;
     // Override point for customization after application launch.
     
-/*****************************************************************************/
+    
     //    初始化融云sdk
     [[RCIM sharedRCIM] initWithAppKey:RONGYUN_KEY];
     
@@ -116,19 +114,46 @@
         NSLog(@"token错误");
     }];
     
+
+    
     _mapManager = [[BMKMapManager alloc]init];
     // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
     BOOL ret = [_mapManager start:@"6PK19NT1x999KtdsBRbO5CmITFVZi5gc"  generalDelegate:nil];
     if (!ret) {
         NSLog(@"manager start failed!");
     }
-    /*****************************************************************************/
-    //TODO:短信验证码
-    [SMSSDK registerApp:APPKEY withSecret:APPSECRET];
+
+
+    //分享
+     [UMSocialData setAppKey:SHARE_SDK];
+//    //微信
+//      [UMSocialWechatHandler setWXAppId:@"wxd930ea5d5a258f4f" appSecret:@"db426a9829e4b49a0dcac7b4162da6b6" url:@"http://www.umeng.com/social"];
+//    //微博
+//     [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:@"3921700954"
+//                                              secret:@"04b48b094faeb16683c32669824ebdad"
+//                                         RedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
+//    //QQ
+//    
+//    [UMSocialQQHandler setQQWithAppId:@"100424468" appKey:@"c7394704798a158208a74ab60104f0ba" url:@"http://www.umeng.com/social"];
+
+    //设置微信AppId、appSecret，分享url
+    [UMSocialWechatHandler setWXAppId:@"wxd930ea5d5a258f4f" appSecret:@"db426a9829e4b49a0dcac7b4162da6b6" url:@"http://www.umeng.com/social"];
+    //设置手机QQ 的AppId，Appkey，和分享URL，需要#import "UMSocialQQHandler.h"
+    [UMSocialQQHandler setQQWithAppId:@"100424468" appKey:@"c7394704798a158208a74ab60104f0ba" url:@"http://www.umeng.com/social"];
     
+    [UMSocialData defaultData].extConfig.qqData.qqMessageType = UMSocialQQMessageTypeImage;
+    //打开新浪微博的SSO开关，设置新浪微博回调地址，这里必须要和你在新浪微博后台设置的回调地址一致。需要 #import "UMSocialSinaSSOHandler.h"
+    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:@"3921700954"
+                                              secret:@"04b48b094faeb16683c32669824ebdad"
+                                         RedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
+    //微信第三方登录
     
+        [UMSocialWechatHandler setWXAppId:@"wxd930ea5d5a258f4f" appSecret:@"db426a9829e4b49a0dcac7b4162da6b6" url:@"http://www.umeng.com/social"];
+    //QQ第三方
+    [UMSocialQQHandler setQQWithAppId:@"100424468" appKey:@"c7394704798a158208a74ab60104f0ba" url:@"http://www.umeng.com/social"];
     
-    
+    //微博第三方
+  
     return YES;
 }
 - (void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion{
@@ -149,6 +174,19 @@
     
     return completion(nil);
 }
+
+//分享系统回调
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    BOOL result = [UMSocialSnsService handleOpenURL:url];
+    if (result == FALSE) {
+        //调用其他SDK，例如支付宝SDK等
+    }
+    return result;
+}
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url { return [UMSocialSnsService handleOpenURL:url]; }
+
+
 //
 //- (void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion{
 //    if ([@"9069" isEqual:userId]) {

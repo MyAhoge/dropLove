@@ -6,6 +6,7 @@
 //  Copyright © 2016年 ljz. All rights reserved.
 //
 
+
 #import "ScreenPasswordViewController.h"
 #import "dropHeader.h"
 
@@ -22,6 +23,7 @@
 @property (strong, nonatomic)UILabel *lable3;
 @property (strong, nonatomic)UILabel *lable4;
 @property (strong, nonatomic)NSTimer *timer;
+@property (strong, nonatomic)UIButton *canclebtn;
 
 @end
 
@@ -29,8 +31,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
-
+    
+    
     self.view.backgroundColor =COLOR(243, 239, 230, 1);
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.title = @"设置数字密码";
@@ -45,8 +47,8 @@
     UIBarButtonItem *leftBtn =[[UIBarButtonItem alloc]initWithTitle:@"取消" style: UIBarButtonItemStylePlain target:self action:@selector(back)];
     leftBtn.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = leftBtn;
-
-
+    
+    
     
     
     self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_MY, HEIGHT_MY)];
@@ -67,38 +69,58 @@
     [self.table addSubview:_lable2];
     self.lable2.textAlignment = NSTextAlignmentCenter;
     self.lable2.backgroundColor = COLOR(201, 204, 208, 1);
-
-
+    
+    
     self.lable3 = [[UILabel alloc]initWithFrame:CGRectMake(50+30+(WIDTH_MY-100-120)/3*2+30, 80, 30, 30)];
     self.lable3.font = FONT(25);
     [self.table addSubview:_lable3];
     self.lable3.textAlignment = NSTextAlignmentCenter;
     self.lable3.backgroundColor = COLOR(201, 204, 208, 1);
-
-
+    
+    
     self.lable4 = [[UILabel alloc]initWithFrame:CGRectMake(50+30+(WIDTH_MY-100-120)+30+30, 80, 30, 30)];
     self.lable4.font = FONT(25);
     [self.table addSubview:_lable4];
     self.lable4.textAlignment = NSTextAlignmentCenter;
     self.lable4.backgroundColor = COLOR(201, 204, 208, 1);
-
+    
     
     self.textfield3 = [[UITextField alloc]initWithFrame:CGRectMake(-100, 0, 30, 30)];
     self.textfield3.font = FONT(25);
     self.textfield3.textColor = COLOR(243, 239, 230, 1);
     [self.table addSubview:_textfield3];
     self.textfield3.keyboardType = UIKeyboardTypeNumberPad;
- 
+    
     [self timestar];
     
-
+    self.canclebtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH_MY/2-60, 150, 120, 40)];
+    [self.canclebtn setTintColor:[UIColor blackColor]];
+    self.canclebtn.titleLabel.font = FONT(15);
+    
+    NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
+    NSString *name1 = [defaults1 objectForKey:@"lockpassword"];//根据键值取出name
+    NSLog(@"读取数据%@",name1);
+    
+    if (name1 != nil) {
+        [self.canclebtn setTitle:@"已开启密码锁定" forState: UIControlStateNormal];
+    }else{
+        [self.canclebtn setTitle:@"关闭密码锁定" forState: UIControlStateNormal];
+    }
+    
+    [self.canclebtn addTarget:self action:@selector(cancle) forControlEvents:UIControlEventTouchUpInside];
+    self.canclebtn.backgroundColor = [UIColor grayColor];
+    self.canclebtn.layer.cornerRadius = 5;
+    self.canclebtn.layer.masksToBounds = YES;
+    [self.table addSubview:_canclebtn];
+    
+    
 }
 
 - (void)timestar{
     
     self.timer = [NSTimer scheduledTimerWithTimeInterval:0.001 target:self selector:@selector(add) userInfo:nil repeats:YES];
-
-
+    
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -115,12 +137,12 @@
     }else{
         self.lable1.text = @"";
     }
-
+    
     
     if (self.textfield3.text.length >= 2) {
-         self.lable2.text = [self.textfield3.text substringWithRange:NSMakeRange(1, 1)];
+        self.lable2.text = [self.textfield3.text substringWithRange:NSMakeRange(1, 1)];
     }else{
-         self.lable2.text = @"";
+        self.lable2.text = @"";
     }
     
     if (self.textfield3.text.length >= 3) {
@@ -128,14 +150,14 @@
     }else{
         self.lable3.text = @"";
     }
-
+    
     if (self.textfield3.text.length >= 4) {
         self.lable4.text = [self.textfield3.text substringWithRange:NSMakeRange(3, 1)];
     }else{
         self.lable4.text = @"";
     }
-
-
+    
+    
 }
 
 - (void)save{
@@ -147,23 +169,50 @@
         [defaults setObject:num forKey:@"lockpassword"];
         [defaults synchronize];
         
+        
         NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
         NSString *name1 = [defaults1 objectForKey:@"lockpassword"];//根据键值取出name
         NSLog(@"读取数据%@",name1);
         
+        
+        
         [self.timer invalidate];
         
-         self.timer = nil;
+        self.timer = nil;
         
         [self.navigationController popViewControllerAnimated:YES];
         
     }
+    
+}
 
+- (void)cancle{
+    
+    NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
+    NSString *num = nil;
+    NSLog(@"%@",num);
+    [defaults setObject:num forKey:@"lockpassword"];
+    [defaults synchronize];
+    
+    NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
+    NSString *name1 = [defaults1 objectForKey:@"lockpassword"];//根据键值取出name
+    NSLog(@"读取数据%@",name1);
+    
+    
+    if (name1 != nil) {
+        [self.canclebtn setTitle:@"已开启密码锁定" forState: UIControlStateNormal];
+    }else{
+        
+        [self.canclebtn setTitle:@"已关闭密码锁定" forState: UIControlStateNormal];
+        
+    }
+    
+    
 }
 
 - (void)back{
     
-     [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

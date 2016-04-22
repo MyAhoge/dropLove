@@ -11,9 +11,10 @@
 #import <BaiduMapAPI_Search/BMKSearchComponent.h>//引入检索功能所有的头文件
 #import <BaiduMapAPI_Map/BMKMapComponent.h>
 #import <BaiduMapAPI_Search/BMKSearchComponent.h>
+#import <BaiduMapAPI_Location/BMKLocationComponent.h>//引入定位功能所有的头文
 
 
-@interface MapViewController : UIViewController<BMKMapViewDelegate,BMKPoiSearchDelegate>
+@interface MapViewController : UIViewController<BMKMapViewDelegate,BMKPoiSearchDelegate,BMKLocationServiceDelegate>
 
 @property (strong, nonatomic) BMKMapView *mapView;
 @property (strong, nonatomic) BMKPoiSearch *poisearch;

@@ -149,7 +149,7 @@
                  
                  @"date":self.dateString,
                  
-                 @"userid":@"1"
+                 @"userid":@1
                  };
     
     if (_delegate != nil &&[_delegate respondsToSelector:@selector(showMemorial:)]) {

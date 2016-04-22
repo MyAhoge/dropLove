@@ -19,4 +19,5 @@
 
 @property (strong, nonatomic)NSMutableDictionary *mutDic;
 
+@property (copy, nonatomic)NSString *citysub;
 @end

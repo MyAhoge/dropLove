@@ -20,6 +20,8 @@
 
 @property (copy,nonatomic)NSString *image;
 
+@property (copy, nonatomic)NSString *wishid;
+
 @property (copy,nonatomic)NSString *psname;
 
 @property (copy,nonatomic)NSString *pssex;

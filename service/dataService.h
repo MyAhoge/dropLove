@@ -44,9 +44,7 @@
 /************社区************/
 //TODO:社区
 + (void)socialDic:(NSDictionary *)dic AndWidth:(void(^)(NSDictionary *resultDic))sucess addWidth:(void(^)(NSDictionary *error))error;
-#pragma mark 社区评论请求
-+ (void)socialCommentData:(NSDictionary *)dic andWidthSucess:(void(^)(NSDictionary *resultDic))sucess addWidthFiel:(void(^)(NSDictionary *fiel))error;
-//+ (void)socialImg:(NSDictionary *)dic andWidth:(void(^)(NSDictionary *resultDic))sucess addWidth:(void(^)(NSDictionary *error))error;
+
 //TODO:社区删除
 + (void)socialdelete:(NSDictionary *)dic andWithSucess:(void(^)(NSDictionary *resultDic))sucess andWithError:(void(^)(NSDictionary *error))error;
 

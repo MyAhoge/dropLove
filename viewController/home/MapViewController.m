@@ -12,6 +12,7 @@
 
 @interface MapViewController ()
 
+@property (strong, nonatomic)BMKLocationService* locService;
 
 @end
 
@@ -20,20 +21,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"地图";
+    NSString *name = [self.activeandadress substringFromIndex:3];
+    self.title = name;
+    
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont systemFontOfSize:18],NSForegroundColorAttributeName:[UIColor whiteColor]};
-    
-    
-    _mapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_MY, HEIGHT_MY)];
-    
-    [self.view addSubview:_mapView];
     
     self.poisearch = [[BMKPoiSearch alloc]init];
     
     // 设置地图级别
     [_mapView setZoomLevel:13];
     _mapView.isSelectedAnnotationViewFront = YES;
+    
+    
+    self.mapView = [[BMKMapView alloc]init];
+    self.view = _mapView;
+    
+    self.mapView.userTrackingMode = BMKUserTrackingModeFollow;  //定位模式
+    self.mapView.zoomLevel = 15.0; //显示尺寸
+    self.mapView.showsUserLocation = YES;  //显示
+    self.mapView.mapType = BMKMapTypeStandard; //地图类型
+    
+    
+    self.locService = [[BMKLocationService alloc]init];
+    self.locService.delegate = self;
+    [self.locService startUserLocationService];
     
     
     
@@ -57,6 +69,28 @@
     }
     
 }
+
+
+
+
+
+- (void)didUpdateUserHeading:(BMKUserLocation *)userLocation {
+    //
+    //    NSLog(@"heading is %@",userLocation.heading);
+    
+    //显示定位图层
+    [_mapView updateLocationData:userLocation];
+}
+//处理位置坐标更新
+- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation {
+    //
+    //    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    
+    self.mapView.showsUserLocation = YES;
+    
+    [_mapView updateLocationData:userLocation];
+}
+
 
 
 //-(void)test{
@@ -85,15 +119,12 @@
 
 
 -(void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
     [_mapView viewWillAppear];
     _mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
     _poisearch.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
     [_mapView viewWillDisappear];
     _mapView.delegate = nil; // 不用时，置nil
     _poisearch.delegate = nil; // 不用时，置nil
@@ -143,7 +174,7 @@
 }
 - (void)mapView:(BMKMapView *)mapView didAddAnnotationViews:(NSArray *)views
 {
-    NSLog(@"didAddAnnotationViews");
+    //    NSLog(@"didAddAnnotationViews");
 }
 
 #pragma mark -

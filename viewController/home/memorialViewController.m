@@ -20,7 +20,7 @@
 //    self.view.backgroundColor = COLOR(239, 239, 243,1);
 
     
-    [self dataSource];
+    [self updataTimeAxis];
     
     self.navigationItem.title = @"纪念日";
     
@@ -143,6 +143,17 @@
     NSLog(@"读取数据%@",name1);
    
     self.lovedateLab.text = name1;
+    
+    [self updataTimeAxis];
+}
+- (void)updataTimeAxis{
+    UIRefreshControl *refresh = [[UIRefreshControl alloc]init];
+    refresh.attributedTitle = [[NSAttributedString alloc]initWithString:@"刷新"];
+    [refresh addTarget:self action:@selector(dataSource:) forControlEvents:UIControlEventValueChanged];
+    [self.table addSubview:refresh];
+    [refresh beginRefreshing];
+    [self dataSource:refresh];
+    
 }
 
 //我们相爱时间天数计算
@@ -201,12 +212,12 @@
     
     int days=((int)time)/(3600*24);
    
-    NSString *dateContent=[[NSString alloc] initWithFormat:@"%i",days];
+    self.dateContent=[[NSString alloc] initWithFormat:@"%i",days];
     
 //    NSLog(@"%@",dateContent);
 
 
-    if ([dateContent isEqualToString:@"0"]) {
+    if ([_dateContent isEqualToString:@"0"]) {
         cell.numLab.text = @"今";
         
         cell.detailLab.text =  me.content;
@@ -214,7 +225,7 @@
         NSString *detailstr = [[NSString alloc]initWithFormat:@"%@已经",me.content];
         cell.detailLab.text = detailstr;
         
-        cell.numLab.text = dateContent;
+        cell.numLab.text = _dateContent;
     }
 
     cell.yearLab.text = [me.date substringToIndex:7];
@@ -250,8 +261,14 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    editMemorialDayViewController *cellEdit = [[editMemorialDayViewController alloc]init];
-    [self.navigationController pushViewController:cellEdit animated:YES];
+    ShareViewController *share = [[ShareViewController alloc]init];
+    memorialDayModel *model = [[memorialDayModel alloc]init];
+    model = self.cellArr[indexPath.section];
+    
+    share.timeStr = model.date;
+    share.contentStr = model.content;
+    share.dayStr = self.dateContent;
+    [self.navigationController pushViewController:share animated:YES];
 }
 
 
@@ -310,7 +327,7 @@
     
 }
 #pragma mark 数据处理
-- (void)dataSource{
+- (void)dataSource:(UIRefreshControl *)sender{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSDictionary *dic = @{@"userid":@1};
         [dataService mmmm:dic addWith:^(NSDictionary *dic) {
@@ -332,8 +349,10 @@
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.table reloadData];
+                [sender endRefreshing];
             });
         }];
+        
     });
 }
 
@@ -357,7 +376,7 @@
         } addWith:^(NSDictionary *errorDic) {
             
         }];
-        [self dataSource];
+        [self updataTimeAxis];
   
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.table reloadData];

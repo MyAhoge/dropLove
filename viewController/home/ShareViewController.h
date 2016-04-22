@@ -26,5 +26,10 @@
 
 @property(strong,nonatomic)UILabel *shareLab;
 
+@property(copy,nonatomic)NSString *timeStr;
+
+@property(copy,nonatomic)NSString *contentStr;
+
+@property(copy,nonatomic)NSString *dayStr;
 
 @end

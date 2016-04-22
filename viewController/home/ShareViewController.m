@@ -9,7 +9,7 @@
 #import "ShareViewController.h"
 #import "dropHeader.h"
 
-@interface ShareViewController ()
+@interface ShareViewController ()<UMSocialUIDelegate>
 
 @end
 
@@ -30,11 +30,11 @@
                                                                     
                                                                     };
     
-    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStyleDone target:self action:@selector(edit:)];
-    rightBtn.tintColor = [UIColor whiteColor];
-    
-    
-    self.navigationItem.rightBarButtonItem = rightBtn;
+//    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStyleDone target:self action:@selector(edit:)];
+//    rightBtn.tintColor = [UIColor whiteColor];
+//    
+//    
+//    self.navigationItem.rightBarButtonItem = rightBtn;
     
     self.myView = [[UIView alloc]initWithFrame:CGRectMake(15, 15, WIDTH-30, 140)];
     
@@ -58,7 +58,7 @@
     
     self.shareTimeLab = [[UILabel alloc]initWithFrame:CGRectMake(40, 15, 127, 20)];
     
-    self.shareTimeLab.text = @"2000-08-22";
+    self.shareTimeLab.text = self.timeStr;
     
     self.shareTimeLab.textAlignment = NSTextAlignmentLeft;
     
@@ -72,7 +72,7 @@
     
     self.contentLab.textAlignment = NSTextAlignmentCenter;
     
-    self.contentLab.text = @"我们已经相爱";
+    self.contentLab.text = self.contentStr;
     
     self.contentLab.font = FONT(15);
     
@@ -84,7 +84,7 @@
     
     self.dayLab.textColor= COLOR(64, 203, 255, 1);
     
-    self.dayLab.text = @"1000";
+    self.dayLab.text = self.dayStr;
     
     self.dayLab.font = FONT(28);
     
@@ -124,6 +124,8 @@
     
     self.shareBtn.layer.masksToBounds = YES;
     
+    [self.shareBtn addTarget:self action:@selector(sharememday) forControlEvents:UIControlEventTouchDown];
+    
     [self.shareBtn addSubview:self.shareLab];
     
     
@@ -139,6 +141,11 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)sharememday{
+      UIImage *image = [[UMSocialScreenShoterDefault screenShoter] getScreenShot];
+    [UMSocialSnsService presentSnsIconSheetView:self appKey:SHARE_SDK shareText:@"点滴爱" shareImage:image shareToSnsNames:nil delegate:nil];
+    
 }
 -(void)edit:(UIButton *)sender{
     

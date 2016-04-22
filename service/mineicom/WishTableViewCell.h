@@ -18,7 +18,13 @@
 
 @property (strong, nonatomic) UIImageView *image;
 
+@property (strong, nonatomic) UIImageView *image2;
+
+@property (strong, nonatomic) UIImageView *image3;
+
 @property (assign, nonatomic) int labheight;
+
+@property (strong, nonatomic)UIButton *deletebtn;
 
 - (void)setHeight:(NSString *)text;
 

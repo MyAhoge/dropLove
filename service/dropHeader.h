@@ -13,17 +13,20 @@
 #import "MineViewController.h"
 #import "SocialViewController.h"
 #import "TimeAxisViewController.h"
-//
+
 #import "PlistLocalInfo.h"
 #import "SharkViewController.h"
+
 #import <CoreLocation/CoreLocation.h>
 #import "AFNetworking.h"
 #import "weatherServices.h"
+
 //0330
 #import <RongIMKit/RongIMKit.h>
 #import "AppDelegate.h"
 #import "timelistcell.h"
 #import "piclistcell.h"
+//#import "TimeCommentViewController.h"
 #import "dataService.h"
 //0331
 #import "commentViewController.h"
@@ -32,6 +35,7 @@
 //0405
 #import "memorialViewController.h"
 #import "memorialTableViewCell.h"
+
 #import "socialCell.h"
 #import "socialPublishController.h"
 //0406
@@ -55,6 +59,7 @@
 //0409
 #import "ImageViewController.h"
 #import "BIDContentCell.h"
+#import "Header.h"
 //0410
 #import "timeListimagecell.h"
 //0411
@@ -65,6 +70,34 @@
 #import "ClockViewController.h"
 #import "ClockModel.h"
 
+//0411
+#import "PSInfoViewController.h"
+#import "SetViewController.h"
+
+//0412
+#import "PSInfoTableViewCell.h"
+
+//0413
+#import "NumSetViewController.h"
+#import "NumSafetyViewController.h"
+#import "ScreenPasswordViewController.h"
+
+// 0414
+#import "NoticeTableViewCell.h"
+#import "NoticeViewController.h"
+#import "OpinionViewController.h"
+#import "MBProgressHUD.h"
+#import "AboutViewController.h"
+
+//0418
+#import "UMSocial.h"//SHARE
+
+#import "UMSocialWechatHandler.h"
+
+#import "UMSocialSinaSSOHandler.h"
+
+#import "UMSocialQQHandler.h"
+
 //0412
 #import "loginViewController.h"
 #import "registerViewController.h"
@@ -73,6 +106,7 @@
 #import "ClockModel.h"
 #import "SetViewController.h"
 #import "PSInfoViewController.h"
+
 //0413
 #import "forgetViewController.h"
 #import "marryViewController.h"
@@ -91,11 +125,20 @@
 #import "NoticeTableViewCell.h"
 #import "NoticeViewController.h"
 #import "OpinionViewController.h"
-#import "TouchIDViewController.h"
+//#import "TouchIDViewController.h"
 
 //0415
 #import "requestViewController.h"
 #import "invitationViewController.h"
+//0419
+#import "UMSocialScreenShoter.h"
+#import "UIImage+fixOrientation.h"
+
+//0421
+#import "UMSocialWechatHandler.h"
+#import "UMSocialQQHandler.h"
+#import "UMSocialSinaSSOHandler.h"
+
 
 
 #pragma mark 常用宏
@@ -118,12 +161,18 @@
 
 #define WEATHER_URL @"http://op.juhe.cn/onebox/weather/query"
 
+
 //0330
-//荣云
+
 #define RONGYUN_KEY @"e5t4ouvptd73a"
+
 #define TOKEN @"FRKLiEKf8ni4+me2R37Q55e+9qvH6fp6vNYL7dFl8kGJmQkqmrIilIiVdFmckTgRX79ocALvDncwOZjzsN0ejA=="
+
+#define URL @"http://10.110.5.58:8888/mylove/index.php/home/timeaxis/timeaxis"
+
 #define MICOLOR [UIColor colorWithRed:243.0/255.0 green:239.0/255.0 blue:230.0/255.0 alpha:1]
-//登录按钮颜色
+
+//0414
 #define COLOR_LOGINBTN [UIColor colorWithRed:55/255.0 green:205/255.0 blue:50/255.0 alpha:1]
 
 //0414
@@ -133,13 +182,15 @@
 //返回按钮frame
 #define BACK_FRAME [[UIButton alloc]initWithFrame:CGRectMake(10, 32.5, 10, 20)]
 
+//0418
+#define SHARE_SDK @"57142a7967e58e36c5000af6"
 
-//dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//
-//
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//
-//    });
-//});
+//QQAPP ID1105260541
+//QQAPP KEYpPhCFA3ZRnvQYDHx
+
+
+
+
+
 
 #endif /* dropHeader_h */

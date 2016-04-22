@@ -49,4 +49,6 @@
 
 @property(copy,nonatomic)NSString  *loveStr;
 
+@property(copy,nonatomic)NSString *dateContent;
+
 @end

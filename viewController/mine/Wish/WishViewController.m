@@ -10,8 +10,7 @@
 #import "dropHeader.h"
 
 
-@interface WishViewController ()<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>
-
+@interface WishViewController ()<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 
 @property (strong, nonatomic)NSArray *arrwish;
@@ -40,6 +39,20 @@
 
 @property (strong, nonatomic)UIImageView *image1;
 
+@property (strong, nonatomic)UIImageView *image2;
+
+@property (strong, nonatomic)UIImageView *image3;
+
+@property (strong, nonatomic)UIImageView *image4;
+
+@property (strong, nonatomic)NSMutableArray *array;
+
+@property (copy, nonatomic)NSString *cityplace;
+
+@property (copy, nonatomic)NSString *deldewish8;
+
+@property (strong, nonatomic)UIScrollView *imageScroll;
+
 @end
 
 @implementation WishViewController
@@ -47,8 +60,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSLog(@"=======%@",_citysub);
+    
+    
+    
     self.mutarrwish = [[NSMutableArray alloc]initWithCapacity:0];
-     self.view.backgroundColor =COLOR(243, 239, 230, 1);
+    self.view.backgroundColor =COLOR(243, 239, 230, 1);
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
@@ -66,10 +83,10 @@
     //2.把UIBarButtonItem对象赋值给leftBarButtonItem或者rightBarButtonItem
     rightBtn.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightBtn;
-
     
-
-   
+    
+    
+    
     self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_MY, HEIGHT_MY-64) style:UITableViewStyleGrouped];
     
     [self.view addSubview:_table];
@@ -79,46 +96,19 @@
     self.table.dataSource =self;
     
     
+    /**
+     添加愿望界面
+     */
     self.addview = [[UIView alloc]initWithFrame:CGRectMake(0, HEIGHT_MY, WIDTH_MY, HEIGHT_MY)];
     self.addview.backgroundColor = COLOR(243, 239, 230, 1);
     [self.view addSubview:_addview];
     
-    UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 20)];
-    [self.addview addSubview:topView];
-    topView.backgroundColor = COLOR_MINE;
     
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, WIDTH, 44)];
-    [self.addview addSubview:headerView];
-    headerView.backgroundColor = COLOR_MINE;
-    
-    UILabel *lab2 = [[UILabel alloc]initWithFrame:CGRectMake(50, 0, WIDTH-100, 44)];
-    lab2.text = @"添加愿望";
-    lab2.font = FONT(17);
-    lab2.textColor = [UIColor whiteColor];
-    lab2.textAlignment = NSTextAlignmentCenter;
-    [headerView addSubview:lab2];
-    
-    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 0, 30, 44)];
-    [headerView addSubview:backBtn];
-    backBtn.titleLabel.font = FONT(15);
-    backBtn.titleLabel.textAlignment = UIControlContentVerticalAlignmentCenter;
-    backBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
-    [backBtn setTitle:@"取消" forState:UIControlStateNormal];
-    [backBtn addTarget:self action:@selector(cancle) forControlEvents:UIControlEventTouchUpInside];
     
     /**
-     存储添加起床闹钟按钮
+     添加愿望写汉字页面
      */
-    UIButton *saveBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH-24-20, 0, 30, 44)];
-    [headerView addSubview:saveBtn];
-    saveBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
-    saveBtn.titleLabel.textAlignment = UIControlContentVerticalAlignmentCenter;
-    saveBtn.titleLabel.font = FONT(15);
-    [saveBtn setTitle:@"完成" forState:UIControlStateNormal];
-    [saveBtn addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
-
-
-    self.view1 = [[UIView alloc]initWithFrame:CGRectMake(0, 64, WIDTH_MY, (WIDTH_MY-30-10)/3+200+40-50-50-10)];
+    self.view1 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_MY, (WIDTH_MY-30-10)/3+200+40-50-50-10)];
     self.view1.backgroundColor = [UIColor whiteColor];
     [self.addview addSubview:_view1];
     
@@ -142,13 +132,32 @@
     self.lable1.text = @"记录一下愿望吧...";
     self.lable1.textAlignment = NSTextAlignmentLeft;
     [self.view1 addSubview:_lable1];
-
+    
+    // 添加图片按钮
+    
+    self.image4 = [[UIImageView alloc]initWithFrame:CGRectMake(15, 200+15-50-50, (WIDTH_MY-30-10)/3, (WIDTH_MY-30-10)/3)];
+    [self.view1 addSubview:_image4];
+    
     self.image1 = [[UIImageView alloc]initWithFrame:CGRectMake(15, 200+15-50-50, (WIDTH_MY-30-10)/3, (WIDTH_MY-30-10)/3)];
     self.image1.image = [UIImage imageNamed:@"101.jpg"];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(picture)];
+    self.image1.userInteractionEnabled = YES;
+    [self.image1 addGestureRecognizer:tap];
     [self.view1 addSubview:_image1];
-
     
-    self.view2 = [[UIView alloc]initWithFrame:CGRectMake(0,(WIDTH_MY-30-10)/3+200+40-50-50-10+64+10 , WIDTH_MY, 40)];
+    self.image2 = [[UIImageView alloc]initWithFrame:CGRectMake(15+(WIDTH_MY-30-10)/3+5, 200+15-50-50, (WIDTH_MY-30-10)/3, (WIDTH_MY-30-10)/3)];
+    [self.view1 addSubview:_image2];
+    
+    self.image3 = [[UIImageView alloc]initWithFrame:CGRectMake(15+(WIDTH_MY-30-10)/3*2+10, 200+15-50-50, (WIDTH_MY-30-10)/3, (WIDTH_MY-30-10)/3)];
+    [self.view1 addSubview:_image3];
+    
+    
+    
+    
+    /**
+     添加愿望地点选项
+     */
+    self.view2 = [[UIView alloc]initWithFrame:CGRectMake(0,(WIDTH_MY-30-10)/3+200+40-50-50-10+10 , WIDTH_MY, 40)];
     self.view2.backgroundColor = [UIColor whiteColor];
     [self.addview addSubview:_view2];
     
@@ -162,41 +171,189 @@
     image2.image = [UIImage imageNamed:@"下一页"];
     [self.view2 addSubview:image2];
     
-    
     [self downline];
 }
 
 
-
+/**
+ *  加载数据库中的愿望
+ */
 - (void)downline{
     // CGD 线程
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         [IcomNSObject wish:^(NSDictionary *wishdic) {
-//            NSLog(@"%@",wishdic);
+            //                        NSLog(@"%@",wishdic);
             self.arrwish  = [wishdic objectForKey:@"data"];
-            self.k = (int)self.arrwish.count;
-            NSLog(@"%d",_k);
-//            [self.table reloadData];
+            //            NSLog(@"=========%@",self.arrwish);
             
-            for (NSDictionary *date1 in self.arrwish) {
+            if (self.arrwish != nil && ![self.arrwish isKindOfClass:[NSNull class]] && self.arrwish.count != 0){
                 
-                ClockModel *model = [[ClockModel alloc]init];
-                NSLog(@"%@",[date1 objectForKey:@"wish_content"]);
-                model.content = [date1 objectForKey:@"wish_content"];
-                model.date = [date1 objectForKey:@"wish_date"];
-                model.place = [date1 objectForKey:@"wish_place"];
-                model.image = [date1 objectForKey:@"wish_image"];
-                [self.mutarrwish addObject:model];
-//                NSLog(@"****模型字典****%@",_mutarrwish);
+                NSLog(@"1233");
+                
+                
+                for (NSDictionary *date1 in self.arrwish) {
+                    
+                    ClockModel *model = [[ClockModel alloc]init];
+                    //                NSLog(@"%@",date1);
+                    NSLog(@"%@",[date1 objectForKey:@"wish_content"]);
+                    model.content = [date1 objectForKey:@"wish_content"];
+                    model.date = [date1 objectForKey:@"wish_date"];
+                    model.place = [date1 objectForKey:@"wish_place"];
+                    model.image = [date1 objectForKey:@"wish_image"];
+                    model.wishid = [date1 objectForKey:@"wish_id"];
+                    NSLog(@"=========%@======",[date1 objectForKey:@"wish_id"]);
+                    [self.mutarrwish addObject:model];
+                    
+                }
             }
+            
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.table reloadData];
             });
             
         }];
     });
+    
+    
+}
 
+
+/**
+ *  添加愿望图片按钮弹出选项
+ */
+- (void)picture{
+    
+    NSLog(@"添加照片");
+    
+    //1.
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    //2.
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"从相册中选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self locaPhoto];
+    }];
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"拍一张" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self camera];
+    }];
+    UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    //3.
+    [alert addAction:action1];
+    [alert addAction:action2];
+    [alert addAction:action3];
+    //4.
+    [self presentViewController:alert animated:YES completion:nil];
+    
+}
+
+//调出本地相册
+- (void)locaPhoto{
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        picker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:picker.sourceType];
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        [self presentViewController:picker  animated:YES completion:nil];
+    }
+    
+    //NSLog(@"相册");
+    //    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    //    [self presentViewController:picker animated:YES completion:nil];
+    
+    
+    
+    
+    
+}
+//调出摄像头
+- (void)camera{
+    
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    picker.mediaTypes = @[(NSString *)kUTTypeMovie,(NSString *)kUTTypeImage];
+    
+    picker.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
+    
+    
+    
+    
+    [self presentViewController:picker animated:YES completion:nil];
+    
+    
+}
+
+//该代理方法仅适用于只选取图片时
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary<NSString *,id> *)editingInfo {
+    
+    NSLog(@"选择完毕----image:%@-----info:%@",image,editingInfo);
+}
+
+
+
+
+// 选择图片
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    
+    if (self.image4.image == nil) {
+        [self.image4 setImage:[info objectForKey:UIImagePickerControllerOriginalImage]];
+        self.image1.frame = CGRectMake(15+(WIDTH_MY-30-10)/3+5, 200+15-50-50, (WIDTH_MY-30-10)/3, (WIDTH_MY-30-10)/3);
+    }else if(self.image2.image == nil){
+        
+        [self.image2 setImage:[info objectForKey:UIImagePickerControllerOriginalImage]];
+        self.image1.frame = CGRectMake(15+(WIDTH_MY-30-10)/3*2+10, 200+15-50-50, (WIDTH_MY-30-10)/3, (WIDTH_MY-30-10)/3);
+    }else if(self.image3.image == nil){
+        
+        [self.image3 setImage:[info objectForKey:UIImagePickerControllerOriginalImage]];
+        self.image1.frame = CGRectMake(1000, 200+15-50-50, (WIDTH_MY-30-10)/3, (WIDTH_MY-30-10)/3);
+        
+    }
+    NSLog(@"++++++--------%@",self.image2.image);
+    
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    
+    NSLog(@"%@",info);
+    
+    
+    
+    
+    
+    
+    //创建可变数组,存储资源文件
+    self.array = [NSMutableArray arrayWithCapacity:0];
+    
+    //创建资源库,用于访问相册资源
+    
+    
+    //    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    //
+    //    //遍历资源库中所有的相册,有多少个相册,usingBlock会调用多少次
+    //    [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+    //
+    //        //如果存在相册,再遍历
+    //        if (group) {
+    //
+    //            //遍历相册中所有的资源(照片,视频)
+    //            [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+    //
+    //                if (result) {
+    //                    //将资源存储到数组中
+    //                    [_array addObject:result];
+    //
+    //                }
+    //            }];
+    //        }
+    
+    //刷新_collectionView reloadData;
+    //        [_collect reloadData];
+    //
+    //    } failureBlock:^(NSError *error) {
+    //
+    //        NSLog(@"访问失败");
+    //    }];
+    
+    NSLog(@"%@",_array);
     
 }
 
@@ -204,14 +361,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-
+    
     return 1;
     
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    NSLog(@"++++组数++++%lu",(unsigned long)self.arrwish.count);
+    //    NSLog(@"++++组数++++%lu",(unsigned long)self.arrwish.count);
     return self.mutarrwish.count;
 }
 
@@ -240,24 +397,84 @@
     if (cell == nil) {
         cell = [[WishTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
-
+    
     
     ClockModel *model = [[ClockModel alloc]init];
     model = self.mutarrwish[self.mutarrwish.count-1-indexPath.section];
     cell.contentlab.text = model.content;
     cell.datelab.text = model.date;
     cell.placelab.text = model.place;
+    
+    NSLog(@"%@",model.wishid);
+    
+    
+    
     NSString *image1 = model.image;
     if (image1 != nil) {
         cell.image.image = [UIImage imageNamed:@"丽江.jpg"];
+        cell.image2.image = [UIImage imageNamed:@"风景11.jpg"];
+        cell.image3.image = [UIImage imageNamed:@"风景10.jpg"];
     }
     
     [cell setHeight:cell.contentlab.text];
     self.height = cell.frame.size.height;
-
+    
+    [cell.deletebtn addTarget:self action:@selector(delete5:) forControlEvents:UIControlEventTouchUpInside];
+    cell.deletebtn.tag = self.mutarrwish.count-1-indexPath.section+500;
+    
+    
     return cell;
     
 }
+
+
+/**
+ *  删除愿望
+ *
+ */
+- (void)delete5:(UIButton *)sender{
+    
+    NSLog(@"%ld",(long)sender.tag);
+    
+    NSLog(@"*****************%@",(ClockModel *)[self.mutarrwish[sender.tag-500] wishid]);
+    
+    UIAlertController *acl = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定删除吗" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *aat = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        /**
+         *  这个必须在前面 （先删除数据库里的数据再删除数组中的数据）
+         */
+        if ((ClockModel *)[self.mutarrwish[sender.tag-500] wishid] != NULL) {
+            
+            NSDictionary *deldedic = @{@"nwish":(ClockModel *)[self.mutarrwish[sender.tag-500] wishid],
+                                       @"id":@1};
+            [IcomNSObject deletewish:deldedic Andicomchange:^(NSDictionary *signature) {
+                NSLog(@"删除成功");
+            }];
+        }
+        
+        
+        
+        /**
+         *  这个必须再后面
+         */
+        [self.mutarrwish removeObjectAtIndex:sender.tag-500];
+        NSLog(@"%@",_mutarrwish);
+        [self.table reloadData];
+        NSLog(@"-----------------%ld",sender.tag);
+        
+    }];
+    
+    
+    UIAlertAction *aat2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    
+    [acl addAction:aat];
+    [acl addAction:aat2];
+    [self presentViewController:acl animated:YES completion:nil];
+    
+}
+
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -266,36 +483,75 @@
 }
 
 
-
-//  添加愿望
+//  进入添加愿望
 - (void)addwish{
     
     [UIView animateWithDuration:0.3 animations:^{
         
         [self.table setHidden:NO];
         self.addview.frame = CGRectMake(0, 0, WIDTH_MY, HEIGHT_MY);
-        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        
+        self.title = @"添加愿望";
+        
+        
+        UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"完成" style: UIBarButtonItemStylePlain target:self action:@selector(save)];
+        
+        
+        rightBtn.tintColor = [UIColor whiteColor];
+        self.navigationItem.rightBarButtonItem = rightBtn;
+        
+        UIBarButtonItem *leftBtn = [[UIBarButtonItem alloc]initWithTitle:@"取消" style: UIBarButtonItemStylePlain target:self action:@selector(cancle)];
+        
+        leftBtn.tintColor = [UIColor whiteColor];
+        self.navigationItem.leftBarButtonItem = leftBtn;
+        
         
     }];
+    
+    
+    
     
     NSLog(@"添加愿望");
     
     
 }
 
+/**
+ *  添加愿望页面取消按钮
+ */
 - (void)cancle{
     
     [UIView animateWithDuration:0.3 animations:^{
         
         [self.table setHidden:NO];
         self.addview.frame = CGRectMake(0, HEIGHT_MY, WIDTH_MY, HEIGHT_MY);
+        
+        [self.view endEditing:YES];
+        
         [self.navigationController setNavigationBarHidden:NO animated:YES];
-         [self.view endEditing:YES];
+        
+        self.mutdic = [[NSMutableDictionary alloc]initWithCapacity:0];
+        
+        self.title = @"我们的愿望";
+        
+        UIBarButtonItem *rightBtn =[[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target:self action:@selector(addwish)];
+        
+        rightBtn.tintColor = [UIColor whiteColor];
+        self.navigationItem.rightBarButtonItem = rightBtn;
+        
+        self.navigationItem.leftBarButtonItem = nil;
+        
+        self.image2.image = nil;
+        self.image3.image = nil;
+        self.image4.image = nil;
+        self.image1.frame = CGRectMake(15, 200+15-50-50, (WIDTH_MY-30-10)/3, (WIDTH_MY-30-10)/3);
     }];
     
 }
 
-
+/**
+ *  发布愿望
+ */
 - (void)save{
     
     NSLog(@"发布东西");
@@ -321,7 +577,16 @@
             NSLog(@"++++添加时候的时间+++%@",dateString);
             
             
-            NSString *place = @"上海虹桥";
+            
+            if (self.citysub != nil) {
+                self.cityplace = self.citysub;
+                
+            }else{
+                self.cityplace = @"未知位置";
+                
+            }
+            
+            NSLog(@"+++愿望位置+++%@",self.cityplace);
             
             NSString *str = self.textView.text;
             
@@ -329,14 +594,15 @@
             int k = 1;
             NSString *kk = [NSString stringWithFormat:@"%d",k];
             [mutdic1 setValue:str forKey:@"content"];
-            [mutdic1 setValue:place forKey:@"place"];
+            [mutdic1 setValue:self.cityplace forKey:@"place"];
             [mutdic1 setValue:dateString forKey:@"date"];
             [mutdic1 setObject:kk forKey:@"id"];
+            [mutdic1 setObject:@"" forKey:@"image"];
             
             ClockModel *model = [[ClockModel alloc]init];
             model.content = str;
             model.date = dateString;
-            model.place = place;
+            model.place = self.cityplace;
             model.image = kk;
             [self.mutarrwish addObject:model];
             [self.table reloadData];
@@ -347,24 +613,46 @@
             
             [self.table setHidden:NO];
             self.addview.frame = CGRectMake(0, HEIGHT_MY, WIDTH_MY, HEIGHT_MY);
-            [self.navigationController setNavigationBarHidden:NO animated:YES];
+            
+            self.title = @"我们的愿望";
+            
+            UIBarButtonItem *rightBtn =[[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target:self action:@selector(addwish)];
+            
+            rightBtn.tintColor = [UIColor whiteColor];
+            self.navigationItem.rightBarButtonItem = rightBtn;
+            
+            self.navigationItem.leftBarButtonItem = nil;
+            
+            self.image2.image = nil;
+            self.image3.image = nil;
+            self.image4.image = nil;
+            self.image1.frame = CGRectMake(15, 200+15-50-50, (WIDTH_MY-30-10)/3, (WIDTH_MY-30-10)/3);
+            
             
         }
         
         [self.view endEditing:YES];
         
+        
     }];
-
-
+    
+    
 }
 
-
+/**
+ *  点击键盘回收
+ *
+ */
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     
     [self.view endEditing:YES];
     
 }
 
+/**
+ *  添加愿望提示文字框
+ *
+ */
 - (void)textViewDidChange:(UITextView *)textView{
     
     if ([textView.text length] == 0) {
@@ -375,6 +663,11 @@
         [self.lable1 setHidden:YES];
         
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    NSLog(@"123");
 }
 
 @end

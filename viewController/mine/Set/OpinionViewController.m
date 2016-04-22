@@ -18,11 +18,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor =COLOR(243, 239, 230, 1);
-    
+  
+
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
     self.title = @"意见反馈";
-    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+   
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     
     self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont systemFontOfSize:18],NSForegroundColorAttributeName:[UIColor whiteColor]};
@@ -73,7 +74,7 @@
     
     self.descriptionLab.textColor = COLOR(164, 164, 172, 1);
     
-    self.descriptionLab.font = FONT(12);
+    self.descriptionLab.font = FONT(13);
     
     self.descriptionLab.numberOfLines = 3;
     
@@ -81,7 +82,7 @@
     
    
     
-    self.commitBtn = [[UIButton alloc]initWithFrame:CGRectMake(15, 281, WIDTH-30, 40)];
+    self.commitBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 281, WIDTH-20, 45)];
     
     self.commitBtn.backgroundColor = COLOR_LOGINBTN;
     
@@ -89,6 +90,8 @@
     
     [self.commitBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.commitBtn.layer.cornerRadius = 5;
+    
+    self.commitBtn.titleLabel.font = FONT(15);
     
     self.commitBtn.layer.masksToBounds = YES;
     
@@ -110,6 +113,29 @@
     }
 }
 
+-(void)overcommit{
+    
+    if ([self.textView.text isEqualToString:@""]) {
+        
+    }else{
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        
+        // Set the custom view mode to show any view.
+        hud.mode = MBProgressHUDModeCustomView;
+        // Set an image view with a checkmark.
+        UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        hud.customView = [[UIImageView alloc] initWithImage:image];
+        // Looks a bit nicer if we make it square.
+        hud.square = YES;
+        // Optional label text.
+        hud.label.text = NSLocalizedString(@"提交成功！", @"HUD done title");
+        
+        [hud hideAnimated:YES afterDelay:2.f];
+       
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 #pragma mark - UITextView Delegate Methods
 //return回收键盘
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -121,9 +147,7 @@
     return YES;
 }
 
--(void)overcommit{
-    [self.navigationController popViewControllerAnimated:YES];
-}
+
 //点击空白回收键盘
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     

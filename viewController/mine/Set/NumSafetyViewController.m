@@ -8,6 +8,7 @@
 
 #import "NumSafetyViewController.h"
 #import "dropHeader.h"
+#import <LocalAuthentication/LocalAuthentication.h>
 @interface NumSafetyViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (strong, nonatomic)UITableView *table;
@@ -42,7 +43,24 @@
     
     self.view1 = [[UIView alloc]initWithFrame:CGRectMake(0, 10+50, WIDTH, 50)];
     self.view1.backgroundColor = [UIColor whiteColor];
-    [self.table addSubview:_view1];
+    LAContext *context = [[LAContext alloc]init];
+    NSError *errpr = nil;
+    
+    /**
+     *  判断是否支持指纹识别，支持的话就添加指纹控制开关
+     */
+    if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&errpr]) {
+        
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            //其他情况，切换主线程处理
+            
+            [self.table addSubview:_view1];
+            
+            NSLog(@"支持指纹");
+        }];
+    }
+    
+    
     
     UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(15, 15, 100, 20)];
     lable.text = @"Touch ID";
@@ -55,6 +73,7 @@
     
     NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
     NSString *Screenpassword1 = [defaults1 objectForKey:@"Screenpassword"];
+    NSLog(@"%@+++++++指纹解锁",Screenpassword1);
     if ([Screenpassword1 isEqualToString:@"Screenpassword"]) {
         self.switch1.on = YES;
     }else{
@@ -64,7 +83,7 @@
     [self.switch1 addTarget:self action:@selector(add:) forControlEvents: UIControlEventValueChanged];
     [self.view1 addSubview:_switch1];
     
-
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -98,7 +117,7 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
     }
-
+    
     return cell;
     
 }
@@ -114,36 +133,60 @@
     }
 }
 
+
+
 - (void)add:(id)sender{
     
-    if ((self.switch1.on == YES)) {
-        NSLog(@"开启指纹解锁");
+    NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
+    NSString *name1 = [defaults1 objectForKey:@"lockpassword"];//根据键值取出name
+    NSLog(@"读取数据%@",name1);
+    
+    if (name1 != nil) {
         
-        NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
-        NSString *Screenpassword = @"Screenpassword";
-        [defaults setObject:Screenpassword forKey:@"Screenpassword"];
-        [defaults synchronize];
-        
-        NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
-        NSString *Screenpassword1 = [defaults1 objectForKey:@"Screenpassword"];//根据键值取出name
-        NSLog(@"读取数据%@",Screenpassword1);
-
-        
-    }else{
-        
-        NSLog(@"关闭指纹解锁");
-        NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
-        NSString *CloseScreenpassword = @"CloseScreenpassword";
-        [defaults setObject:CloseScreenpassword forKey:@"Screenpassword"];
-        [defaults synchronize];
-        
-        NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
-        NSString *Screenpassword1 = [defaults1 objectForKey:@"Screenpassword"];//根据键值取出name
-        NSLog(@"*****读取数据%@",Screenpassword1);
-        if (Screenpassword1 == nil) {
-            NSLog(@"nil");
+        if ((self.switch1.on == YES)) {
+            NSLog(@"开启指纹解锁");
+            
+            NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
+            NSString *Screenpassword = @"Screenpassword";
+            [defaults setObject:Screenpassword forKey:@"Screenpassword"];
+            [defaults synchronize];
+            
+            NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
+            NSString *Screenpassword1 = [defaults1 objectForKey:@"Screenpassword"];//根据键值取出name
+            NSLog(@"读取数据%@",Screenpassword1);
+            
+            
+        }else{
+            
+            NSLog(@"关闭指纹解锁");
+            NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
+            NSString *CloseScreenpassword = @"CloseScreenpassword";
+            [defaults setObject:CloseScreenpassword forKey:@"Screenpassword"];
+            [defaults synchronize];
+            
+            NSUserDefaults *defaults1 =[NSUserDefaults standardUserDefaults];
+            NSString *Screenpassword1 = [defaults1 objectForKey:@"Screenpassword"];//根据键值取出name
+            NSLog(@"*****读取数据%@",Screenpassword1);
+            if (Screenpassword1 == nil) {
+                NSLog(@"nil");
+            }
         }
     }
+    
+    else{
+        
+        UIAlertAction *alert1 =[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            self.switch1.on = NO;
+        }];
+        UIAlertController *alertctl = [UIAlertController alertControllerWithTitle:@"提示" message:@"请设置数字密码" preferredStyle:UIAlertControllerStyleAlert];
+        [alertctl addAction:alert1];
+        [self presentViewController:alertctl animated:YES completion:nil];
+        
+        NSLog(@"请设置数字密码");
+        
+        
+    }
+    
 }
 
 @end

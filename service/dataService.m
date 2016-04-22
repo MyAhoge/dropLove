@@ -14,15 +14,12 @@
  *  数据处理
  */
 
-
-
 @implementation dataService
-
 #pragma mark uierId
 + (NSString *)myUserId{
     NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
     
-    return @"1";
+    return [[userDef objectForKey:@"data"] objectForKey:@"user_id"];
 }
 //   2147483647
 #pragma mark 登录
@@ -193,31 +190,6 @@
         NSLog(@"社区数据请求失败");
     }];
 }
-#pragma mark 社区评论请求
-+ (void)socialCommentData:(NSDictionary *)dic andWidthSucess:(void (^)(NSDictionary *))sucess addWidthFiel:(void (^)(NSDictionary *))error{
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    
-        [manager POST:@"http://115.159.215.216:80/myLove/index.php/Home/social/comment" parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            sucess(responseObject);
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"社区数据请求失败");
-        }];
-    
-    
-}
-
-//+ (void)socialImg:(NSDictionary *)dic andWidth:(void (^)(NSDictionary *))sucess addWidth:(void (^)(NSDictionary *))error{
-//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-//    
-//    [manager POST:@"http://115.159.215.216:80/myLove/index.php/Home/social/social" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        sucess(responseObject);
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        NSLog(@"社区数据请求失败");
-//    }];
-//}
-
 #pragma mark 社区数据添加
 + (void)socialAddDataDic:(NSDictionary *)dic addWith:(void (^)(NSDictionary *))sucess addWith:(void (^)(NSDictionary *))error{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];

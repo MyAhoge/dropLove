@@ -96,7 +96,8 @@
     
     self.tianLab.frame = CGRectMake(WIDTH_MY-41, 15, 31, 21);
     
-    self.numLab.frame = CGRectMake(WIDTH_MY-85, 15, 40, 23);
+    self.numLab.frame = CGRectMake(WIDTH_MY-95, 15, 70, 23);
+    
     
 }
 

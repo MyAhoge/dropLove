@@ -27,7 +27,7 @@
     [super viewDidLoad];
     
     self.arr1 = @[@"账号管理",@"账号安全"];
-    self.arr2 = @[@"帮助",@"意见反馈",@"关于点滴爱"];
+    self.arr2 = @[@"意见反馈",@"关于点滴爱"];
     
     self.view.backgroundColor =COLOR(243, 239, 230, 1);
     
@@ -55,7 +55,7 @@
     self.outbtn.backgroundColor = COLOR(42, 206, 34, 1);
     self.outbtn.titleLabel.font = FONT(15);
     [self.table addSubview:_outbtn];
-
+    
     
     
     
@@ -66,11 +66,11 @@
     if (section == 0) {
         return 2;
     }
-//    else if (section == 1){
-//        return 3;
-//    }
+    //    else if (section == 1){
+    //        return 3;
+    //    }
     else{
-        return 3;
+        return 2;
     }
 }
 
@@ -82,15 +82,15 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-//    
-//    if (section == 0) {
-//        return 10;
-//    }
-//    else if (section == 1){
-//        return 10;
-//    }else{
-//        return 150;
-//    }
+    //
+    //    if (section == 0) {
+    //        return 10;
+    //    }
+    //    else if (section == 1){
+    //        return 10;
+    //    }else{
+    //        return 150;
+    //    }
     
     return 10;
     
@@ -110,21 +110,21 @@
         cell.textLabel.text = self.arr1[indexPath.row];
         cell.textLabel.font = FONT(15);
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-
+        
     }else if (indexPath.section == 1){
         cell.textLabel.text = self.arr2[indexPath.row];
         cell.textLabel.font = FONT(15);
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-       
-
+        
+        
     }
-//    else{
-//        cell.textLabel.text = @"退出登录";
-//        cell.textLabel.textAlignment = NSTextAlignmentCenter;
-//        cell.backgroundColor = COLOR(237, 79, 64, 0.9);
-//        cell.textLabel.font = FONT(15);
-////        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    }
+    //    else{
+    //        cell.textLabel.text = @"退出登录";
+    //        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    //        cell.backgroundColor = COLOR(237, 79, 64, 0.9);
+    //        cell.textLabel.font = FONT(15);
+    ////        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    //    }
     
     return cell;
     
@@ -140,38 +140,45 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-//    if (indexPath.section == 2) {
-//        
-//        UIAlertController *acl = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定退出登录吗" preferredStyle:UIAlertControllerStyleActionSheet];
-//       
-//        UIAlertAction *aat = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-//                NSLog(@"确定退出登录");
-//        }];
-//        
-//        UIAlertAction *aat1 = [UIAlertAction actionWithTitle:@"取消" style:  UIAlertActionStyleCancel handler:nil];
-//        [acl addAction:aat];
-//        [acl addAction:aat1];
-//        
-//        [self presentViewController:acl animated:YES completion:nil];
-//        
-//    }else
+    //    if (indexPath.section == 2) {
+    //
+    //        UIAlertController *acl = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定退出登录吗" preferredStyle:UIAlertControllerStyleActionSheet];
+    //
+    //        UIAlertAction *aat = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+    //                NSLog(@"确定退出登录");
+    //        }];
+    //
+    //        UIAlertAction *aat1 = [UIAlertAction actionWithTitle:@"取消" style:  UIAlertActionStyleCancel handler:nil];
+    //        [acl addAction:aat];
+    //        [acl addAction:aat1];
+    //
+    //        [self presentViewController:acl animated:YES completion:nil];
+    //
+    //    }else
     if (indexPath.section == 0 && indexPath.row == 0){
         
         NumSetViewController *nvc = [[NumSetViewController alloc]init];
         [self.navigationController pushViewController:nvc animated:YES];
-         nvc.hidesBottomBarWhenPushed = YES;
+        nvc.hidesBottomBarWhenPushed = YES;
     }else if (indexPath.section == 0 && indexPath.row == 1){
         
         NumSafetyViewController *svc = [[NumSafetyViewController alloc]init];
         svc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:svc animated:YES];
         
-    }else if (indexPath.section == 1 && indexPath.row == 1){
+    }else if (indexPath.section == 1 && indexPath.row == 0){
         
         OpinionViewController *ovc = [[OpinionViewController alloc]init];
         ovc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:ovc animated:YES];
     }
+    else if (indexPath.section == 1 && indexPath.row == 1){
+        
+        AboutViewController *avc = [[AboutViewController alloc]init];
+        avc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:avc animated:YES];
+    }
+
     
     
 }
@@ -190,7 +197,8 @@
     [acl addAction:aat1];
     
     [self presentViewController:acl animated:YES completion:nil];
-
+    
 }
 
 @end
+
